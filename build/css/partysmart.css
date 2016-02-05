@@ -10,3 +10,9 @@ body {
   font-size: 32px;
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+.row-padding {
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+}

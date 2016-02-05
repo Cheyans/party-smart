@@ -57,7 +57,58 @@
       <div class="panel panel-default">
 
         <div class="panel-body">
-          Select Party to Report:
+          <!-- Modal -->
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><b>Set Location</b></h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="AddressLine1">Address Line 1</label>
+                      <input type="address" class="form-control" id="exampleInputEmail1" placeholder="Address Line 1">
+                    </div>
+                    <div class="form-group">
+                      <label for="AddressLine2">Address Line 2</label>
+                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Address Line 2">
+                    </div>
+                    <div class="form-group">
+                      <label for="City">City</label>
+                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                      <label for="State/Province">State / Province</label>
+                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="State / Province">
+                    </div>
+                    <div class="form-group">
+                      <label for="PostalZip">Postal or Zip Code</label>
+                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Postal or Zip Code">
+                    </div>
+                    <label for="exampleInputPassword1">Country</label>
+                    <select class="form-control">
+                      <option>Brazil</option>
+                      <option>Canada</option>
+                      <option>China</option>
+                      <option>Russia</option>
+                      <option>United States</option>
+                    </select>
+                    <hr>
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+            <div class ="row row-padding">
+              Select Party to Report:
+              <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">Set Location</button>
+            </div>
           <div class="row">
             <img src="img/map.jpg" width="100%" />
           </div>
