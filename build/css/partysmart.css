@@ -35,14 +35,26 @@ tbody td, thead th {
 /*--------------------Navbar--------------------*/
 
 .navbar-fixed-top {
-  height: 45px !important;
+  height: 45px;
+  background: rgba(248, 248, 248, 0.9);
+  border-style: solid;
+  border-color: gainsboro;
 }
+
+/*Brand*/
+
 .navbar-brand {
   font-size: 35px;
   font-family: "Lato";
   /* Top padding should be relative to nav-btn padding, based on font-size
   which has a padding of 10px via boostrap.css*/
-  padding: 2.5px 16px !important;
+  padding: 2.5px 16px 0px 16px;
+  !important;
+  height: inherit;
+  margin: 0 0 0 4px;
+  border-bottom: 3px solid #891C1D;
+  color: #891C1D !important;
+  transition: .3s;
 }
 .navbar-brand .left-brand-title {
   font-weight: bolder;
@@ -52,12 +64,10 @@ tbody td, thead th {
   font-weight: lighter;
   font-variant: small-caps;
 }
-.navbar-right {
-  position: absolute;
-  right: 20px;
-  height: 100%
-}
-.nav-btn {
+
+/*Button*/
+
+.navbar-fixed-top .btn {
   border-radius: 0px;
   border: 0px;
   font-size: 1em;
@@ -65,41 +75,30 @@ tbody td, thead th {
   min-width: 150px;
   height: 100%;
   font-family: "Lato", sans-serif;
-  background-color: #f8f8f8;
-  transition:.3s;
+  background-color: inherit;
+  transition: .3s;
   box-shadow: none;
-}
-.nav-host {
-  border-top: 3px solid #5AD8B1 !important;
-}
-.nav-complain {
-  border-top: 3px solid #f5756c !important;
-}
-.nav-profile {
-  color: inherit;
-  border-top: 3px solid #6585ed !important;
+  padding: 12px 16px 2.5px 16px;
+  border-bottom: 3px solid #891C1D;
 }
 .nav-profile-img {
   width: 25px;
 }
-.nav-host:hover, .nav-host:active{
-  background-color: #5AD8B1 !important;
-  box-shadow: none;
+.navbar-right {
+  position: absolute;
+  right: 20px;
+  height: 100%;
 }
-.nav-complain:hover, .nav-complain:active {
-  background-color: #f5756c !important;
-  box-shadow: none;
-}
-.nav-profile:hover, .nav-profile:active {
-  background-color: #6585ed !important;
-  box-shadow: none;
-}
-.nav-btn:visited {
-  background-color: #f8f8f8;
-  color: inherit !important;
+
+/*Misc*/
+
+.navbar-brand:hover, .navbar-brand:active, .nav-btn:hover, .nav-btn:active {
+  background-color: #891C1D !important;
+  color: white !important;
 }
 
 /*--------------------Needs Category--------------------*/
+
 .row-padding {
   padding-bottom: 10px;
   padding-right: 10px;
