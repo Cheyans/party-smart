@@ -1,72 +1,119 @@
+/*--------------------Global--------------------*/
+
 body {
   padding-top: 60px;
+  font-family: "Merriweather";
+}
+table {
+  width: 100%;
+}
+thead, tbody, tr, td, th {
+  display: block;
+}
+tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+thead th {
+  height: 30px;
+  /*text-align: left;*/
+}
+tbody {
+  height: 200px;
+  overflow-y: auto;
+}
+thead {
+  /* fallback */
+}
+tbody td, thead th {
+  width: 100%;
+  float: left;
 }
 
+/*--------------------Navbar--------------------*/
+
+.navbar-fixed-top {
+  height: 45px !important;
+}
+.navbar-brand {
+  font-size: 35px;
+  font-family: "Lato";
+  /* Top padding should be relative to nav-btn padding, based on font-size
+  which has a padding of 10px via boostrap.css*/
+  padding: 2.5px 16px !important;
+}
+.navbar-brand .left-brand-title {
+  font-weight: bolder;
+  font-variant: small-caps;
+}
+.navbar-brand .right-brand-title {
+  font-weight: lighter;
+  font-variant: small-caps;
+}
+.navbar-right {
+  position: absolute;
+  right: 20px;
+  height: 100%
+}
 .nav-btn {
-  padding: 8px;
+  border-radius: 0px;
+  border: 0px;
+  font-size: 1em;
+  width: auto;
+  min-width: 150px;
+  height: 100%;
+  font-family: "Lato", sans-serif;
+  background-color: #f8f8f8;
+  transition:.3s;
+  box-shadow: none;
+}
+.nav-host {
+  border-top: 3px solid #5AD8B1 !important;
+}
+.nav-complain {
+  border-top: 3px solid #f5756c !important;
+}
+.nav-profile {
+  color: inherit;
+  border-top: 3px solid #6585ed !important;
+}
+.nav-profile-img {
+  width: 25px;
+}
+.nav-host:hover, .nav-host:active{
+  background-color: #5AD8B1 !important;
+  box-shadow: none;
+}
+.nav-complain:hover, .nav-complain:active {
+  background-color: #f5756c !important;
+  box-shadow: none;
+}
+.nav-profile:hover, .nav-profile:active {
+  background-color: #6585ed !important;
+  box-shadow: none;
+}
+.nav-btn:visited {
+  background-color: #f8f8f8;
+  color: inherit !important;
 }
 
-.navbar-header > .navbar-brand {
-  font-size: 30px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
-.navbar-header-left > .navbar-brand {
-  font-size: 20px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
+/*--------------------Needs Category--------------------*/
 .row-padding {
   padding-bottom: 10px;
   padding-right: 10px;
   padding-left: 10px;
 }
-
-table {
-        width: 100%;
-    }
-
-thead, tbody, tr, td, th { display: block; }
-
-tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-}
-
-thead th {
-    height: 30px;
-
-    /*text-align: left;*/
-}
-
-tbody {
-    height: 200px;
-    overflow-y: auto;
-}
-
-thead {
-    /* fallback */
-}
-
-
-tbody td, thead th {
-    width: 100%;
-    float: left;
-}
-
 .going-invited-margin {
-     margin-top: 2px;
+  margin-top: 2px;
 }
-
 .badge-warning {
-   background-color: #b94a48;
+  background-color: #b94a48;
 }
-
 .home-location-img {
-    max-width: 275px;
-    height: 170px;
-    border: 3px solid gray;
-    margin-left: 10px;
+  max-width: 275px;
+  height: 170px;
+  border: 3px solid gray;
+  margin-left: 10px;
 }

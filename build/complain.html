@@ -1,50 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>PartySmart</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS goes here -->
-    <link href="css/partysmart.css" rel="stylesheet">
-
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PartySmart</title>
+  <!-- Remote imports -->
+  <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
+  <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+  <!-- Local imports -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/partysmart.css" rel="stylesheet">
+</head>
   <body>
-    <!-- Custom HTML goes here -->
-    <nav class="navbar navbar-fixed-top navbar-default">
-      <div class="container">
-
-        <!-- Left part of navbar -->
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            PartySmart
-          </a>
-        </div>
-        <!-- Right part of navbar -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <div class="nav navbar-nav navbar-right">
-            <div class="btn-toolbar pull-right" role="toolbar">
-              <div class="btn-group nav-btn" role="group">
-                <a class="btn btn-default" href="#" role="button">
-                  + Host New Party
-                </a>
-                <a class="btn btn-default" href="neighborscreen.html" role="button">
-                  Make a Complaint
-                </a>
-                <a class="btn btn-primary" href="#" role="button">
-                  <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" />
-                  [User Profile]
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <!-- Navbar  -->
+    <nav class="navbar-fixed-top navbar-default">
+      <!-- PartySmart Header -->
+      <a class="navbar-brand" href="index.html">
+        <span class="mdi mdi-magnify" aria-hidden="true"></span>
+        <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+      </a>
+      <!-- Navigation buttons -->
+      <div class="navbar-right">
+        <a class="btn btn-default btn-lg nav-btn nav-host" href="#" role="button">
+                      Host
+                      </a>
+        <a class="btn btn-default btn-lg nav-btn nav-complain" href="complain.html" role="button">
+                      Complain
+                      </a>
+        <a class="btn btn-primary btn-lg nav-btn nav-profile" href="#" role="button">
+          <img class="nav-profile-img" src="img/guy.jpg" class="img-circle" /> [User Profile]
+        </a>
       </div>
     </nav>
 
