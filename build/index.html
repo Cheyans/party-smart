@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap Template</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PartySmart</title>
+  <!-- Remote imports -->
+  <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
+  <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+  <!-- Local imports -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/partysmart.css" rel="stylesheet">
+</head>
 
-    <!-- Custom CSS goes here -->
-  </head>
-  <body>
-    <!-- Custom HTML goes here -->
-    Hello world!
-    <br>
-    <a href="complain.html">complain.html</a>
-    <br>
-    <a href="party-info.html">party-info.html</a>
-    <br>
-    <a href="party-registration.html">party-registration</a>
-    <br>
-    <a href="party-homepage.html">party-registration</a>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- App code -->
-    <script src="js/bundle.js"></script>
-  </body>
+<body>
+  <!-- Navbar  -->
+  <nav class="navbar-fixed-top navbar-default">
+    <!-- PartySmart Header -->
+    <a class="navbar-brand" href="index.html">
+      <span class="mdi mdi-magnify" aria-hidden="true"></span>
+      <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+    </a>
+    <!-- Navigation buttons -->
+    <div class="navbar-right">
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="party-LogIn.html" role="button">
+                    LogIn
+                    </a>
+      <a class="btn btn-default btn-lg nav-btn nav-complain" href="party-SignUp.html" role="button">
+                    SignUp
+                    </a>
+    </div>
+  </nav>
+
+  <!-- Background Image -->
+  <div class="main-container">
+    <div class="main-background"></div>
+    <a name="features"></a>
+    <div class="container services" class="row">
+      <div class="col-md-6">
+        <span></span>
+        <h4>Register a Party</h4>
+        <p>
+          Register a party with us so that you are aware of the situation around you.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <span></span>
+        <h4>File a Complaint</h4>
+        <p>
+          If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
 </html>
