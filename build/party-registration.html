@@ -15,7 +15,7 @@
   <link href="css/partysmart.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="registration">
   <!-- Navbar  -->
   <nav class="navbar-fixed-top navbar-default">
     <!-- PartySmart Header -->
@@ -38,17 +38,49 @@
   </nav>
 
   <div class="container">
-    <div class="row">
-      <!-- multiple columns -->
-    </div><!-- closing .row -->
+    <div class="panel panel-default">
 
-    <p>Actual content goes here. It will span the full width.</p>
-
-    <div class="row">
-      <!-- multiple columns -->
-    </div><!-- closing .row -->
-  </div><!-- closing .container -->
-  <!-- ...and here. -->
+      <div class="panel-body">
+        <fieldset>
+          <div class="row row-padding">
+            <div class='form-group col-lg-11 address'>
+              <input class="form-control" placeholder="Address" required="true" type="text" />
+            </div>
+            <div class="col-lg-1 autolocate">
+              <button type="button" class="btn btn-default">
+                <span class="mdi mdi-map-marker"></span>
+              </button>
+            </div>
+          </div>
+          <div class='row row-padding'>
+            <div class='col-sm-4'>
+              <div class='form-group'>
+                <input class="form-control" placeholder="City" required="true" type="text" />
+              </div>
+            </div>
+            <div class='col-sm-2'>
+              <div class='form-group'>
+                <input class="form-control" placeholder="State / Province" required="true" type="text" />
+              </div>
+            </div>
+            <div class='col-sm-2'>
+              <div class='form-group'>
+                <input class="form-control" placeholder="Postal or Zip Code" required="true" type="text" />
+              </div>
+            </div>
+            <div class='col-sm-4'>
+              <div class='form-group'>
+                <input class="form-control" placeholder="Country" required="true" type="text"/>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="row">
+          <img src="img/map.jpg" width="100%" />
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="js/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -1,8 +1,19 @@
 /*--------------------Global--------------------*/
+html {
+  height: 100%;
+}
 body {
   height: inherit;
   padding-top: 60px;
   font-family: "Merriweather";
+  background-color:white;
+  height: 100%;
+  background: -webkit-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
+  background: -moz-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
+  background: -ms-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
+  background: -o-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 table {
   width: 100%;
@@ -46,7 +57,7 @@ tbody td, thead th {
   font-family: "Lato";
   padding: 2.5px 16px 0px 16px;
   height: inherit;
-  margin: -1px 0 0 5px;
+  margin: 0px 0 0 5px;
   border-bottom: 3px solid #891C1D;
   color: #891C1D !important;
   transition: .3s;
@@ -68,13 +79,13 @@ tbody td, thead th {
   font-size: 1em;
   width: auto;
   min-width: 150px;
-  height: 100%;
+  height: inherit;
   font-family: "Lato", sans-serif;
   background-color: inherit;
   transition: .3s;
   box-shadow: none;
   padding: 12px 16px 2.5px 16px;
-  border-top: 3px solid #891C1D;
+  border-bottom: 3px solid #891C1D;
 }
 .nav-profile-img {
   width: 25px;
@@ -100,6 +111,19 @@ tbody td, thead th {
   background-size: cover;
   padding-bottom: 30%;
   height: 50%;
+}
+
+/*--------------------Party Registration--------------------*/
+.registration .mdi-map-marker {
+  font-size: 18px;
+}
+
+.registration .address {
+    width: 93.3333%;
+}
+
+.registration .autolocate {
+  width: 0;
 }
 
 /*--------------------Needs Category--------------------*/
