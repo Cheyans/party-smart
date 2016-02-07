@@ -7,11 +7,11 @@ body {
   padding-top: 60px;
   font-family: "Merriweather";
   background-color:white;
-  height: 100%;
-  background: -webkit-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
-  background: -moz-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
-  background: -ms-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
-  background: -o-linear-gradient(-45deg, #5d2a2c 0%, #881c1c 70%, #ffffff 0%);
+  height: 100;
+  background: -webkit-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
+  background: -moz-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
+  background: -ms-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
+  background: -o-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -111,6 +111,15 @@ tbody td, thead th {
   background-size: cover;
   padding-bottom: 30%;
   height: 50%;
+}
+
+/*--------------------Party Info--------------------*/
+
+.search-text-margin{
+  margin-top: 7px;
+}
+.search-padding{
+  padding-top: 20px;
 }
 
 /*--------------------Party Registration--------------------*/
