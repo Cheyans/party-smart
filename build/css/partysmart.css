@@ -1,19 +1,8 @@
 /*--------------------Global--------------------*/
-html {
-  height: 100%;
-}
+
 body {
-  height: inherit;
   padding-top: 60px;
   font-family: "Merriweather";
-  background-color:white;
-  height: 100;
-  background: -webkit-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
-  background: -moz-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
-  background: -ms-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
-  background: -o-linear-gradient(-45deg, #ffffff 0%, #eeeeee 90%, #eeeeee 0%);
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 table {
   width: 100%;
@@ -29,12 +18,14 @@ tr:after {
 }
 thead th {
   height: 30px;
+  /*text-align: left;*/
 }
 tbody {
   height: 200px;
   overflow-y: auto;
 }
 thead {
+  /* fallback */
 }
 tbody td, thead th {
   width: 100%;
@@ -55,9 +46,11 @@ tbody td, thead th {
 .navbar-brand {
   font-size: 35px;
   font-family: "Lato";
+  /* Top padding should be relative to nav-btn padding, based on font-size
+  which has a padding of 10px via boostrap.css*/
   padding: 2.5px 16px 0px 16px;
   height: inherit;
-  margin: 0px 0 0 5px;
+  margin: -1px 0 0 5px;
   border-bottom: 3px solid #891C1D;
   color: #891C1D !important;
   transition: .3s;
@@ -79,7 +72,7 @@ tbody td, thead th {
   font-size: 1em;
   width: auto;
   min-width: 150px;
-  height: inherit;
+  height: 100%;
   font-family: "Lato", sans-serif;
   background-color: inherit;
   transition: .3s;
@@ -103,6 +96,22 @@ tbody td, thead th {
   color: white !important;
 }
 
+.btn-info{
+border-top:1px solid white;
+border-left:1px solid white;
+border-right:1px solid white;
+text-align: left;
+font-size: 12px;
+color: white;
+
+background-color: grey;
+border-bottom:0px;
+color: #fff;
+opacity: 1;
+}
+
+
+
 /*--------------------Homepage--------------------*/
 
 /*background*/
@@ -113,32 +122,8 @@ tbody td, thead th {
   height: 50%;
 }
 
-/*--------------------Party Info--------------------*/
-
-.search-text-margin{
-  margin-top: 7px;
-}
-.search-padding{
-  padding-top: 20px;
-}
-
-/*--------------------Party Registration--------------------*/
-.registration .mdi-map-marker {
-  font-size: 18px;
-}
-
-.registration .address {
-    width: 93.3333%;
-}
-
-.registration .autolocate {
-  width: 0;
-}
-
 /*--------------------Needs Category--------------------*/
-.row-centered {
-    text-align:center;
-}
+
 .row-padding {
   padding-bottom: 10px;
   padding-right: 10px;
