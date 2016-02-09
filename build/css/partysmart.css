@@ -110,6 +110,7 @@ color: #fff;
 opacity: 1;
 }
 
+<<<<<<< HEAD
 /*Admin Page*/
 .alignleft {
 	float: left;
@@ -117,6 +118,16 @@ opacity: 1;
 .alignright {
 	float: right;
 }
+=======
+/*--------------------Party Info--------------------*/		
+
+ .search-text-margin{
+   margin-top: 7px;
+ }
+ .search-padding{
+   padding-top: 20px;
+ }
+>>>>>>> 0b9da8d8b474a7e1ad1becfdcb89fa9da78ba6f1
 
 
 
