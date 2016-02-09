@@ -46,8 +46,6 @@ tbody td, thead th {
 .navbar-brand {
   font-size: 35px;
   font-family: "Lato";
-  /* Top padding should be relative to nav-btn padding, based on font-size
-  which has a padding of 10px via boostrap.css*/
   padding: 2.5px 16px 0px 16px;
   height: inherit;
   margin: -1px 0 0 5px;
@@ -95,41 +93,55 @@ tbody td, thead th {
   background-color: #891C1D !important;
   color: white !important;
 }
-
-.btn-info{
-border-top:1px solid white;
-border-left:1px solid white;
-border-right:1px solid white;
-text-align: left;
-font-size: 12px;
-color: white;
-
-background-color: #881c1c;
-border-bottom:0px;
-color: #fff;
-opacity: 1;
+.btn-info {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  text-align: left;
+  font-size: 12px;
+  color: white;
+  background-color: #881c1c;
+  border-bottom: 0px;
+  color: #fff;
+  opacity: 1;
 }
-
 
 /*Admin Page*/
+
 .alignleft {
-	float: left;
+  float: left;
 }
 .alignright {
-	float: right;
+  float: right;
+}
+
+/*--------------------Party Registration--------------------*/
+
+.registration .map {
+  padding-bottom: 25px;
+}
+.registration .mdi-map-marker {
+  font-size: 18px;
+}
+.registration .mdi-close-box {
+  font-size: 20px;
+  color: maroon;
+}
+.registration .address {
+  width: 93.3333%;
+}
+.registration .autolocate {
+  width: 0;
 }
 
 /*--------------------Party Info--------------------*/
 
- .search-text-margin{
-   margin-top: 7px;
- }
- .search-padding{
-   padding-top: 20px;
- }
-
-
-
+.search-text-margin {
+  margin-top: 7px;
+}
+.search-padding {
+  padding-top: 20px;
+}
 
 /*--------------------Homepage--------------------*/
 
@@ -152,7 +164,7 @@ opacity: 1;
   font-style: italic;
 }
 
-/*party-denial*/
+/*--------------------Party Denial--------------------*/
 #personal-parties {
     border: 2px solid;
     position: relative;
@@ -169,7 +181,7 @@ opacity: 1;
 
   }
 .denial{
-  background-color: red; 
+  background-color: red;
 }
 
 /*--------------------Needs Category--------------------*/
