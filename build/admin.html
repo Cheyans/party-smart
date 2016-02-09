@@ -1,310 +1,628 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-      <title>PartySmart's Admin Page</title>
-      <!-- Bootstrap's CSS -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-      <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
-      <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
-      <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
-      <!-- Local imports -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/partysmart.css" rel="stylesheet">
-   </head>
-   <body>
-      <!-- Our Facebook layout will go here. -->
-      <!-- Navbar  -->
-      <nav class="navbar-fixed-top navbar-default">
-         <!-- PartySmart Header -->
-         <a class="navbar-brand" href="index.html">
-         <span class="mdi mdi-magnify" aria-hidden="true"></span>
-         <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
-         </a>
-         <!-- Navigation buttons -->
-         <div class="navbar-right">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>PartySmart's Admin Page</title>
+    <!-- Bootstrap's CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+    <!-- Local imports -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/partysmart.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Our Facebook layout will go here. -->
+    <!-- Navbar  -->
+    <nav class="navbar-fixed-top navbar-default">
+        <!-- PartySmart Header -->
+        <a class="navbar-brand" href="index.html">
+            <span class="mdi mdi-magnify" aria-hidden="true"></span>
+            <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+        </a>
+        <!-- Navigation buttons -->
+        <div class="navbar-right">
             <h3>
                <span class="glyphicon glyphicon-pencil"></span>
                Administration Page
             </h3>
-         </div>
-      </nav>
-      <!-- Grid Container -->
-      <div class="container">
-         <!-- The row that contains the three main columns of the website. -->
-         <div class="row">
+        </div>
+    </nav>
+    <!-- Grid Container -->
+    <div class="container">
+        <!-- The row that contains the three main columns of the website. -->
+        <div class="row">
             <!-- Left sidebar: A cell that spans 2 columns -->
             <div class="col-md-2">
             </div>
             <!-- Main feed: A cell that spans 7 columns -->
             <div class="col-md-7">
-               <div class="panel panel-default">
-                  <div class="panel-body">
-                     <nav class="navbar-fixed-top navbar-default">
-                        <!-- PartySmart Header -->
-                        <a class="navbar-brand" href="index.html">
-                        <span class="mdi mdi-magnify" aria-hidden="true"></span>
-                        <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
-                        </a>
-                        <!-- Navigation buttons -->
-                        <div class="navbar-right">
-                           <h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <nav class="navbar-fixed-top navbar-default">
+                            <!-- PartySmart Header -->
+                            <a class="navbar-brand" href="index.html">
+                                <span class="mdi mdi-magnify" aria-hidden="true"></span>
+                                <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+                            </a>
+                            <!-- Navigation buttons -->
+                            <div class="navbar-right">
+                                <h3>
                               <span class="glyphicon glyphicon-pencil"></span>
                               Administration Page
                            </h3>
+                            </div>
+                        </nav>
+                        <!-- Tables on right sidebar -->
+                        <table class="table table-striped">
+                            <!--Navbar for table -->
+                            <thead>
+                                <tr>
+                                    <h3>Party Smart User's</h3>
+                                    <br>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="filterable-cell">
+                                        <!-- Trigger the modal with a button -->
+                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal1">
+                                            Alicia
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                    <br>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Shannon's New Year Party
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Erik's Birthday Bash
+                                                                    </td>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    </tr>
+
+                                    <td class="filterable-cell">
+                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal2">
+                                            Bernard
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                    <br>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Katrina's 21st
+                                                                    </td>
+                                                                    <td class="filterable-cell">
+                                                                        Susan's bridal shower
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Pooja's 20th
+                                                                    </td>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    </div>
+                </div>
+                </td>
+                </tr>
+                <tr>
+                    <td class="filterable-cell">
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal3">
+                            Mira
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+
+                                                    Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                    <br>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="filterable-cell">
+                                                        Claire's Party
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="filterable-cell">
+                                                        Erik's Birthday Bash
+                                                    </td>
+                                                    <td class="filterable-cell">
+                                                        Sruti's Party
+                                                    </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     </nav>
-                     <!-- Tables on right sidebar -->
-                     <table class="table table-striped">
-                     <!--Navbar for table -->
-                     <thead>
-                        <tr>
-                           <h3>Party Smart User's</h3>
-                           <br>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td class="filterable-cell">
-                              <!-- Trigger the modal with a button -->
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Alicia</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="filterable-cell">
+                            <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal4">
+                                Dan
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                        <br>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="filterable-cell">
+                                                            Claire's Party
+                                                        </td>
+                                                        <td class="filterable-cell">
+                                                            Jay's Party
+                                                        </td>
+                                                        <td class="filterable-cell">
+                                                            Peter's Party
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="filterable-cell">
+                                                            Erik's Birthday Bash
+                                                        </td>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                           </td>
+                                </div>
+                            </div>
+                        </td>
                         </tr>
                         <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Bernard</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
+                            <td class="filterable-cell">
+                                <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal5">
+                                    Dellios
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+
+                                                            Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                            <br>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="filterable-cell">
+                                                                Spriha's Party
+                                                            </td>
+                                                            <td class="filterable-cell">
+                                                                Ashley's Party
+                                                            </td>
+                                                            <td class="filterable-cell">
+                                                                Ivy's Party
+                                                            </td>
+                                                            <td class="filterable-cell">
+                                                                Cassie's Party
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="filterable-cell">
+                                                                Ryan's Birthday Bash
+                                                            </td>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Cailagh</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
+                                </div>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td class="filterable-cell">
+                                    <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal6">
+                                        Vlady
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+
+                                                                Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                <br>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="filterable-cell">
+                                                                    Katie's Party
+                                                                </td>
+                                                                <td class="filterable-cell">
+                                                                    Juliana's Party
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="filterable-cell">
+                                                                    Erik's Birthday Bash
+                                                                </td>
+                                                                <td class="filterable-cell">
+                                                                    Erin's Birthday Party
+                                                                </td>
+                                                                <td class="filterable-cell">
+                                                                    Maryam's Party
+                                                                </td>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Dan</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Dellios</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Nelly</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Patricia</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Quixian</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="filterable-cell">
-                              <div class="modal-button">
-                                 <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal">Zelda</button>
-                              </div>
-                              <!-- Modal -->
-                              <div id="myModal" class="modal fade" role="dialog">
-                                 <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">History</h4>
-                                       </div>
-                                       <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                       </div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </td>
-                        </tr>
-                     </tbody>
-                  </div>
-               </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td class="filterable-cell">
+                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal7">
+                                            Nelly
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                    <br>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Zainab's Party
+                                                                    </td>
+                                                                    <td class="filterable-cell">
+                                                                        Mahnoor's Party
+                                                                    </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="filterable-cell">
+                                                                        Erik's Birthday Bash
+                                                                    </td>
+                                                                    <td class="filterable-cell">
+                                                                        Anam's Birthday
+                                                                    </td>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="filterable-cell">
+                                            <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal8">
+                                                Patricia
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+
+                                                                        Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                        <br>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="filterable-cell">
+                                                                            Sarah's Party
+                                                                        </td>
+                                                                        <td class="filterable-cell">
+                                                                            Welcome Back Party
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="filterable-cell">
+                                                                            End of the Year Party
+                                                                        </td>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="filterable-cell">
+                                                <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal9">
+                                                    Zelda
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <h4 class="modal-title" id="myModalLabel">User History</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+
+                                                                            Parties Attended<span class="glyphicon glyphicon-ok"></span>
+                                                                            <br>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="filterable-cell">
+                                                                                Morgan's Party
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            Complaints<span class="glyphicon glyphicon-remove"></span>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="filterable-cell">
+                                                                                Naomi's Birthday Bash
+                                                                            </td>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            </tr>
+                                            </tbody>
             </div>
-         </div>
-      </div>
-      <!-- Right sidebar: A cell that spans 3 columns -->
-      <div class="col-md-3">
-      </div>
-      </div>
-      <!-- Bootstrap's script tag  -->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-   </body>
+        </div>
+    </div>
+    </div>
+    </div>
+    </table>
+    <!-- Right sidebar: A cell that spans 3 columns -->
+    <div class="col-md-3">
+    </div>
+    </div>
+    <!-- Bootstrap's script tag  -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
 </html>

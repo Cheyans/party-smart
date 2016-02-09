@@ -104,10 +104,18 @@ text-align: left;
 font-size: 12px;
 color: white;
 
-background-color: grey;
+background-color: #881c1c;
 border-bottom:0px;
 color: #fff;
 opacity: 1;
+}
+
+/*Admin Page*/
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
 }
 
 
