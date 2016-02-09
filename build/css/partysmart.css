@@ -152,6 +152,26 @@ opacity: 1;
   font-style: italic;
 }
 
+/*party-denial*/
+#personal-parties {
+    border: 2px solid;
+    position: relative;
+    float:left;
+    width:100%
+  }
+
+  #personal-parties div {
+    float:left;
+    width:25%;
+    height: 50%;
+    text-align: center;
+    font-style: italic;
+
+  }
+.denial{
+  background-color: red; 
+}
+
 /*--------------------Needs Category--------------------*/
 
 .row-padding {
