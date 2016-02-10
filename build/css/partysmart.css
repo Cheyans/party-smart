@@ -114,6 +114,17 @@ tbody td, thead th {
 .alignright {
   float: right;
 }
+.navbar-right-align {
+  margin-bottom: 10px;
+  margin-right: 3px;
+  bottom: 1px;
+}
+.text-centering-main-panel{
+  margin-bottom: 15px;
+}
+.search-centering{
+  margin-top: 12px;
+}
 
 /*--------------------Party Registration--------------------*/
 
