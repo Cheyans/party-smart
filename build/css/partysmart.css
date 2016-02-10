@@ -146,7 +146,7 @@ tbody td, thead th {
 /*--------------------Homepage--------------------*/
 
 .index {
-  padding-top: 0px;
+  padding-top: 60px;
 }
 
 /*background*/
@@ -159,6 +159,8 @@ tbody td, thead th {
 }
 /*center the two icons*/
 .homepage-icon{
+  height: 40px;
+  width: 40px;
   display: block;
   margin-left: auto;
   margin-right: auto
@@ -166,6 +168,29 @@ tbody td, thead th {
 .homepage-text{
   text-align: center;
   font-style: italic;
+}
+.container-services .col-md-4{
+  padding-left: 3%;
+  padding-right: 3%;
+  text-align: center;
+}
+.image-button{
+  color: inherit;
+  border-radius: 0px;
+  border: 0px;
+  font-size: 1em;
+  width: 100%;
+  min-width: 150px;
+  height: 100%;
+  background-color: inherit;
+  transition: .3s;
+  box-shadow: none;
+  padding: 12px 16px 2.5px 16px;
+  border-bottom: 3px solid #891C1D;
+}
+.image-button:hover, .image-button:active{
+  background-color: #891C1D !important;
+  color: white !important;
 }
 
 /*--------------------Party Denial--------------------*/
