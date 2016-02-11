@@ -27,7 +27,7 @@
             <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
         </a>
         <!-- Navigation buttons -->
-        <div class="navbar-right">
+        <div class="navbar-right navbar-right-align">
             <h3>
                <span class="glyphicon glyphicon-pencil"></span>
                Administration Page
@@ -45,29 +45,23 @@
             <div class="col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <nav class="navbar-fixed-top navbar-default">
-                            <!-- PartySmart Header -->
-                            <a class="navbar-brand" href="index.html">
-                                <span class="mdi mdi-magnify" aria-hidden="true"></span>
-                                <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
-                            </a>
-                            <!-- Navigation buttons -->
-                            <div class="navbar-right">
-                                <h3>
-                              <span class="glyphicon glyphicon-pencil"></span>
-                              Administration Page
-                           </h3>
-                            </div>
-                        </nav>
                         <!-- Tables on right sidebar -->
+                        <row>
+                          <div class="col-md-6 text-centering-main-panel">
+                          <h3>Party Smart Users:</h3>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group search-centering">
+                              <input type="text" class="form-control" placeholder="Search Users...">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                              </span>
+                            </div>
+                          </div>
+                        </row>
+                        <br>
                         <table class="table table-striped">
                             <!--Navbar for table -->
-                            <thead>
-                                <tr>
-                                    <h3>Party Smart User's</h3>
-                                    <br>
-                                </tr>
-                            </thead>
                             <tbody>
                                 <tr>
                                     <td class="filterable-cell">
@@ -75,7 +69,6 @@
                                         <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal1">
                                             Alicia
                                         </button>
-
                                         <!-- Modal -->
                                         <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -89,7 +82,6 @@
                                                         <table class="table table-striped">
                                                             <thead>
                                                                 <tr>
-
                                                                     Parties Attended<span class="glyphicon glyphicon-ok"></span>
                                                                     <br>
                                                                 </tr>
@@ -126,7 +118,6 @@
                                         </div>
                                     </td>
                                     </tr>
-
                                     <td class="filterable-cell">
                                         <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal2">
                                             Bernard
@@ -187,7 +178,6 @@
                 </tr>
                 <tr>
                     <td class="filterable-cell">
-
                         <!-- Button trigger modal -->
                         <button type="button" class="btn-info" data-toggle="modal" data-target="#myModal3">
                             Mira

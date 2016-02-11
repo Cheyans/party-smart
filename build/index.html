@@ -15,7 +15,7 @@
   <link href="css/partysmart.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="index">
   <!-- Navbar  -->
   <nav class="navbar-fixed-top navbar-default">
     <!-- PartySmart Header -->
@@ -25,35 +25,63 @@
     </a>
     <!-- Navigation buttons -->
     <div class="navbar-right">
-      <a class="btn btn-default btn-lg nav-btn nav-host" href="party-LogIn.html" role="button">
-                    LogIn
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="party-registration.html" role="button">
+                    Host
                     </a>
-      <a class="btn btn-default btn-lg nav-btn nav-complain" href="party-SignUp.html" role="button">
-                    SignUp
+      <a class="btn btn-default btn-lg nav-btn nav-complain" href="complain.html" role="button">
+                    Complain
                     </a>
+      <a class="btn btn-default btn-lg nav-btn nav-profile" href="#" role="button">
+        <img class="nav-profile-img" src="img/guy.jpg" class="img-circle" /> [User Profile]
+      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="index.html" role="button">
+                    LogOut
+      </a>
     </div>
   </nav>
 
   <!-- Background Image -->
   <div class="main-container">
-    <div class="main-background"></div>
     <a name="features"></a>
-    <div class="container services" class="row">
-      <div class="col-md-6">
-        <span></span>
-        <h4>Register a Party</h4>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div class="main-background"></div>
+    <div class="panel panel-default">
+    <div class="container-services panel-body" class="row">
+      <div class="col-md-4">
+        <a class="btn image-button" href="party-registration.html" role="button">
+          <img class="homepage-icon" src="img/city.png" class="img-circle" />
+          <h4 class="homepage-text">Register a Party</h4>
+        </a>
+        <br><br>
         <p>
           Register a party with us so that you are aware of the situation around you.
         </p>
       </div>
-      <div class="col-md-6">
-        <span></span>
-        <h4>File a Complaint</h4>
+      <div class="col-md-4">
+        <a class="btn image-button" href="complain.html" role="button">
+          <img class="homepage-icon" src="img/message-alert.png" class="img-circle" />
+          <h4 class="homepage-text">File a Complaint</h4>
+        </a>
+        <br><br>
         <p>
           If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
         </p>
       </div>
+      <div class="col-md-4">
+        <a class="btn image-button" href="#" role="button">
+          <img class="homepage-icon" src="img/account-multiple-plus.png" class="img-circle" />
+          <h4 class="homepage-text">Request to Attend a Party</h4>
+        </a>
+        <br><br>
+        <p>
+          Request to Attend a Party.
+        </p>
+      </div>
     </div>
+    </div>
+    </div>
+    <div class="col-md-1">
   </div>
 
 </body>

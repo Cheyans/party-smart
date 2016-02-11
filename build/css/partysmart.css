@@ -46,8 +46,6 @@ tbody td, thead th {
 .navbar-brand {
   font-size: 35px;
   font-family: "Lato";
-  /* Top padding should be relative to nav-btn padding, based on font-size
-  which has a padding of 10px via boostrap.css*/
   padding: 2.5px 16px 0px 16px;
   height: inherit;
   margin: -1px 0 0 5px;
@@ -78,7 +76,7 @@ tbody td, thead th {
   transition: .3s;
   box-shadow: none;
   padding: 12px 16px 2.5px 16px;
-  border-bottom: 3px solid #891C1D;
+  border-bottom: 3px solid #891C1D !important;
 }
 .nav-profile-img {
   width: 25px;
@@ -95,50 +93,135 @@ tbody td, thead th {
   background-color: #891C1D !important;
   color: white !important;
 }
-
-.btn-info{
-border-top:1px solid white;
-border-left:1px solid white;
-border-right:1px solid white;
-text-align: left;
-font-size: 12px;
-color: white;
-
-background-color: #881c1c;
-border-bottom:0px;
-color: #fff;
-opacity: 1;
+.btn-info {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  text-align: left;
+  font-size: 12px;
+  color: white;
+  background-color: #881c1c;
+  border-bottom: 0px;
+  color: #fff;
+  opacity: 1;
 }
 
-<<<<<<< HEAD
 /*Admin Page*/
+
 .alignleft {
-	float: left;
+  float: left;
 }
 .alignright {
-	float: right;
+  float: right;
 }
-=======
-/*--------------------Party Info--------------------*/		
+.navbar-right-align {
+  margin-bottom: 10px;
+  margin-right: 3px;
+  bottom: 1px;
+}
+.text-centering-main-panel{
+  margin-bottom: 15px;
+}
+.search-centering{
+  margin-top: 12px;
+}
 
- .search-text-margin{
-   margin-top: 7px;
- }
- .search-padding{
-   padding-top: 20px;
- }
->>>>>>> 0b9da8d8b474a7e1ad1becfdcb89fa9da78ba6f1
+/*--------------------Party Registration--------------------*/
 
+.registration .map {
+  padding-bottom: 25px;
+}
+.registration .mdi-map-marker {
+  font-size: 18px;
+}
+.registration .mdi-close-box {
+  font-size: 20px;
+  color: maroon;
+}
+.registration .address {
+  width: 93.3333%;
+}
+.registration .autolocate {
+  width: 0;
+}
 
+/*--------------------Party Info--------------------*/
+
+.search-text-margin {
+  margin-top: 7px;
+}
+.search-padding {
+  padding-top: 20px;
+}
 
 /*--------------------Homepage--------------------*/
+
+.index {
+  padding-top: 60px;
+}
 
 /*background*/
 .main-background {
   background-image: url('../img/party.jpg');
   background-size: cover;
   padding-bottom: 30%;
-  height: 50%;
+  height: 75%;
+  opacity: 75%;
+}
+/*center the two icons*/
+.homepage-icon{
+  height: 40px;
+  width: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+.homepage-text{
+  text-align: center;
+  font-style: italic;
+}
+.container-services .col-md-4{
+  padding-left: 3%;
+  padding-right: 3%;
+  text-align: center;
+}
+.image-button{
+  color: inherit;
+  border-radius: 0px;
+  border: 0px;
+  font-size: 1em;
+  width: 100%;
+  min-width: 150px;
+  height: 100%;
+  background-color: inherit;
+  transition: .3s;
+  box-shadow: none;
+  padding: 12px 16px 2.5px 16px;
+  border-bottom: 3px solid #891C1D;
+}
+.image-button:hover, .image-button:active{
+  background-color: #891C1D !important;
+  color: white !important;
+}
+
+/*--------------------Party Denial--------------------*/
+#personal-parties {
+    border: 2px solid;
+    position: relative;
+    float:left;
+    width:100%
+  }
+
+  #personal-parties div {
+    float:left;
+    width:25%;
+    height: 50%;
+    text-align: center;
+    font-style: italic;
+
+  }
+.denial{
+  background-color: red;
 }
 
 /*--------------------Needs Category--------------------*/
