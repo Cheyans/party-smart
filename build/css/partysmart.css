@@ -76,7 +76,7 @@ tbody td, thead th {
   transition: .3s;
   box-shadow: none;
   padding: 12px 16px 2.5px 16px;
-  border-bottom: 3px solid #891C1D;
+  border-bottom: 3px solid #891C1D !important;
 }
 .nav-profile-img {
   width: 25px;
