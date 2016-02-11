@@ -2,141 +2,148 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>PartySmart User Profile</title>
-    <!-- Bootstrap's CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
-    <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
-    <!-- Local imports -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/partysmart.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>PartySmart User Profile</title>
+  <!-- Bootstrap's CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
+  <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+  <!-- Local imports -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/partysmart.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Our Facebook layout will go here. -->
-    <!-- Navbar  -->
-    <nav class="navbar-fixed-top navbar-default">
-        <!-- PartySmart Header -->
-        <a class="navbar-brand" href="index.html">
-            <span class="mdi mdi-magnify" aria-hidden="true"></span>
-            <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+  <!-- Our Facebook layout will go here. -->
+  <!-- Navbar  -->
+  <nav class="navbar-fixed-top navbar-default">
+    <!-- PartySmart Header -->
+    <a class="navbar-brand" href="index.html">
+      <span class="mdi mdi-magnify" aria-hidden="true"></span>
+      <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+    </a>
+    <!-- Navigation buttons -->
+    <div class="navbar-right">
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="party-registration.html" role="button">
+                      Host
+                      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-complain" href="complain.html" role="button">
+                      Complain
+                      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-profile" href="account-info.html" role="button">
+        <img class="nav-profile-img" src="img/guy.jpg" class="img-circle" /> [User Profile]
+      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="index.html" role="button">
+                      LogOut
         </a>
-        <!-- Navigation buttons -->
-        <div class="navbar-right">
-            <h3>
-               <span class="glyphicon glyphicon-user"></span>
-               Account Information
-            </h3>
-        </div>
-    </nav>
-
-
-    <div class="container">
-        <!-- The row that contains the three main columns of the website. -->
-        <div class="row">
-            <!-- Left sidebar: A cell that spans 2 columns -->
-            <div class="col-md-0">
-
-            </div>
-            <!-- Main feed: A cell that spans 7 columns -->
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-
-                        <!-- Tables on right sidebar -->
-                        <table class="table table-striped">
-                            <!--Navbar for table -->
-                            <thead>
-                                <tr>
-                                    <h3>Parties Invited to:</h3>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="filterable-cell">
-                                        <!-- Trigger the modal with a button -->
-
-                                        Zainab's 20th Birthday:<span class="label label-success pull-right going-invited-margin">Going</span>
-                                        <br>
-                                        <span class="label label-primary">09/04/16</span>
-                                        <br>
-                                        <span class="label label-info pull-center">99 people attending</span>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="filterable-cell">
-                                        Back to School Party 2016 <span class="label label-success pull-right going-invited-margin">Going</span>
-                                        <br>
-                                        <span class="label label-primary">03/06/16</span>
-                                        <br>
-                                        <span class="label label-info pull-center">5 people attending</span>
-
-                                    </td>
-                                </tr>
-                                <td class="filterable-cell">
-                                    Diwali Mela <span class="label label-warning pull-right going-invited-margin">Maybe</span>
-                                    <br>
-                                    <span class="label label-primary">01/05/16</span>
-                                    <br>
-                                    <span class="label label-info pull-center">30 people attending</span>
-                                </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- Right sidebar: A cell that spans 3 columns -->
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-
-                        <table class="table table-striped">
-                            <!--Navbar for table -->
-                            <thead>
-                                <tr>
-                                    <h3>Parties Hosting:</h3>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="filterable-cell">
-                                        <!-- Trigger the modal with a button -->
-
-                                        CS Society Party <span class="label label-default pull-right going-invited-margin">09/23/16</span>
-                                        <br>
-                                        <br>
-                                        <span class="label label-success">2 people going</span>
-                                        <br>
-                                        <br>
-                                        <span class="label label-warning">20 people maybe</span>
-                                        <br>
-                                        <br>
-                                        <span class="label label-danger">9 not going</span>
-
-
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                </tr>
-
-                            </tbody>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+  </nav>
 
+
+  <div class="container">
+    <!-- The row that contains the three main columns of the website. -->
+    <div class="row">
+      <!-- Left sidebar: A cell that spans 2 columns -->
+      <div class="col-md-0">
+
+      </div>
+      <!-- Main feed: A cell that spans 7 columns -->
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <!-- Tables on right sidebar -->
+            <table class="table table-striped account-info-table">
+              <!--Navbar for table -->
+              <thead>
+                <tr>
+                  <h3>Parties Invited to:</h3>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="btn filterable-cell" onClick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      Zainab's 20th Birthday
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-success going-invited-margin">Going</span>
+                      <span class="label label-info">99 people attending</span>
+                      <span class="label label-default">09/04/16</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="btn filterable-cell" onClick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      Back to School Party 2016
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-success going-invited-margin">Going</span>
+                      <span class="label label-info">5 people attendingg</span>
+                      <span class="label label-default">03/06/16</span>
+                    </div>
+                  </td>
+                </tr>
+                <td class="btn filterable-cell" onClick="location.href='party-info.html'">
+                  <div class="pull-left">
+                    Diwali Mela
+                  </div>
+                  <div class="pull-right">
+                    <span class="label label-warning going-invited-margin">Maybe</span>
+                    <span class="label label-info">30 people attending</span>
+                    <span class="label label-default">01/05/16</span>
+                  </div>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Right sidebar: A cell that spans 3 columns -->
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <table class="table table-striped">
+              <!--Navbar for table -->
+              <thead>
+                <tr>
+                  <h3>Parties Hosting:</h3>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="btn filterable-cell" onClick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      CS Society Party
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-default">09/23/16</span>
+                    </div>
+                    <br>
+                    <div class="pull-right">
+                      <span class="label label-success">2 people going</span>
+                      <span class="label label-warning">20 people maybe</span>
+                      <span class="label label-danger">9 not going</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<<<<<<< HEAD
     <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -160,6 +167,11 @@
     <!-- Bootstrap's script tag  -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+=======
+  <!-- Bootstrap's script tag  -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+>>>>>>> 9893c6f6508f9e1dae3b8a14e3b15d53b4c56e05
 </body>
 
 </html>
