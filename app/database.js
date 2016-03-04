@@ -2,11 +2,159 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Modify with your startup's name!
-var startupName = null;
+var startupName = "Party Smart";
 
 // Put your mock objects here, as in Workshop 4
 var initialData = {
+    "users" : [
+      {
+        "_id": 1,
+        "fname": "a",
+        "lname": "b",
+        "phone_number": "999999999",
+        "email": "a@umass.edu",
+        "picture": "",
+        "admin": true,
+        "friends": [
+          1,2
+        ]
+      },
+      {
+        "_id": 2,
+        "fname": "c",
+        "lname": "d",
+        "phone_number": "999999999",
+        "email": "c@umass.edu",
+        "picture": "",
+        "admin": true,
+        "friends": [
+          2,3
+        ]
+      },
+      {
+        "_id": 3,
+        "fname": "e",
+        "lname": "f",
+        "phone_number": "999999999",
+        "email": "e@umass.edu",
+        "picture": "",
+        "admin": true,
+        "friends": [
+          0,3
+        ]
+      },
+      {
+        "_id": 4,
+        "fname": "g",
+        "lname": "h",
+        "phone_number": "999999999",
+        "email": "g@umass.edu",
+        "picture": "",
+        "admin": true,
+        "friends": [
+        ]
+      }
+    ],
+    "parties" : [
+      {
+        "_id": 1,
+        "title": "testParty1",
+        "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
+        "private status": false,
+        "address": "google maps address format, we'll figure it out later",
+        "city": "Amherst",
+        "zip": "01003",
+        "state": "Massachusetts",
+        "country": "United States of America",
+        "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+        "host": 1,
+        "attendees": [
+          1,2,3
+        ],
+        "complaints": [
+          {
+            "_id": 1,
+            "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+            "message": null
+          },
+          {
+            "_id": 2,
+            "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+            "message": "turn your shit down bruh"
+          }
+        ],
+        "supplies" : [
+          {
+            "_id": 1,
+            "supply_id": 1,
+            "claimed_by": 2
+          },
+          {
+            "_id": 2,
+            "supply_id": 1,
+            "claimed_by": 2
+          },
+          {
+            "_id": 3,
+            "supply_id": 2,
+            "claimed_by": 3
+          },
+          {
+            "_id": 4,
+            "supply_id": 3,
+            "claimed_by": null
+          },
+          {
+            "_id": 5,
+            "supply_id": 4,
+            "claimed_by": 2
+          }
+        ]
+      },
+      {
+        "_id": 2,
+        "title": "testParty2",
+        "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+        "private status": false,
+        "address": "google maps address format, we'll figure it out later",
+        "city": "Amherst",
+        "zip": "01003",
+        "state": "Massachusetts",
+        "country": "United States of America",
+        "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+        "host": 2,
+        "attendees": [
+          1
+        ],
+        "complaints": [
+        ],
+        "supplies" : [
+        ]
+      }
+    ],
 
+    "supplies" : [
+      {
+        "_id": 1,
+        "description": "New Amsterdam",
+        "picture": ""
+      },
+      {
+        "_id": 2,
+        "description": "Ballast Point",
+        "picture": ""
+      },
+      {
+        "_id": 3,
+        "description": "Blue Label",
+        "picture": ""
+      },
+      {
+        "_id": 4,
+        "description": "Tennessee Fire",
+        "picture": ""
+      }
+    ]
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
