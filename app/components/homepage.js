@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Page from './page';
+import Navbar from './navbar';
 
 export default class HomePage extends React.Component {
   render() {
     return (
       <div>
-        <Page user={1}/>
+        <Navbar user={1}/>
         {/*Background Image*/}
         <div className="background"/>
         <h2 className="title text">

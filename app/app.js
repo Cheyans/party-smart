@@ -21,4 +21,4 @@ ReactDOM.render((
       <IndexRoute component={HomePage}/>
     </Route>
   </Router>
-), document.body);
+), document.getElementById('app'));
