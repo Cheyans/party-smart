@@ -39,7 +39,7 @@ tbody td, thead th {
 
 .navbar-fixed-top {
   height: 45px;
-  background: rgba(248, 248, 248, 0.9);
+  background: rgba(248, 248, 248, 0.6);
   border-style: solid;
   border-color: gainsboro;
 }
