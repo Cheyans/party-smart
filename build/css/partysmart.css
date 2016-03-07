@@ -1,6 +1,9 @@
 /*--------------------Global--------------------*/
-
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   padding-top: 60px;
   font-family: "Merriweather";
 }
@@ -157,17 +160,28 @@ tbody td, thead th {
 /*--------------------Homepage--------------------*/
 
 .index {
-  padding-top: 60px;
+  padding-top: 0px;
+}
+
+.main-container {
+  height: 100%;
 }
 
 /*background*/
+.main-description {
+  text-align: center;
+  margin: 0 25% 0 25%;
+  width: 50%;
+}
 
 .main-background {
-  background-image: url('../img/party.jpg');
+  background: url('../img/party.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
   background-size: cover;
-  padding-bottom: 30%;
-  height: 75%;
-  opacity: 75%;
+  height: 100%;
+  width: 100%;
 }
 
 /*center the two icons*/
@@ -177,17 +191,18 @@ tbody td, thead th {
   width: 40px;
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
 .homepage-text {
   text-align: center;
   font-style: italic;
 }
-.container-services .col-md-4 {
+.homepage-services {
   padding-left: 3%;
   padding-right: 3%;
   text-align: center;
 }
+
 .image-button {
   color: inherit;
   border-radius: 0px;
