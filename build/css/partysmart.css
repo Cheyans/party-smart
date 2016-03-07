@@ -161,49 +161,63 @@ tbody td, thead th {
 
 .index {
   padding-top: 0px;
-}
-
-.main-container {
-  height: 100%;
+  font-family: "Lato", sans-serif;
 }
 
 /*background*/
-.main-description {
-  text-align: center;
-  margin: 0 25% 0 25%;
-  width: 50%;
-}
 
-.main-background {
-  background: url('../img/party.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-  background-size: cover;
-  height: 100%;
+.index .panel {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0px;
   width: 100%;
 }
 
-/*center the two icons*/
+.index .panel-body {
+  padding: 4.6875% 25%;
+}
+.index .background {
+  background: url('../img/background2.png') no-repeat center;
+}
 
-.homepage-icon {
-  height: 40px;
-  width: 40px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.homepage-text {
-  text-align: center;
-  font-style: italic;
-}
-.homepage-services {
-  padding-left: 3%;
-  padding-right: 3%;
+/*Content*/
+.index .text {
+  color: white;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.2),
+               0px 8px 13px rgba(0,0,0,0.05),
+               0px 18px 23px rgba(0,0,0,0.05);
   text-align: center;
 }
 
-.image-button {
+.index .title {
+  margin-top: 0px;
+  font-weight: 100;
+  padding-top: 6.5%;
+  font-size: 60px;
+}
+
+.index .description {
+  margin: 0 12.5% 0 12.5%;
+  padding-right: 17.5%;
+  padding-left: 17.5%;
+  padding-top: 9.375%;
+  padding-bottom: 4.6875%;
+  font-size: 20px;
+}
+.index .icon {
+  font-size: 3em;
+}
+.index .services {
+  left: 0px;
+  padding-top: 4.6875%;
+  text-align: center;
+  color: white;
+  background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: inset rgba(255, 255, 255, 0.1) 0 1px 0, inset rgba(0, 0, 0, 0.3) 0 -1px 0;
+}
+
+/*icons*/
+.index .service-button {
   color: inherit;
   border-radius: 0px;
   border: 0px;
@@ -215,10 +229,9 @@ tbody td, thead th {
   transition: .3s;
   box-shadow: none;
   padding: 12px 16px 2.5px 16px;
-  border-bottom: 3px solid #891C1D;
 }
-.image-button:hover, .image-button:active {
-  background-color: #891C1D !important;
+.index .service-button:hover, .index .service-button:active {
+  background-color: rgba(255,255,255,0.2) !important;
   color: white !important;
 }
 

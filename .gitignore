@@ -2,5 +2,7 @@
 node_modules
 # Ignores your built application.
 build/js/app.js
+# Ignore osx files
 .DS_Store
+build/.DS_Store
 

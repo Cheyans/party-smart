@@ -8,9 +8,10 @@
   <title>PartySmart</title>
   <!-- Remote imports -->
   <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
-  <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,300" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
   <!-- Local imports -->
+  <script src="js/jquery.min.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/partysmart.css" rel="stylesheet">
 </head>
@@ -18,40 +19,37 @@
 <body class="index">
 
   <!-- Background Image -->
-  <div class="main-container">
-    <a name="features"></a>
-    <div class="main-background panel panel-default">
-        <div class="container panel-body">
-        <div class="main-description">
-          <p>
-            Register a party with us so that you are aware of the situation around you.
-            If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
-          </p>
-        </div>
-        <div class="row homepage-services">
-          <div class="col-md-4">
-            <a class="btn image-button" href="party-registration.html" role="button">
-              <img class="homepage-icon" src="img/city.png" class="img-circle" />
-              <h4 class="homepage-text">Register a Party</h4>
-            </a>
-          </div>
-          <div class="col-md-4">
-            <a class="btn image-button" href="complain.html" role="button">
-              <img class="homepage-icon" src="img/message-alert.png" class="img-circle" />
-              <h4 class="homepage-text">File a Complaint</h4>
-            </a>
-          </div>
-          <div class="col-md-4">
-            <a class="btn image-button" href="#" role="button">
-              <img class="homepage-icon" src="img/account-multiple-plus.png" class="img-circle" />
-              <h4 class="homepage-text">Request to Attend a Party</h4>
-            </a>
-          </div>
-        </div>
+  <div class="background" />
+  <h2 class="title text">
+      Hosting parties made smart
+    </h2>
+  <div class="description text">
+    <p>
+      Register a party with us so that you are aware of the situation around you. If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
+    </p>
+  </div>
+  <div class="panel panel-default container">
+    <div class="row panel-body services">
+      <div class="col-md-4">
+        <a class="btn service-button text" href="party-registration.html" role="button">
+          <span class="icon mdi mdi-file-document" aria-hidden="true"></span>
+          <h4 class="service-text">Register a Party</h4>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn service-button text" href="complain.html" role="button">
+          <span class="icon mdi mdi-comment-alert" aria-hidden="true"></span>
+          <h4 class="service-text">File a Complaint</h4>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn service-button text" href="#" role="button">
+          <span class="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
+          <h4 class="service-text">Request to Attend a Party</h4>
+        </a>
       </div>
     </div>
-
-
+  </div>
 </body>
 
 </html>
