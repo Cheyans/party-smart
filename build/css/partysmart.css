@@ -150,6 +150,7 @@ tbody td, thead th {
 
 /*--------------------Party Info--------------------*/
 
+
 .search-text-margin {
   margin-top: 7px;
 }
@@ -242,6 +243,14 @@ tbody td, thead th {
 }
 
 /*--------------------Account Info--------------------*/
+
+.header-margin-info {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.img-size {
+  max-width:200px;
+}
 
 .account-info-table .row-btn {
   width: 100%;
