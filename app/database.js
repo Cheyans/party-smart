@@ -9,11 +9,11 @@ var initialData = {
     "users" : [
       {
         "_id": 1,
-        "fname": "a",
-        "lname": "b",
+        "fname": "Cheyan",
+        "lname": "Setayesh",
         "phone_number": "999999999",
         "email": "a@umass.edu",
-        "picture": "",
+        "picture": "img/guy.jpg",
         "admin": true,
         "friends": [
           1,2
@@ -25,7 +25,7 @@ var initialData = {
         "lname": "d",
         "phone_number": "999999999",
         "email": "c@umass.edu",
-        "picture": "",
+        "picture": "img/guy.jpg",
         "admin": true,
         "friends": [
           2,3
@@ -37,7 +37,7 @@ var initialData = {
         "lname": "f",
         "phone_number": "999999999",
         "email": "e@umass.edu",
-        "picture": "",
+        "picture": "img/guy.jpg",
         "admin": true,
         "friends": [
           0,3
@@ -49,7 +49,7 @@ var initialData = {
         "lname": "h",
         "phone_number": "999999999",
         "email": "g@umass.edu",
-        "picture": "",
+        "picture": "img/guy.jpg",
         "admin": true,
         "friends": [
         ]
@@ -73,39 +73,32 @@ var initialData = {
         ],
         "complaints": [
           {
-            "_id": 1,
             "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
             "message": null
           },
           {
-            "_id": 2,
             "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
             "message": "turn your shit down bruh"
           }
         ],
         "supplies" : [
           {
-            "_id": 1,
             "supply_id": 1,
             "claimed_by": 2
           },
           {
-            "_id": 2,
             "supply_id": 1,
             "claimed_by": 2
           },
           {
-            "_id": 3,
             "supply_id": 2,
             "claimed_by": 3
           },
           {
-            "_id": 4,
             "supply_id": 3,
             "claimed_by": null
           },
           {
-            "_id": 5,
             "supply_id": 4,
             "claimed_by": 2
           }

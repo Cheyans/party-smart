@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,16 +14,18 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/partysmart.css" rel="stylesheet">
 </head>
-  <body>
-    <!-- Navbar  -->
-    <nav class="navbar-fixed-top navbar-default">
-      <!-- PartySmart Header -->
-      <a class="navbar-brand" href="index.html">
-        <span class="mdi mdi-magnify" aria-hidden="true"></span>
-        <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
-      </a>
-      <!-- Navigation buttons -->
-      <div class="navbar-right">
+
+<body>
+  <!-- Navbar  -->
+  <nav class="navbar-fixed-top navbar-default">
+    <!-- PartySmart Header -->
+    <a class="navbar-brand" href="index.html">
+      <span class="mdi mdi-magnify" aria-hidden="true"></span>
+      <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+    </a>
+    <!-- Navigation buttons -->
+    <div class="navbar">
+      <div class="container-fluid navbar-right">
         <a class="btn btn-default btn-lg nav-btn nav-host" href="party-registration.html" role="button">
                       Host
                       </a>
@@ -36,91 +39,93 @@
                       LogOut
         </a>
       </div>
-    </nav>
-
-    <!-- Right side of screen -->
-    <div class="col-md-2">
     </div>
+  </nav>
 
-    <!-- Middle of screen -->
-    <div class="col-md-8">
-      <div class="panel panel-default">
+  <!-- Right side of screen -->
+  <div class="col-md-2">
+  </div>
 
-        <div class="panel-body">
-          <!-- Modal -->
-          <div class="modal fade location-info-modal" role="dialog">
-            <div class="modal-dialog">
+  <!-- Middle of screen -->
+  <div class="col-md-8">
+    <div class="panel panel-default">
 
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"><b>Set Location</b></h4>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <label for="AddressLine1">Address Line 1</label>
-                      <input type="address" class="form-control" id="exampleInputEmail1" placeholder="Address Line 1">
-                    </div>
-                    <div class="form-group">
-                      <label for="AddressLine2">Address Line 2</label>
-                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Address Line 2">
-                    </div>
-                    <div class="form-group">
-                      <label for="City">City</label>
-                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="City">
-                    </div>
-                    <div class="form-group">
-                      <label for="State/Province">State / Province</label>
-                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="State / Province">
-                    </div>
-                    <div class="form-group">
-                      <label for="PostalZip">Postal or Zip Code</label>
-                      <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Postal or Zip Code">
-                    </div>
-                    <label for="exampleInputPassword1">Country</label>
-                    <select class="form-control">
-                      <option>Brazil</option>
-                      <option>Canada</option>
-                      <option>China</option>
-                      <option>Russia</option>
-                      <option>United States</option>
-                    </select>
-                    <hr>
-                      <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
+      <div class="panel-body">
+        <!-- Modal -->
+        <div class="modal fade location-info-modal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><b>Set Location</b></h4>
               </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="AddressLine1">Address Line 1</label>
+                    <input type="address" class="form-control" id="exampleInputEmail1" placeholder="Address Line 1">
+                  </div>
+                  <div class="form-group">
+                    <label for="AddressLine2">Address Line 2</label>
+                    <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Address Line 2">
+                  </div>
+                  <div class="form-group">
+                    <label for="City">City</label>
+                    <input type="address" class="form-control" id="exampleInputPassword1" placeholder="City">
+                  </div>
+                  <div class="form-group">
+                    <label for="State/Province">State / Province</label>
+                    <input type="address" class="form-control" id="exampleInputPassword1" placeholder="State / Province">
+                  </div>
+                  <div class="form-group">
+                    <label for="PostalZip">Postal or Zip Code</label>
+                    <input type="address" class="form-control" id="exampleInputPassword1" placeholder="Postal or Zip Code">
+                  </div>
+                  <label for="exampleInputPassword1">Country</label>
+                  <select class="form-control">
+                    <option>Brazil</option>
+                    <option>Canada</option>
+                    <option>China</option>
+                    <option>Russia</option>
+                    <option>United States</option>
+                  </select>
+                  <hr>
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+              </div>
+            </div>
 
-            </div>
-          </div>
-            <div class ="row row-padding">
-              Select Party to Report:
-              <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target=".location-info-modal">Set Location</button>
-            </div>
-          <div class="row">
-            <img src="img/map.jpg" width="100%" />
           </div>
         </div>
-        <div class="panel-footer">
-          <div class="list-group">
-            <a href="#" class="list-group-item">123 Candy Cane Lane, Amherst, MA</a>
-            <a href="#" class="list-group-item">126 Candy Cane Lane, Amherst, MA</a>
-            <a href="#" class="list-group-item">4 Potato Street, Amherst, MA</a>
-          </div>
+        <div class="row row-padding">
+          Select Party to Report:
+          <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target=".location-info-modal">Set Location</button>
+        </div>
+        <div class="row">
+          <img src="img/map.jpg" width="100%" />
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="list-group">
+          <a href="#" class="list-group-item">123 Candy Cane Lane, Amherst, MA</a>
+          <a href="#" class="list-group-item">126 Candy Cane Lane, Amherst, MA</a>
+          <a href="#" class="list-group-item">4 Potato Street, Amherst, MA</a>
         </div>
       </div>
     </div>
-    <!-- Left side of screen -->
-    <div class="col-md-2">
-    </div>
+  </div>
+  <!-- Left side of screen -->
+  <div class="col-md-2">
+  </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- App code -->
-    <script src="js/bundle.js"></script>
-  </body>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- App code -->
+  <script src="js/bundle.js"></script>
+</body>
+
 </html>
