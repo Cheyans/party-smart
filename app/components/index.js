@@ -4,9 +4,7 @@ import {Link} from 'react-router';
 export default class HomePage extends React.Component {
   render() {
     return (
-      <div>
-        {/*Background Image*/}
-        <div className="background"/>
+      <div className="background">
         <h2 className="title text">
           Hosting parties made smart
         </h2>
