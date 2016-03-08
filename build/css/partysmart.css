@@ -2,11 +2,13 @@
 html {
   height: 100%;
 }
-body {
+
+.app {
   height: 100%;
   padding-top: 60px;
   font-family: "Merriweather";
 }
+
 table {
   width: 100%;
 }
@@ -165,7 +167,7 @@ tbody td, thead th {
   font-family: "Lato", sans-serif;
 }
 
-/*background*/
+/*Background*/
 
 .index .panel {
   background-color: rgba(0, 0, 0, 0);
