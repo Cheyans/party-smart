@@ -152,7 +152,7 @@ var AdminPage = React.createClass({
   render: function() {
     return (
       <div className="admin">
-        <ReactDataGrid className="grid" columns={columns} rowGetter={this.getRowAt} enableCellSelect={true} rowsCount={this.state.rows.length} minHeight={this.state.originalRows.length * 55} toolbar={< Toolbar enableFilter = {
+        <ReactDataGrid className="grid" columns={columns} rowGetter={this.getRowAt} enableCellSelect={true} rowsCount={this.state.rows.length} minHeight={800} toolbar={< Toolbar enableFilter = {
           true
         } />} onAddFilter={this.handleFilterChange}/>
       </div>
