@@ -17,6 +17,7 @@
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.14.0",
     "react": "^0.14.6",
+    "react-data-grid": "^0.14.15",
     "react-dom": "^0.14.6",
     "react-router": "^2.0.0",
     "webpack": "^1.12.12",

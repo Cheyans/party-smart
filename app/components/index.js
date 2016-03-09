@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default class HomePage extends React.Component {
+export default class IndexPage extends React.Component {
   render() {
     return (
-      <div className="background">
+      <div className="index">
         <h2 className="title text">
           Hosting parties made smart
         </h2>

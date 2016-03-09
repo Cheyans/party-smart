@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 import {getAuthorData} from '../server';
 
-export default class App extends React.Component {
+export default class Page extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {user: 0};
   }
 
@@ -23,7 +23,7 @@ export default class App extends React.Component {
       <div>
         <nav className="navbar navbar-fixed-top navbar-default">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="index">
+            <Link className="navbar-brand" to="/">
               <span className="mdi mdi-magnify" aria-hidden="true"></span><span className="left-brand-title">Party</span><span className="right-brand-title">Smart</span>
             </Link>
             <div className="navbar-right">
