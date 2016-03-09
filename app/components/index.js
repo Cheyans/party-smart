@@ -1,12 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+<<<<<<< HEAD
 export default class HomePage extends React.Component {
 
 
+=======
+export default class IndexPage extends React.Component {
+>>>>>>> origin/feature/admin-page
   render() {
     return (
-      <div className="background">
+      <div className="index">
         <h2 className="title text">
           Hosting parties made smart
         </h2>
@@ -31,10 +35,10 @@ export default class HomePage extends React.Component {
               </a>
             </div>
             <div className="col-md-4">
-              <a className="btn service-button text" href="#" role="button">
+              <Link className="btn service-button text" to="party" role="button">
                 <span className="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
                 <h4 className="service-text">Request to Attend a Party</h4>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

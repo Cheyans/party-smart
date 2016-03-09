@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 import {getAuthorData} from '../server';
 
-export default class App extends React.Component {
+export default class Page extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {user: 0};
   }
 

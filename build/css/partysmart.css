@@ -152,7 +152,9 @@ tbody td, thead th {
 
 /*--------------------Party Info--------------------*/
 
-
+.party-info {
+  padding-top: 60px;
+}
 .search-text-margin {
   margin-top: 7px;
 }
@@ -165,6 +167,8 @@ tbody td, thead th {
 .index {
   padding-top: 0px;
   font-family: "Lato", sans-serif;
+  background: url('../img/background2.png') no-repeat center;
+  background-size: cover;
 }
 
 /*Background*/
@@ -177,9 +181,6 @@ tbody td, thead th {
 
 .index .panel-body {
   padding: 4.6875% 25%;
-}
-.index .background {
-  background: url('../img/background2.png') no-repeat center;
 }
 
 /*Content*/
@@ -194,7 +195,7 @@ tbody td, thead th {
 .index .title {
   margin-top: 0px;
   font-weight: 100;
-  padding-top: 6.5%;
+  padding-top: 12%;
   font-size: 60px;
 }
 
@@ -202,7 +203,7 @@ tbody td, thead th {
   margin: 0 12.5% 0 12.5%;
   padding-right: 17.5%;
   padding-left: 17.5%;
-  padding-top: 9.375%;
+  padding-top: 4.6875%;
   padding-bottom: 4.6875%;
   font-size: 20px;
 }
@@ -236,6 +237,11 @@ tbody td, thead th {
 .index .service-button:hover, .index .service-button:active {
   background-color: rgba(255,255,255,0.2) !important;
   color: white !important;
+}
+
+/*--------------------Homepage--------------------*/
+.admin {
+  padding-top: 60px;
 }
 
 /*--------------------Party Denial--------------------*/
