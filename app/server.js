@@ -12,6 +12,10 @@ export function getAdminInformation(page, pageSize, cb) {
     for(var party of data['parties']) {
       if(party['host'] === user['_id']) {
         user['total_complaints']++;
+        party['host'] = [user['fname'], user['lname']].join(" ");
+        party['attending length'] = party['attending'].length;
+        party['complaints length'] = party['complaints'].length;
+        break;
       }
     }
   }

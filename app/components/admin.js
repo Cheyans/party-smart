@@ -1,96 +1,41 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ReactDataGrid from 'react-data-grid/addons';
 import {getAdminInformation} from '../server';
+import {RowRenderer, userColumns, partyColumns} from './admin-utils';
 
 var Toolbar = ReactDataGrid.Toolbar;
-var DropDownEditor = ReactDataGrid.Editors.DropDownEditor;
-//Admin dropdown options
-var isAdminOptions = ["false", "true"];
-
 //Columns definition
-var columns = [
-  {
-    key: 'picture',
-    name: 'Picture',
-    width: 60,
-    formatter: ReactDataGrid.Formatters.ImageFormatter,
-    resizable: true,
-    locked: true
-  }, {
-    key: 'fname',
-    name: 'First Name',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
-  }, {
-    key: 'lname',
-    name: 'Last Name',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
-  }, {
-    key: 'phone_number',
-    name: 'Phone Number',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
-  }, {
-    key: 'email',
-    name: 'Email',
-    width: 250,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
-  }, {
-    key: 'admin',
-    name: 'Administrator',
-    width: 120,
-    editor: <DropDownEditor options={isAdminOptions}/>,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    editable: true,
-    locked: true
-  }, {
-    key: 'total_complaints',
-    name: 'Total Complaints',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
-  }
-];
+
 
 var AdminPage = React.createClass({
   getInitialState: function() {
     //store the original rows array, and make a copy that can be used for modifying eg.filtering, sorting
-    return {originalRows: [], rows: [], filters: {}};
+    return {
+      originalRows: [],
+      rows: [],
+      filters: {},
+      columns: [],
+      columnName: "users",
+      data: {
+        parties: [],
+        users: []
+      }
+    };
   },
 
   componentDidMount: function() {
     getAdminInformation(0, 1000, (data) => {
-      var rows = data['users'];
-      var originalRows = rows.slice(0);
-      this.setState({originalRows: originalRows, rows: rows, filters: {}});
+      this.setColumn(this.state.columnName, data);
     });
   },
 
-  filterRows : function(originalRows, filters) {
-    var rows = originalRows.filter((r) =>{
+  filterRows: function(originalRows, filters) {
+    var rows = originalRows.filter((r) => {
       var include = true;
       for (var columnKey in filters) {
-        if(filters.hasOwnProperty(columnKey)) {
+        if (filters.hasOwnProperty(columnKey)) {
           var rowValue = r[columnKey].toString().toLowerCase();
-          if(rowValue.indexOf(filters[columnKey].toLowerCase()) === -1) {
+          if (rowValue.indexOf(filters[columnKey].toLowerCase()) === -1) {
             include = false;
           }
         }
@@ -103,9 +48,13 @@ var AdminPage = React.createClass({
   handleGridSort: function(sortColumn, sortDirection) {
     var comparer = function(a, b) {
       if (sortDirection === 'ASC') {
-        return (a[sortColumn] > b[sortColumn])? 1: -1;
+        return (a[sortColumn] > b[sortColumn])
+          ? 1
+          : -1;
       } else if (sortDirection === 'DESC') {
-        return (a[sortColumn] < b[sortColumn])? 1: -1;
+        return (a[sortColumn] < b[sortColumn])
+          ? 1
+          : -1;
       }
     }
 
@@ -121,7 +70,7 @@ var AdminPage = React.createClass({
     this.setState({rows: rows});
   },
 
-  handleFilterChange : function(filter){
+  handleFilterChange: function(filter) {
     this.setState(function(currentState) {
       if (filter.filterTerm) {
         currentState.filters[filter.columnKey] = filter.filterTerm;
@@ -149,10 +98,40 @@ var AdminPage = React.createClass({
     }
     return this.state.rows[index];
   },
+
+  setColumn: function(columnName, data) {
+    var columns = [];
+    if (columnName === "parties") {
+      columns = userColumns;
+      columnName = "users";
+    } else {
+      columns = partyColumns;
+      columnName = "parties"
+    }
+    var rows = data[columnName];
+    var originalRows = rows.slice(0);
+    this.setState({
+      originalRows: originalRows,
+      rows: rows,
+      filters: {},
+      columns: columns,
+      columnName: columnName,
+      data: data
+    });
+  },
+
+  getColumnSelectorName: function() {
+    if (this.state.columnName === "parties") {
+      return "Show Users";
+    }
+    return "Show Parties";
+  },
+
   render: function() {
     return (
       <div className="admin">
-        <ReactDataGrid className="grid" columns={columns} rowGetter={this.getRowAt} enableCellSelect={true} rowsCount={this.state.rows.length} minHeight={800} toolbar={< Toolbar enableFilter = {
+        <a href="" className="btn select-column" onClick={() => this.setColumn(this.state.columnName, this.state.data)}>{this.getColumnSelectorName()}</a>
+        <ReactDataGrid className="grid" onGridSort={this.handleGridSort} columns={this.state.columns} rowGetter={this.getRowAt} enableCellSelect={true} rowsCount={this.state.rows.length} minHeight={800} rowRenderer={RowRenderer} toolbar={< Toolbar enableFilter = {
           true
         } />} onAddFilter={this.handleFilterChange}/>
       </div>

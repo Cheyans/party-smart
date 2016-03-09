@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // Modify with your startup's name!
 var startupName = "Party Smart";
@@ -64,9 +63,9 @@ var initialData = {
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
-      "state": "Massachusetts",
-      "country": "United States of America",
-      "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+      "state": "MA",
+      "country": "USA",
+      "dateTime": "Fri Mar 11 2017 14:29:01 GMT-0500 (EST)",
       "host": 0,
       "attending": [
         1, 2, 3
@@ -108,8 +107,8 @@ var initialData = {
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
-      "state": "Massachusetts",
-      "country": "United States of America",
+      "state": "MA",
+      "country": "USA",
       "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1],
@@ -236,8 +235,3 @@ export class ResetDatabase extends React.Component {
     );
   }
 }
-
-// ReactDOM.render(
-//   <ResetDatabase />,
-//   document.getElementById('db-reset')
-// );
