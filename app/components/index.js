@@ -29,10 +29,10 @@ export default class IndexPage extends React.Component {
               </a>
             </div>
             <div className="col-md-4">
-              <a className="btn service-button text" href="#" role="button">
+              <Link className="btn service-button text" to="party" role="button">
                 <span className="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
                 <h4 className="service-text">Request to Attend a Party</h4>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

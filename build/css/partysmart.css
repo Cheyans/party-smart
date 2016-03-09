@@ -152,7 +152,9 @@ tbody td, thead th {
 
 /*--------------------Party Info--------------------*/
 
-
+.party-info {
+  padding-top: 60px;
+}
 .search-text-margin {
   margin-top: 7px;
 }

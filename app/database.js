@@ -6,363 +6,58 @@ var startupName = "Party Smart";
 
 // Put your mock objects here, as in Workshop 4
 var initialData = {
-  "users": [
+  "users" : [
     {
-      "_id": 1,
+      "_id": 0,
       "fname": "Cheyan",
       "lname": "Setayesh",
       "phone_number": "999999999",
-      "email": "csetayesh@umass.edu",
+      "email": "a@umass.edu",
       "picture": "img/guy.jpg",
       "admin": true,
-      "friends": [1, 2]
-    }, {
+      "friends": [
+        1,2
+      ]
+    },
+    {
+      "_id": 1,
+      "fname": "c",
+      "lname": "d",
+      "phone_number": "999999999",
+      "email": "c@umass.edu",
+      "picture": "img/guy.jpg",
+      "admin": true,
+      "friends": [
+        2,3
+      ]
+    },
+    {
       "_id": 2,
-      "fname": "Tim",
-      "lname": "Richards",
+      "fname": "e",
+      "lname": "f",
       "phone_number": "999999999",
-      "email": "richards@cs.umass.edu",
+      "email": "e@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": false,
-      "friends": [2, 3]
-    }, {
+      "admin": true,
+      "friends": [
+        0,3
+      ]
+    },
+    {
       "_id": 3,
-      "fname": "John",
-      "lname": "Vilk",
+      "fname": "g",
+      "lname": "h",
       "phone_number": "999999999",
-      "email": "jvilk@cs.umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": false,
-      "friends": [0, 3]
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
+      "email": "g@umass.edu",
       "picture": "img/guy.jpg",
       "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
-    }, {
-      "_id": 4,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "aredden@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": []
+      "friends": [
+      ]
     }
   ],
   "parties": [
     {
-      "_id": 1,
+      "_id": 0,
       "title": "testParty1",
       "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
       "private status": false,
@@ -372,7 +67,7 @@ var initialData = {
       "state": "Massachusetts",
       "country": "United States of America",
       "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-      "host": 1,
+      "host": 0,
       "attending": [
         1, 2, 3
       ],
@@ -406,7 +101,7 @@ var initialData = {
         }
       ]
     }, {
-      "_id": 2,
+      "_id": 1,
       "title": "testParty2",
       "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
       "private status": false,
@@ -426,26 +121,28 @@ var initialData = {
       "supplies": []
     }
   ],
-
-  "supplies": [
-    {
-      "_id": 1,
-      "description": "New Amsterdam",
-      "picture": ""
-    }, {
-      "_id": 2,
-      "description": "Ballast Point",
-      "picture": ""
-    }, {
-      "_id": 3,
-      "description": "Blue Label",
-      "picture": ""
-    }, {
-      "_id": 4,
-      "description": "Tennessee Fire",
-      "picture": ""
-    }
-  ]
+    "supplies" : [
+      {
+        "_id": 0,
+        "description": "New Amsterdam",
+        "picture": ""
+      },
+      {
+        "_id": 1,
+        "description": "Ballast Point",
+        "picture": ""
+      },
+      {
+        "_id": 2,
+        "description": "Blue Label",
+        "picture": ""
+      },
+      {
+        "_id": 3,
+        "description": "Tennessee Fire",
+        "picture": ""
+      }
+    ]
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
