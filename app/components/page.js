@@ -18,19 +18,20 @@ export default class App extends React.Component {
     var adminBtn = "";
     if (this.state.admin) {
       adminBtn = <Link className="nav-admin btn btn-default btn-lg nav-btn" to="admin" role="button">Administration</Link>;
+      //debugger;
     }
     return (
       <div>
         <nav className="navbar navbar-fixed-top navbar-default">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="index">
+            <Link className="navbar-brand" to="index" role="button">
               <span className="mdi mdi-magnify" aria-hidden="true"></span><span className="left-brand-title">Party</span><span className="right-brand-title">Smart</span>
             </Link>
             <div className="navbar-right">
               {adminBtn}
               <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complain.html" role="button">Complain</Link>
-              <Link className="nav-profile btn btn-default btn-lg nav-btn" to="account-info.html" role="button">
+              <Link className="nav-profile btn btn-default btn-lg nav-btn" to="profile" role="button" authorData={this.state}>
                 <img className="nav-profile-img img-circle" src={this.state.picture}/>&emsp;{this.state.fname}
               </Link>
               <Link className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">LogOut</Link>

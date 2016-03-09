@@ -5,7 +5,6 @@ html {
 
 .app {
   height: 100%;
-  padding-top: 60px;
   font-family: "Merriweather";
 }
 
@@ -44,6 +43,7 @@ tbody td, thead th {
   background: rgba(248, 248, 248, 0.6);
   border-style: solid;
   border-color: gainsboro;
+  margin-bottom: 60px;
 }
 
 /*Brand*/
@@ -266,7 +266,9 @@ tbody td, thead th {
 .img-size {
   max-width:200px;
 }
-
+.profile-margin-top{
+  margin-top: 50px;
+}
 .account-info-table .row-btn {
   width: 100%;
   background-color: inherit;

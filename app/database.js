@@ -21,8 +21,8 @@ var initialData = {
       },
       {
         "_id": 2,
-        "fname": "c",
-        "lname": "d",
+        "fname": "Jimmy",
+        "lname": "Neutron",
         "phone_number": "999999999",
         "email": "c@umass.edu",
         "picture": "img/guy.jpg",
@@ -33,8 +33,8 @@ var initialData = {
       },
       {
         "_id": 3,
-        "fname": "e",
-        "lname": "f",
+        "fname": "Bella",
+        "lname": "Trix",
         "phone_number": "999999999",
         "email": "e@umass.edu",
         "picture": "img/guy.jpg",
@@ -45,8 +45,8 @@ var initialData = {
       },
       {
         "_id": 4,
-        "fname": "g",
-        "lname": "h",
+        "fname": "Bobby",
+        "lname": "Nadal",
         "phone_number": "999999999",
         "email": "g@umass.edu",
         "picture": "img/guy.jpg",
