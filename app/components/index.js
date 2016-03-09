@@ -38,6 +38,7 @@ export default class HomePage extends React.Component {
             </div>
           </div>
         </div>
+        {this.props.children}
       </div>
     )
   }

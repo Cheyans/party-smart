@@ -24,14 +24,14 @@ export default class App extends React.Component {
       <div>
         <nav className="navbar navbar-fixed-top navbar-default">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="index" role="button">
+            <Link className="navbar-brand" to="/" role="button">
               <span className="mdi mdi-magnify" aria-hidden="true"></span><span className="left-brand-title">Party</span><span className="right-brand-title">Smart</span>
             </Link>
             <div className="navbar-right">
               {adminBtn}
               <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complain.html" role="button">Complain</Link>
-              <Link className="nav-profile btn btn-default btn-lg nav-btn" to="profile" role="button" authorData={this.state}>
+              <Link className="nav-profile btn btn-default btn-lg nav-btn" to={"/profile/"+this.state._id} role="button" authorData={this.state}>
                 <img className="nav-profile-img img-circle" src={this.state.picture}/>&emsp;{this.state.fname}
               </Link>
               <Link className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">LogOut</Link>

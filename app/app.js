@@ -12,8 +12,7 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={Page}>
       <IndexRoute component={Index}/>
-      <Route path= "index" component={Index}/>
-      <Route path= "profile" component={Profile}/>
+      <Route path= "/profile/:id" component={Profile}/>
     </Route>
   </Router>
 ), document.getElementById('app'));

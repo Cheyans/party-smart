@@ -1,9 +1,11 @@
 import React from 'react';
 import {getAuthorData} from '../server';
 import ProfileFriends from './profile-friends';
+import ProfileHostedParties from './profile-hostedparties.js';
 
 
 export default class Profile extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -23,8 +25,12 @@ export default class Profile extends React.Component {
 
   render() {
     var friends = []
+    var hosts = []
     if(this.state.friends){
       friends = this.state.friends;
+    }
+    if(this.state.hostedParties){
+      hosts = this.state.hostedParties;
     }
     return (
       <div>
@@ -34,7 +40,7 @@ export default class Profile extends React.Component {
           <div className="col-md-4">
             <div className="media">
               <div className="media-left">
-              <img src="img/guy.jpg" alt="..." className="media-object img-size"/>
+              <img src="../img/guy.jpg" alt="..." className="media-object img-size"/>
               </div>
               <div className="media-body">
                 <h3>{this.state.fname} {this.state.lname}</h3>
@@ -67,12 +73,11 @@ export default class Profile extends React.Component {
               <div className="panel-body">
                 <table className="table table-striped account-info-table">
                   <thead>
+
                     <tr>
-                      <th>
                     <h4>Invited to:</h4>
-                    <br/>
-                    </th>
                     </tr>
+
                   </thead>
                   <tbody>
                     <tr>
@@ -122,21 +127,11 @@ export default class Profile extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                    <td className="btn filterable-cell" to="location.href='party-info.html'">
-                        <div className="pull-left">
-                          CS Society Party
-                        </div>
-                        <div className="pull-right">
-                          <span className="label label-default">09/23/16</span>
-                        </div>
-                        <div className="pull-right">
-                          <span className="label label-success"> 2</span>
-                          <span className="label label-warning">20</span>
-                          <span className="label label-danger"> 9</span>
-                        </div>
-                      </td>
-                    </tr>
+                    {hosts.map((party,i) => {
+                      return (
+                        <ProfileHostedParties key={i} _id={party} attendees={[]}></ProfileHostedParties>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -149,10 +144,6 @@ export default class Profile extends React.Component {
               </div>
               <div className="panel-body">
                     <div className="input-group pull-right">
-                      <input type="text" className="form-control" placeholder="Search" />
-                      <span className="input-group-btn" />
-                        <button className="btn btn-default" type="button" />
-                          <span className="mdi mdi-magnify" aria-hidden="true" />
                     </div>
                     <hr />
                     <br />

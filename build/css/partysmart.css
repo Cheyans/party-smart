@@ -269,6 +269,11 @@ tbody td, thead th {
 .profile-margin-top{
   margin-top: 50px;
 }
+
+.account-info-inv-header{
+  margin-bottom: 20px;
+}
+
 .account-info-table .row-btn {
   width: 100%;
   background-color: inherit;

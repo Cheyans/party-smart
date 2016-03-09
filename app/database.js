@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // Modify with your startup's name!
 var startupName = "Party Smart";
@@ -17,7 +16,11 @@ var initialData = {
         "admin": true,
         "friends": [
           1,2
+        ],
+        "hostedParties": [
+          1
         ]
+
       },
       {
         "_id": 2,
@@ -29,6 +32,9 @@ var initialData = {
         "admin": true,
         "friends": [
           2,3
+        ],
+        "hostedParties": [
+          2
         ]
       },
       {
@@ -41,6 +47,9 @@ var initialData = {
         "admin": true,
         "friends": [
           0,3
+        ],
+        "hostedParties": [
+
         ]
       },
       {
@@ -52,13 +61,16 @@ var initialData = {
         "picture": "img/guy.jpg",
         "admin": true,
         "friends": [
+        ],
+        "hostedParties": [
+
         ]
       }
     ],
     "parties" : [
       {
         "_id": 1,
-        "title": "testParty1",
+        "ptitle": "testParty1",
         "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
         "private status": false,
         "address": "google maps address format, we'll figure it out later",
@@ -70,6 +82,12 @@ var initialData = {
         "host": 1,
         "attendees": [
           1,2,3
+        ],
+        "declined":[
+
+        ],
+        "invited":[
+
         ],
         "complaints": [
           {
@@ -106,7 +124,7 @@ var initialData = {
       },
       {
         "_id": 2,
-        "title": "testParty2",
+        "ptitle": "testParty2",
         "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
         "private status": false,
         "address": "google maps address format, we'll figure it out later",
@@ -119,33 +137,36 @@ var initialData = {
         "attendees": [
           1
         ],
+        "declined":[
+
+        ],
+        "invited":[
+
+        ],
         "complaints": [
         ],
         "supplies" : [
+          {
+            "_id": 1,
+            "description": "New Amsterdam",
+            "picture": ""
+          },
+          {
+            "_id": 2,
+            "description": "Ballast Point",
+            "picture": ""
+          },
+          {
+            "_id": 3,
+            "description": "Blue Label",
+            "picture": ""
+          },
+          {
+            "_id": 4,
+            "description": "Tennessee Fire",
+            "picture": ""
+          }
         ]
-      }
-    ],
-
-    "supplies" : [
-      {
-        "_id": 1,
-        "description": "New Amsterdam",
-        "picture": ""
-      },
-      {
-        "_id": 2,
-        "description": "Ballast Point",
-        "picture": ""
-      },
-      {
-        "_id": 3,
-        "description": "Blue Label",
-        "picture": ""
-      },
-      {
-        "_id": 4,
-        "description": "Tennessee Fire",
-        "picture": ""
       }
     ]
 };
@@ -174,6 +195,13 @@ export function readDocument(collection, id) {
   return JSONClone(data[collection][id]);
 }
 
+export function readDocumentLength(collection) {
+  // Clone the data. We do this to model a database, where you receive a
+  // *copy* of an object and not the object itself.
+
+  return JSONClone(data[collection].length);
+}
+
 /**
  * Emulates writing a "document" to a NoSQL database.
  */
@@ -198,6 +226,7 @@ export function addDocument(collectionName, newDoc) {
   writeDocument(collectionName, newDoc);
   return newDoc;
 }
+
 
 /**
  * Reset our browser-local database.
