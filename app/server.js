@@ -17,6 +17,11 @@ export function getAdminInformation(page, pageSize, cb) {
   }
   return emulateServerReturn(data, cb);
 }
+
+export function getPartyData(id, cb) {
+  return emulateServerReturn(readDocument('parties', id), cb);
+}
+
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.
