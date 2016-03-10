@@ -4,12 +4,13 @@ import {getParty} from '../server';
 export default class ProfileHostedParties extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      partyInfo: null
+    };
   }
 
   componentDidMount() {
-
-    getParty(this.props._id-1, (partyInfo) => {
+    getParty(this.props._id, (partyInfo) => {
       this.setState(partyInfo);
     });
 
@@ -20,14 +21,14 @@ export default class ProfileHostedParties extends React.Component {
     var invited = []
     var declined = []
     var date = new Date();
-    if(this.state.attendees){
-      attendees = this.state.attendees;
+    if(this.state.attending){
+      attendees = this.state.attending;
     }
     if(this.state.invited){
       invited = this.state.invited;
     }
-    if(this.state.declined){
-      declined = this.state.declined;
+    if(this.state.not_attending){
+      declined = this.state.not_attending;
     }
     if(this.state.dateTime){
       date = new Date(this.state.dateTime);
@@ -36,20 +37,16 @@ export default class ProfileHostedParties extends React.Component {
       <tr>
       <td className="btn filterable-cell" to="location.href='party-info.html'">
           <div className="pull-left">
-          {this.state.ptitle}
+          {this.state.title}
           </div>
           <div className="pull-right">
-            <span className="label label-default">{date.getMonth()}/{date.getDay()}/{date.getYear()-100}</span>
-          </div>
-          <div className="pull-right">
-
             <span className="label label-success">{attendees.length}</span>
             <span className="label label-warning">{invited.length}</span>
             <span className="label label-danger">{declined.length}</span>
+            <span className="label label-default">{date.getMonth()}/{date.getDay()}/{date.getYear()-100}</span>
           </div>
         </td>
       </tr>
     )
   }
-
 }

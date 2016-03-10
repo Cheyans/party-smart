@@ -275,6 +275,9 @@ tbody td, thead th {
 .profile-margin-top{
   margin-top: 50px;
 }
+.table-header-margin-bottom{
+  margin-bottom: 15px;
+}
 
 .account-info-inv-header{
   margin-bottom: 20px;

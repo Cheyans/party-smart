@@ -1,13 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-<<<<<<< HEAD
+
 export default class HomePage extends React.Component {
-
-
-=======
-export default class IndexPage extends React.Component {
->>>>>>> origin/feature/admin-page
   render() {
     return (
       <div className="index">

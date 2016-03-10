@@ -1,8 +1,8 @@
 import React from 'react';
 import {getAuthorData} from '../server';
 import ProfileFriends from './profile-friends';
-import ProfileHostedParties from './profile-hostedparties.js';
-
+import ProfileHostedParties from './profile-hostedparties';
+import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
 
 export default class Profile extends React.Component {
 
@@ -17,15 +17,10 @@ export default class Profile extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   getAuthorData(this.state.user, (userData) => {
-  //     this.setState(userData);
-  //   });
-  // }
-
   render() {
     var friends = []
     var hosts = []
+
     if(this.state.friends){
       friends = this.state.friends;
     }
@@ -51,7 +46,7 @@ export default class Profile extends React.Component {
             <br />
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">News Feed</h3>
+                <h3 className="panel-title">Previous Parties:</h3>
               </div>
               <div className="panel-body">
                 <br />
@@ -70,62 +65,21 @@ export default class Profile extends React.Component {
           </div>
           <div className="col-md-5">
             <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Invited To:</h3>
+              </div>
               <div className="panel-body">
                 <table className="table table-striped account-info-table">
-                  <thead>
-
-                    <tr>
-                    <h4>Invited to:</h4>
-                    </tr>
-
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="btn filterable-cell" to="location.href='party-info.html'">
-                        <div className="pull-left">
-                          Zainabs 20th Birthday
-                        </div>
-                        <div className="pull-right">
-                          <span className="label label-success going-invited-margin">Going</span>
-                          <span className="label label-info">99</span>
-                          <span className="label label-default">09/04/16</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="btn filterable-cell" to="location.href='party-info.html'">
-                        <div className="pull-left">
-                          Back to School Party 2016
-                        </div>
-                        <div className="pull-right">
-                          <span className="label label-success going-invited-margin">Going</span>
-                          <span className="label label-info"> 5</span>
-                          <span className="label label-default">03/06/16</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <td className="btn filterable-cell" to="location.href='party-info.html'">
-                      <div className="pull-left">
-                        Diwali Mela
-                      </div>
-                      <div className="pull-right">
-                        <span className="label label-warning going-invited-margin">Maybe</span>
-                        <span className="label label-info">30</span>
-                        <span className="label label-default">01/05/16</span>
-                      </div>
-                    </td>
-                  </tbody>
+                    <ProfileInvitedIntermediate key={0} _id={this.props.params.id}></ProfileInvitedIntermediate>
                 </table>
               </div>
             </div>
             <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Parties Hosting:</h3>
+              </div>
               <div className="panel-body">
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <h4>Parties Hosting:</h4>
-                    </tr>
-                  </thead>
+                <table className="table table-striped account-info-table">
                   <tbody>
                     {hosts.map((party,i) => {
                       return (
@@ -145,8 +99,6 @@ export default class Profile extends React.Component {
               <div className="panel-body">
                     <div className="input-group pull-right">
                     </div>
-                    <hr />
-                    <br />
                 <table className="table table-striped">
                   <tbody>
                   {friends.map((friend,i) => {

@@ -1,12 +1,59 @@
-import {readDocument, writeDocument, addDocument, getLimitedDBDump} from './database.js';
+import {readDocument, readDocumentLength, getLimitedDBDump} from './database.js';
 
 export function getAuthorData(id, cb) {
   return emulateServerReturn(readDocument('users', id), cb);
 }
 
 export function getParty(id,cb){
-
   return emulateServerReturn(readDocument('parties',id),cb);
+}
+
+export function getInviteInfo(id,cb){
+  var size = readDocumentLength('parties');
+  var inv = [];
+  var index = 0;
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.invited.length;z++){
+      if(curParty.invited[z]===parseInt(id)){
+        inv[index]=curParty._id;
+        index++;
+      }
+    }
+  }
+  return emulateServerReturn(inv,cb);
+}
+
+export function getDeclinedInfo(id,cb){
+  var size = readDocumentLength('parties');
+  var inv = [];
+  var index = 0;
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.notattending.length;z++){
+      if(curParty.notattending[z]===parseInt(id)){
+        inv[index]=curParty._id;
+        index++;
+      }
+    }
+  }
+  return emulateServerReturn(inv,cb);
+}
+
+export function getGoingInfo(id,cb){
+  var size = readDocumentLength('parties');
+  var inv = [];
+  var index = 0;
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.attending.length;z++){
+      if(curParty.attending[z]===parseInt(id)){
+        inv[index]=curParty._id;
+        index++;
+      }
+    }
+  }
+  return emulateServerReturn(inv,cb);
 }
 
 export function getAdminInformation(page, pageSize, cb) {
