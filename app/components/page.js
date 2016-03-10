@@ -20,7 +20,6 @@ export default class Page extends React.Component {
     if (this.state.admin) {
       adminBtn = <Link className="nav-admin btn btn-default btn-lg nav-btn" to="admin" role="button">Administration</Link>;
     }
-    debugger;
     return (
       <div>
         <nav className="navbar navbar-fixed-top navbar-default">

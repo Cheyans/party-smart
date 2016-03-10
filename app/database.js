@@ -5,7 +5,7 @@ var startupName = "Party Smart";
 
 // Put your mock objects here, as in Workshop 4
 var initialData = {
-  "users" : [
+  "users": [
     {
       "_id": 0,
       "fname": "Cheyan",
@@ -13,45 +13,35 @@ var initialData = {
       "phone_number": "999999999",
       "email": "a@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": [
-        1,2
-      ]
-    },
-    {
+      "admin": "true",
+      "friends": [1, 2]
+    }, {
       "_id": 1,
       "fname": "c",
       "lname": "d",
       "phone_number": "999999999",
       "email": "c@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": [
-        2,3
-      ]
-    },
-    {
+      "admin": "true",
+      "friends": [2, 3]
+    }, {
       "_id": 2,
       "fname": "e",
       "lname": "f",
       "phone_number": "999999999",
       "email": "e@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": [
-        0,3
-      ]
-    },
-    {
+      "admin": "true",
+      "friends": [0, 3]
+    }, {
       "_id": 3,
       "fname": "g",
       "lname": "h",
       "phone_number": "999999999",
       "email": "g@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": true,
-      "friends": [
-      ]
+      "admin": "true",
+      "friends": []
     }
   ],
   "parties": [
@@ -59,7 +49,7 @@ var initialData = {
       "_id": 0,
       "title": "testParty1",
       "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
-      "private status": false,
+      "private status": "false",
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
@@ -79,6 +69,33 @@ var initialData = {
         }, {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
           "message": "turn your shit down bruh"
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
         }
       ],
       "supplies": [
@@ -103,7 +120,7 @@ var initialData = {
       "_id": 1,
       "title": "testParty2",
       "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": false,
+      "private status": "false",
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
@@ -116,32 +133,46 @@ var initialData = {
         2, 4
       ],
       "not attending": [3],
-      "complaints": [],
+      "complaints": [
+        {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }, {
+          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "message": null
+        }
+      ],
       "supplies": []
     }
   ],
-    "supplies" : [
-      {
-        "_id": 0,
-        "description": "New Amsterdam",
-        "picture": ""
-      },
-      {
-        "_id": 1,
-        "description": "Ballast Point",
-        "picture": ""
-      },
-      {
-        "_id": 2,
-        "description": "Blue Label",
-        "picture": ""
-      },
-      {
-        "_id": 3,
-        "description": "Tennessee Fire",
-        "picture": ""
-      }
-    ]
+  "supplies": [
+    {
+      "_id": 0,
+      "description": "New Amsterdam",
+      "picture": ""
+    }, {
+      "_id": 1,
+      "description": "Ballast Point",
+      "picture": ""
+    }, {
+      "_id": 2,
+      "description": "Blue Label",
+      "picture": ""
+    }, {
+      "_id": 3,
+      "description": "Tennessee Fire",
+      "picture": ""
+    }
+  ]
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));

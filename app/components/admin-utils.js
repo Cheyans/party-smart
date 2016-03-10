@@ -1,191 +1,115 @@
-import React from 'react';
-import ReactDataGrid from 'react-data-grid/addons';
+const MAX_COMLPAINTS = 10;
+const WARN_COMPLAINTS = 5;
 
-var DropDownEditor = ReactDataGrid.Editors.DropDownEditor;
-//Admin dropdown options
-var isAdminOptions = ["false", "true"];
+export var userColumns = [
+  "picture",
+  "fname",
+  "lname",
+  "phone_number",
+  "email",
+  "admin",
+  "total complaints"
+]
 
-export var RowRenderer = React.createClass({
-  setScrollLeft: function(scrollBy) {
-    //if you want freeze columns to work, you need to make sure you implement this as apass through
-    this.refs.row.setScrollLeft(scrollBy);
-  },
-  getRowStyle: function() {
-    return {color: () => {
+export var partyColumns = [
+  "title",
+  "host",
+  "address",
+  "city",
+  "zip",
+  "state",
+  "country",
+  "dateTime",
+  "private status",
+  "attending length",
+  "complaints length"
+];
+
+export var rowMetaData = {
+  "bodyCssClassName": function(row) {
+    if (row.host) {
       var today = new Date();
       var tomorrow = new Date();
       tomorrow.setDate(today.getDate() + 1);
-      var date = Date.parse(this.props.row.dateTime);
+      var date = Date.parse(row.dateTime);
       if (date > tomorrow) {
-        return 'green';
+        return 'future-date griddle-row';
       } else if (date > today) {
-        return 'yellow';
+        return 'near-date griddle-row';
       } else {
-        return 'red';
+        return 'overdue-date griddle-row';
       }
-    }}
-  },
-
-  render: function() {
-    //here we are just changing the style
-    //but we could replace this with anything we liked, cards, images, etc
-    //usually though it will just be a matter of wrapping a div, and then calling back through to the grid
-    return (
-      <div style={this.getRowStyle()}>
-        < ReactDataGrid.Row ref="row" {...this.props}/></div >
-    )
+    } else {
+      var complaintsLength = row['total complaints'];
+      if (complaintsLength >= MAX_COMLPAINTS) {
+        return 'high-complaints griddle-row';
+      } else if (complaintsLength >= WARN_COMPLAINTS) {
+        return 'medium-complaints griddle-row';
+      } else {
+        return 'low-complaints griddle-row'
+      }
+    }
   }
-});
+};
 
-export var userColumns = [
+export var userColumnMetaData = [
   {
-    key: 'picture',
-    name: 'Picture',
-    width: 60,
-    formatter: ReactDataGrid.Formatters.ImageFormatter,
-    resizable: true,
-    locked: true
+    "columnName": "picture",
+    "displayName": "Avatar"
   }, {
-    key: 'fname',
-    name: 'First Name',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "fname",
+    "displayName": "First Name"
   }, {
-    key: 'lname',
-    name: 'Last Name',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "lname",
+    "displayName": "Last Name"
   }, {
-    key: 'phone_number',
-    name: 'Phone Number',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "phone_number",
+    "displayName": "Phone Number"
   }, {
-    key: 'email',
-    name: 'Email',
-    width: 250,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "email",
+    "displayName": "Email"
   }, {
-    key: 'admin',
-    name: 'Administrator',
-    width: 120,
-    editor: <DropDownEditor options={isAdminOptions}/>,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    editable: true,
-    locked: true
+    "columnName": "admin",
+    "displayName": "Admin"
   }, {
-    key: 'total_complaints',
-    name: 'Total Complaints',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "total complaints",
+    "displayName": "Total Complaints"
   }
 ];
 
-export var partyColumns = [
+export var partyColumnMetaData = [
   {
-    key: 'title',
-    name: 'Title',
-    width: 200,
-    sortable: true,
-    resizable: true,
-    filterable: true,
-    locked: true
+    "columnName": "title",
+    "displayName": "Title"
   }, {
-    key: 'host',
-    name: 'Host',
-    width: 150,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "host",
+    "displayName": "Host Name"
   }, {
-    key: 'description',
-    name: 'Description',
-    width: 250,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "address",
+    "displayName": "Address"
   }, {
-    key: 'address',
-    name: 'Address',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "city",
+    "displayName": "City"
   }, {
-    key: 'city',
-    name: 'City',
-    width: 150,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "zip",
+    "displayName": "Zip Code"
   }, {
-    key: 'zip',
-    name: 'ZipCode',
-    width: 100,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "state",
+    "displayName": "State"
   }, {
-    key: 'state',
-    name: 'State',
-    width: 50,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "country",
+    "displayName": "Country"
   }, {
-    key: 'country',
-    name: 'Country',
-    width: 70,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "dateTime",
+    "displayName": "Date Time"
   }, {
-    key: 'dateTime',
-    name: 'Date-Time',
-    width: 200,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "private status",
+    "displayName": "Private Party"
   }, {
-    key: 'attending length',
-    name: 'Attending',
-    width: 100,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "attending length",
+    "displayName": "Attending"
   }, {
-    key: 'complaints length',
-    name: 'Complaints',
-    width: 100,
-    resizable: true,
-    sortable: true,
-    filterable: true,
-    locked: true
+    "columnName": "complaints length",
+    "displayName": "Complaints"
   }
 ];

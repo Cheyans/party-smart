@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>PartySmart User Profile</title>
+  <!-- Bootstrap's CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css" />
+  <link href="//fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css" />
+  <!-- Local imports -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/partysmart.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navbar  -->
+  <nav class="navbar-fixed-top navbar-default">
+    <!-- PartySmart Header -->
+    <a class="navbar-brand" href="index.html">
+      <span class="mdi mdi-magnify" aria-hidden="true"></span>
+      <span class="left-brand-title">Party</span><span class="right-brand-title">Smart</span>
+    </a>
+    <!-- Navigation buttons -->
+    <div class="navbar-right">
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="party-registration.html" role="button">
+                      Host
+                      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-complain" href="complain.html" role="button">
+                      Complain
+                      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-profile" href="account-info.html" role="button">
+        <img class="nav-profile-img img-circle" src="img/guy.jpg"> [User Profile]
+      </a>
+      <a class="btn btn-default btn-lg nav-btn nav-host" href="index.html" role="button">
+                      LogOut
+        </a>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <!-- The row that contains the three main columns of the website. -->
+    <div class="row">
+
+
+
+    </div>
+    <br>
+
+    <!-- top profile panel -->
+    <div class="row">
+      <!-- Left sidebar: A cell that spans 4 columns -->
+      <div class="col-md-4">
+
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object img-size" src="img/guy.jpg" alt="...">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">John Q Person</h4>
+            xyz@gmail.com <br>
+            456-345-1235
+          </div>
+        </div>
+        <br>
+        <!-- News Feed Left Column -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">News Feed</h3>
+          </div>
+          <div class="panel-body">
+            <br>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                This is some event
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                This is some other event
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Main feed: A cell that spans 5 columns -->
+      <div class="col-md-5">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <!-- Tables on right sidebar -->
+            <table class="table table-striped account-info-table">
+              <!--Navbar for table -->
+              <thead>
+                <tr>
+                  <h4>Invited to:</h4>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="btn filterable-cell" onclick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      Zainab's 20th Birthday
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-success going-invited-margin">Going</span>
+                      <span class="label label-info">99 attending</span>
+                      <span class="label label-default">09/04/16</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="btn filterable-cell" onclick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      Back to School Party 2016
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-success going-invited-margin">Going</span>
+                      <span class="label label-info">5 attendingg</span>
+                      <span class="label label-default">03/06/16</span>
+                    </div>
+                  </td>
+                </tr>
+                <td class="btn filterable-cell" onclick="location.href='party-info.html'">
+                  <div class="pull-left">
+                    Diwali Mela
+                  </div>
+                  <div class="pull-right">
+                    <span class="label label-warning going-invited-margin">Maybe</span>
+                    <span class="label label-info">30 attending</span>
+                    <span class="label label-default">01/05/16</span>
+                  </div>
+                </td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <table class="table table-striped">
+              <!--Navbar for table -->
+              <thead>
+                <tr>
+                  <h4>Parties Hosting:</h4>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="btn filterable-cell" onclick="location.href='party-info.html'">
+                    <div class="pull-left">
+                      CS Society Party
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-default">09/23/16</span>
+                    </div>
+                    <div class="pull-right">
+                      <span class="label label-success">2 going</span>
+                      <span class="label label-warning">20 maybe</span>
+                      <span class="label label-danger">9 going</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Right sidebar: A cell that spans 3 columns -->
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Find A Friend</h3>
+          </div>
+          <div class="panel-body">
+                <div class="input-group pull-right">
+                  <input type="text" class="form-control" placeholder="Search">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                      <span class="mdi mdi-magnify" aria-hidden="true"></span>
+                  </button>
+                  </span>
+                </div>
+
+                <hr>
+                <br>
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Alicia
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Bernard
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Caighla
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Dan
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Dellois
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Nelly
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Patricia
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Quixan
+
+                  </td>
+                </tr>
+                <tr>
+                  <td class="filterable-cell">
+                    <img src="img/guy.jpg" class="img-circle" width="18px" height="18px" /> Zelda
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+    <!-- Bootstrap's script tag  -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+  <!-- Bootstrap's script tag  -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+
+  </body>
+</html>
