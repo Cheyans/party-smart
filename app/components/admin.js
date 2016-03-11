@@ -2,7 +2,9 @@ import React from 'react';
 import {getAdminInformation} from '../server';
 import Griddle from 'griddle-react';
 import {userColumns, partyColumns, rowMetaData, partyColumnMetaData, userColumnMetaData} from './admin-utils';
+import {Modal} from './admin-modals';
 
+var modal = "";
 
 export default class AdminPage extends React.Component {
   constructor(props) {
@@ -26,8 +28,14 @@ export default class AdminPage extends React.Component {
     return this.state.columnName === "parties" ? "Show Users" : "Show Parties";
   }
 
-  renderModal(row) {
-    row.props.data
+  showModal(row) {
+    modal = <Modal data={row.props.data} hideModal={this.hideModal}></Modal>;
+    this.forceUpdate();
+  }
+
+  hideModal() {
+    modal = "";
+    this.forceUpdate();
   }
 
   swapTables(newState) {
@@ -43,7 +51,6 @@ export default class AdminPage extends React.Component {
     this.setState(newState);
   }
 
-
   render() {
     return (
       <div className = "admin">
@@ -51,7 +58,8 @@ export default class AdminPage extends React.Component {
         <Griddle results={this.state[this.state.columnName]} columns={this.state.columns} rowMetadata={rowMetaData} columnMetadata={this.state.columnMetaData}
           settingsToggleClassName={"settings btn"} useGriddleStyles={false} bodyHeight={800} resultsPerPage={50}
           sortAscendingComponent={<span className="mdi mdi-arrow-up-bold"></span>} sortDescendingComponent={<span className="mdi mdi-arrow-down-bold"></span>}
-          showFilter={true} onRowClick={this.renderModal} enableInfiniteScroll={true} showSettings={true} />)
+          showFilter={true} onRowClick={(row) => this.showModal(row)} enableInfiniteScroll={true} showSettings={true} />)
+          {modal}
       </div>
     )
   }

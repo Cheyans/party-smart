@@ -74,6 +74,9 @@ export var userColumnMetaData = [
   }, {
     "columnName": "total complaints",
     "displayName": "Total Complaints"
+  }, {
+    "columnName": "friends",
+    "visible": false
   }
 ];
 
@@ -111,5 +114,14 @@ export var partyColumnMetaData = [
   }, {
     "columnName": "complaints length",
     "displayName": "Complaints"
+  }, {
+    "columnName": "complaints",
+    "visible": false
+  }, {
+    "columnName": "supplies",
+    "visible": false
+  }, {
+    "columnName": "attending",
+    "visible": false
   }
 ];
