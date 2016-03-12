@@ -67,17 +67,17 @@ export default class ProfileInvitedIntermediate extends React.Component {
       <div className="list-group">
         {going.map((party,i) => {
           return (
-            <ProfileInvitedParties key={i} _id={party} type="Going"></ProfileInvitedParties>
+            <ProfileInvitedParties key={i} _id={party} user={this.props.user} type="Going"></ProfileInvitedParties>
         )
         })}
       {invited.map((party,i) => {
         return (
-          <ProfileInvitedParties key={i} _id={party} type="Invited"></ProfileInvitedParties>
+          <ProfileInvitedParties key={i} _id={party} user={this.props.user} type="Invited"></ProfileInvitedParties>
       )
       })}
       {declined.map((party,i) => {
         return (
-          <ProfileInvitedParties key={i} _id={party} type="Declined"></ProfileInvitedParties>
+          <ProfileInvitedParties key={i} _id={party} user={this.props.user} type="Declined"></ProfileInvitedParties>
       )
       })}
     </div>

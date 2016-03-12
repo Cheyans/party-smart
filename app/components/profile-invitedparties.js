@@ -1,5 +1,6 @@
 import React from 'react';
 import {getParty, getUserName} from '../server';
+import {Link} from 'react-router';
 
 class DeclinedRow extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class DeclinedRow extends React.Component {
       date = new Date(this.props.date);
     }
     return (
-              <a href="#" className="list-group-item">
+                <Link to={"party"+"/"+this.props.user._id+"/"+this.props.id} className="list-group-item">
                 <h4 className="list-group-item-heading">{this.props.title}</h4>
                 <p className="list-group-item-text">
                   Hosted By: {this.state.hostInfo.fname} {this.state.hostInfo.lname}
@@ -31,7 +32,7 @@ class DeclinedRow extends React.Component {
                   <span className='label label-info'>{this.props.going}</span>
                   <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
                 </p>
-              </a>
+              </Link>
     );
   }
 }
@@ -54,12 +55,13 @@ class InvitedRow extends React.Component{
 
 
   render(){
+
     var date;
     if(this.props.date){
       date = new Date(this.props.date);
     }
     return (
-              <a href="#" className="list-group-item">
+                <Link to={"party"+"/"+this.props.user._id+"/"+this.props.id} className="list-group-item">
                 <h4 className="list-group-item-heading">{this.props.title}</h4>
                 <p className="list-group-item-text">
                   Hosted By: {this.state.hostInfo.fname} {this.state.hostInfo.lname}
@@ -68,7 +70,7 @@ class InvitedRow extends React.Component{
                   <span className='label label-info'>{this.props.going}</span>
                   <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
                 </p>
-              </a>
+              </Link>
     );
   }
 }
@@ -94,7 +96,7 @@ class GoingRow extends React.Component {
       date = new Date(this.props.date);
     }
     return (
-      <a href="#" className="list-group-item">
+      <Link to={"party"+"/"+this.props.user._id+"/"+this.props.id} className="list-group-item">
         <h4 className="list-group-item-heading">{this.props.title}</h4>
         <p className="list-group-item-text">
           Hosted By: {this.state.hostInfo.fname} {this.state.hostInfo.lname}
@@ -103,7 +105,7 @@ class GoingRow extends React.Component {
           <span className='label label-info'>{this.props.going}</span>
           <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
         </p>
-      </a>
+      </Link>
     );
   }
 }
@@ -129,15 +131,15 @@ export default class ProfileInvitedParties extends React.Component {
       )}else
     if(this.props.type=="Invited"){
     return (
-      <InvitedRow host={this.state.partyInfo.host} title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
+      <InvitedRow id={this.state.partyInfo._id} host={this.state.partyInfo.host} user={this.props.user}  title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
     )}else
     if(this.props.type=="Going"){
         return(
-          <GoingRow host={this.state.partyInfo.host} title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
+          <GoingRow id={this.state.partyInfo._id} host={this.state.partyInfo.host} user={this.props.user}  title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
         )}else
     if(this.props.type=="Declined"){
         return(
-          <DeclinedRow host={this.state.partyInfo.host} title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
+          <DeclinedRow id={this.state.partyInfo._id} host={this.state.partyInfo.host} user={this.props.user}  title={this.state.partyInfo.title} going={this.state.partyInfo.attending.length} date={this.state.partyInfo.dateTime}/>
         )}
     else return(
       <div/>

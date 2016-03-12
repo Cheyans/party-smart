@@ -13,7 +13,8 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={Page}>
       <IndexRoute component={IndexPage}/>
-      <Route path= "/profile/:id" component={Profile}/>
+      <Route path="profile/:id" component={Profile}></Route>
+      <Route path="party/:userId/:partyId" component={PartyInfo}></Route>
       <Route path="admin" component={AdminPage}></Route>
       <Route path="party" component={PartyInfo}></Route>
     </Route>

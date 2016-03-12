@@ -1,5 +1,6 @@
 import React from 'react';
 import {getParty} from '../server';
+import {Link} from 'react-router';
 
 export default class ProfileHostedParties extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class ProfileHostedParties extends React.Component {
       date = new Date(this.state.dateTime);
     }
     return (
-      <a href="#" className="list-group-item">
+      <Link to={"party"+"/"+this.props.user._id+"/"+this.state._id} className="list-group-item">
         <h4 className="list-group-item-heading">{this.state.title}</h4>
         <p className="list-group-item-text">
           <span className="label label-success">{attendees.length}</span>
@@ -41,7 +42,7 @@ export default class ProfileHostedParties extends React.Component {
           <span className="label label-danger">{declined.length}</span>
           <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
         </p>
-      </a>
+      </Link>
     )
   }
 }

@@ -13,6 +13,7 @@ export default class Profile extends React.Component {
       prevParties: [],
       hostedParties: [],
       userData: {
+        _id:"",
         fname: "",
         lname: "",
         email: "",
@@ -76,7 +77,7 @@ export default class Profile extends React.Component {
                       <td>
                         {prevParties.map((friend,i) => {
                           return (
-                            <ProfilePreviousParties key={i} party = {this.state.prevParties[i]}></ProfilePreviousParties>
+                            <ProfilePreviousParties key={i} party = {this.state.prevParties[i]} user={this.state.userData}></ProfilePreviousParties>
                           )
                         })}
                       </td>
@@ -96,7 +97,7 @@ export default class Profile extends React.Component {
                   <tbody className = "span-of-table">
                     <tr>
                       <td>
-                        <ProfileInvitedIntermediate key={0} _id={this.props.params.id}></ProfileInvitedIntermediate>
+                        <ProfileInvitedIntermediate key={0} _id={this.props.params.id} user={this.state.userData}></ProfileInvitedIntermediate>
                       </td>
                     </tr>
                   </tbody>
@@ -114,7 +115,7 @@ export default class Profile extends React.Component {
                       <td>
                         {hosts.map((party,i) => {
                           return (
-                            <ProfileHostedParties key={i} _id={party} attendees={[]}></ProfileHostedParties>
+                            <ProfileHostedParties key={i} _id={party} attendees={[]} user={this.state.userData}></ProfileHostedParties>
                           )
                         })}
                       </td>
@@ -140,7 +141,7 @@ export default class Profile extends React.Component {
                   <tbody className = "">
                     {friends.map((friend,i) => {
                       return (
-                        <ProfileFriends key={i} id={friend}></ProfileFriends>
+                        <ProfileFriends key={i} user={this.state.userData} id={friend}></ProfileFriends>
                       )
                     })}
                   </tbody>
