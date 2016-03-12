@@ -61,10 +61,10 @@ var initialData = {
         "title": "testParty1",
         "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
         "private status": false,
-        "address": "google maps address format, we'll figure it out later",
+        "address": "95 Pleasant Street",
         "city": "Amherst",
         "zip": "01003",
-        "state": "Massachusetts",
+        "state": "MA",
         "country": "United States of America",
         "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
         "host": 1,
@@ -109,10 +109,10 @@ var initialData = {
         "title": "testParty2",
         "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
         "private status": false,
-        "address": "google maps address format, we'll figure it out later",
+        "address": "95 Pleasant Street",
         "city": "Amherst",
         "zip": "01003",
-        "state": "Massachusetts",
+        "state": "MA",
         "country": "United States of America",
         "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
         "host": 2,
@@ -149,6 +149,13 @@ var initialData = {
       }
     ]
 };
+/*
+*Returns a cloned collection
+*/
+export function readCollection(collection){
+  return JSONClone(data[collection]);
+}
+
 
 var data = JSON.parse(localStorage.getItem(startupName));
 if (data === null) {

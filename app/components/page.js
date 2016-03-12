@@ -19,14 +19,13 @@ export default class App extends React.Component {
 
   render() {
     var adminBtn = "";
-    debugger;
     if (this.state.admin) {
-      adminBtn = <Link className="nav-admin btn btn-default btn-lg nav-btn" to="admin.html" role="button">Administration</Link>;
+      adminBtn = <Link className="nav-admin btn btn-default btn-lg nav-btn" to="admin" role="button">Administration</Link>;
     }
     return (
       <div>
         <nav className="navbar-fixed-top navbar-default">
-          <Link className="navbar-brand" to="index.html">
+          <Link className="navbar-brand" to="index">
             <span className="mdi mdi-magnify" aria-hidden="true"></span>
             <span className="left-brand-title">Party</span>
             <span className="right-brand-title">Smart</span>
@@ -40,7 +39,7 @@ export default class App extends React.Component {
                 <img className="nav-profile-img img-circle" src={this.state.image}/>
                 {this.state.fname}
               </Link>
-              <Link className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">Host</Link>
+              <Link className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">LogOut</Link>
             </div>
           </div>
         </nav>
