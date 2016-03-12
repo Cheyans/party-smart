@@ -17,8 +17,10 @@ export default class Complaint extends React.Component {
     }
     return (
       <div className="container complain panel panel-default">
-        Select Party to Report:
-        <img className="image" src="img/map.jpg" width="100%" />
+      <div className="complaint-header">
+        Select a Party to Report:
+        </div>
+        <img className="imageComplain" src="img/map.jpg" width="100%" />
         <div className="panel-footer">
           <div className="list-group">
             {data.map((address, i) => {

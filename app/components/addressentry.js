@@ -43,7 +43,7 @@ export default class AddressEntry extends React.Component {
     /* TODO: How do we send the post to the server + update the Feed? */
     //this.props.addComplain();
     addComplaint(this.props.data.id, addressEntryText, () => {
-      this.setState({isShowingModal: false, value: ""});
+      this.setState({isShowingModal: true, value: "Complaint submitted."});
     });
   }
 }
@@ -74,11 +74,10 @@ handleChange(e) {
         <div onClick={this.handleClick}>
           {this.state.isShowingModal && <ModalContainer onClose={this.handleClose}>
             <ModalDialog onClose={this.handleClose}>
-              <textarea placeholder="Enter a complaint..." value={this.state.value} onChange={(e) => this.handleChange(e)} />
+              <textarea className="modal-text" placeholder="Enter a complaint..." value={this.state.value} onChange={(e) => this.handleChange(e)} />
               <hr></hr>
-              <button type="submit" className="btn btn-default" onClick={(e) => this.handlePost(e)}>Submit</button>
-              <hr></hr>
-              <button type="close " className="btn btn-default" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+              <button type="submit" className="btn btn-default btn-right-address" onClick={(e) => this.handlePost(e)}>Submit</button>
+              <button type="close " className="btn btn-default btn-left-address" onClick={(e) => this.handleCloseClick(e)}>Close</button>
             </ModalDialog>
           </ModalContainer>
           }
