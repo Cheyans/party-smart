@@ -8,11 +8,11 @@ import Complaint from './components/complaint';
 // import Admin from './components/admin';
 
 ReactDOM.render((
-  <Router history={browserHistory}> 
+  <Router history={browserHistory}>
 
     <Route path="/" component={Page}>
       <IndexRoute component={Index}/>
-      <Route path="admin" component={Complaint}/>
+      <Route path="complaint" component={Complaint}/>
     </Route>
   </Router>
 ), document.getElementById('app'));
