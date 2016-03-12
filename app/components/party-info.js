@@ -6,7 +6,11 @@ import {getPartyData} from '../server';
 export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {party: 0, host: {}};
+    this.state = {
+      party: 0,
+      host: {}
+      attending: []
+    };
   }
 
   componentDidMount() {
@@ -19,6 +23,12 @@ export default class PartyInfo extends React.Component {
   }
 
   render() {
+    var attending = [];
+
+    if (this.state.attending) {
+      attending = this.state.attending;
+    }
+
     return (
       <div className="container party-info">
         <div className="row">
@@ -104,6 +114,11 @@ export default class PartyInfo extends React.Component {
                   </thead>
                   <tbody>
                     <PartyInfoInvited user={this.state.host.fname} picture={this.state.host.picture}></PartyInfoInvited>
+                      {attending.map((user,i) => {
+                        return (
+                          <PartyInfoInvited key={i} id={user}></PartyInfoInvited>
+                        )
+                      })}
                     <tr>
                       <td className="filterable-cell">
                         <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Caighla
