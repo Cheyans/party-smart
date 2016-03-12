@@ -262,6 +262,15 @@ html {
   padding: 1% 6.5% 0 0;
 }
 
+/*.admin .row {
+  width: 150%;
+}*/
+
+.admin .modal-text {
+  margin-bottom: -2.5%;
+}
+
+
 /*--------------------Party Denial--------------------*/
 
 #personal-parties {

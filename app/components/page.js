@@ -28,7 +28,7 @@ export default class Page extends React.Component {
               <span className="mdi mdi-magnify" aria-hidden="true"></span><span className="left-brand-title">Party</span><span className="right-brand-title">Smart</span>
             </Link>
             <div className="navbar-right">
-              <ResetDatabase className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">Reset Database</ResetDatabase>
+              <ResetDatabase className="nav-logout btn btn-default btn-lg nav-btn" role="button">Reset Database</ResetDatabase>
               {adminBtn}
               <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complain.html" role="button">Complain</Link>
