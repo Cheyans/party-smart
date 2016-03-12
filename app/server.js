@@ -4,8 +4,35 @@ export function getAuthorData(id, cb) {
   return emulateServerReturn(readDocument('users', id), cb);
 }
 
+export function getUserName(id, cb) {
+  var user = readDocument('users', id);
+  var info = {
+    fname:"",
+    lname:""
+  }
+  info.fname = user.fname;
+  info.lname = user.lname;
+  return emulateServerReturn(info, cb);
+}
+
 export function getParty(id,cb){
   return emulateServerReturn(readDocument('parties',id),cb);
+}
+
+export function getHostedParties(id, cb){
+  var size = readDocumentLength('parties');
+  var hosts = [];
+  var index = 0;
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.invited.length;z++){
+      if(curParty.host===parseInt(id)){
+        hosts[index]=curParty._id;
+        index++;
+      }
+    }
+  }
+  return emulateServerReturn(hosts,cb);
 }
 
 export function getInviteInfo(id,cb){

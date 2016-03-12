@@ -1,5 +1,5 @@
 import React from 'react';
-import {getAuthorData, getPrevParties} from '../server';
+import {getAuthorData, getPrevParties, getHostedParties} from '../server';
 import ProfileFriends from './profile-friends';
 import ProfileHostedParties from './profile-hostedparties';
 import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
@@ -10,18 +10,26 @@ export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      futureHostingParties: [],
-      futureInvParties: [],
-      prevParties: []
+      prevParties: [],
+      hostedParties: [],
+      userData: {
+        fname: "",
+        lname: "",
+        email: "",
+        phone_number: ""
+      }
     };
   }
 
   componentDidMount() {
     getAuthorData(0, (userData) => {
-      this.setState(userData);
+      this.setState({userData : userData});
     });
     getPrevParties(0, (prevParties) => {
       this.setState({prevParties : prevParties});
+    });
+    getHostedParties(0, (hostedParties)=> {
+      this.setState({hostedParties : hostedParties});
     });
   }
 
@@ -33,9 +41,10 @@ export default class Profile extends React.Component {
     if(this.state.prevParties){
       prevParties = this.state.prevParties;
     }
-    if(this.state.friends){
-      friends = this.state.friends;
+    if(this.state.userData.friends){
+      friends = this.state.userData.friends;
     }
+
     if(this.state.hostedParties){
       hosts = this.state.hostedParties;
     }
@@ -50,9 +59,9 @@ export default class Profile extends React.Component {
               <img src="../img/guy.jpg" alt="..." className="media-object img-size"/>
               </div>
               <div className="media-body">
-                <h3>{this.state.fname} {this.state.lname}</h3>
-                {this.state.email} <br/>
-                {this.state.phone}
+                <h4>{this.state.userData.fname} {this.state.userData.lname}</h4>
+                {this.state.userData.email} <br/>
+              {this.state.userData.phone_number}
               </div>
             </div>
             <br />
@@ -61,11 +70,19 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Previous:</h3>
               </div>
               <div className="panel-body">
-                {prevParties.map((friend,i) => {
-                  return (
-                    <ProfilePreviousParties key={i} party = {this.state.prevParties[i]}></ProfilePreviousParties>
-                  )
-                })}
+                <table className="table account-info-table previous-table table-outline">
+                  <tbody className = "span-of-table">
+                    <tr>
+                      <td>
+                        {prevParties.map((friend,i) => {
+                          return (
+                            <ProfilePreviousParties key={i} party = {this.state.prevParties[i]}></ProfilePreviousParties>
+                          )
+                        })}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -75,8 +92,14 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Invited To:</h3>
               </div>
               <div className="panel-body">
-                <table className="table account-info-table">
-                    <ProfileInvitedIntermediate key={0} _id={this.props.params.id}></ProfileInvitedIntermediate>
+                <table className="table account-info-table table-outline">
+                  <tbody className = "span-of-table">
+                    <tr>
+                      <td>
+                        <ProfileInvitedIntermediate key={0} _id={this.props.params.id}></ProfileInvitedIntermediate>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -85,13 +108,17 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Hosting:</h3>
               </div>
               <div className="panel-body">
-                <table className="table account-info-table">
-                  <tbody>
-                    {hosts.map((party,i) => {
-                      return (
-                        <ProfileHostedParties key={i} _id={party} attendees={[]}></ProfileHostedParties>
-                      )
-                    })}
+                <table className="table account-info-table table-outline">
+                  <tbody className = "span-of-table">
+                    <tr>
+                      <td>
+                        {hosts.map((party,i) => {
+                          return (
+                            <ProfileHostedParties key={i} _id={party} attendees={[]}></ProfileHostedParties>
+                          )
+                        })}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -103,13 +130,19 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
-                <table className="table">
-                  <tbody>
-                  {friends.map((friend,i) => {
-                    return (
-                      <ProfileFriends key={i} id={friend}></ProfileFriends>
-                    )
-                  })}
+                <div className="input-group">
+                  <input type="text" className="form-control" placeholder="Search..."/>
+                  <span className="input-group-btn">
+                    <button className="btn btn-default" type="button">Go!</button>
+                  </span>
+                </div>
+                <table className="table table-outline friends-table">
+                  <tbody className = "">
+                    {friends.map((friend,i) => {
+                      return (
+                        <ProfileFriends key={i} id={friend}></ProfileFriends>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>

@@ -16,10 +16,10 @@ export default class ProfileFriends extends React.Component {
     return (
       <tr>
         <td className="filterable-cell">
-          <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" /> {this.state.fname} {this.state.lname}
+          <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
+          <div className="pull-right">{this.state.fname} {this.state.lname}</div>
         </td>
       </tr>
     )
   }
-
 }

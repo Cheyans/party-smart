@@ -16,10 +16,8 @@ var initialData = {
       "admin": true,
       "friends": [
         1,2
-      ],
-      "hostedParties": [
-        0
       ]
+
     },
     {
       "_id": 1,
@@ -46,9 +44,6 @@ var initialData = {
       "admin": true,
       "friends": [
         0,3
-      ],
-      "hostedParties": [
-
       ]
     },
     {
@@ -60,9 +55,6 @@ var initialData = {
       "picture": "img/guy.jpg",
       "admin": true,
       "friends": [
-      ],
-      "hostedParties": [
-
       ]
     }
   ],
@@ -162,10 +154,10 @@ var initialData = {
   "state": "Massachusetts",
   "country": "United States of America",
   "dateTime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
-  "host": 0,
+  "host": 1,
   "attending": [0],
   "invited": [
-    1, 2, 4
+     2, 4
   ],
   "notattending": [3],
   "complaints": [],
@@ -228,7 +220,45 @@ var initialData = {
         "description": "Tennessee Fire",
         "picture": ""
       }
-    ]}]
+    ]},{
+      "_id": 4,
+      "title": "testParty5",
+      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+      "private status": false,
+      "address": "google maps address format, we'll figure it out later",
+      "city": "Amherst",
+      "zip": "01003",
+      "state": "Massachusetts",
+      "country": "United States of America",
+      "dateTime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
+      "host": 2,
+      "attending": [1,3],
+      "invited": [
+      ],
+      "notattending": [0],
+      "complaints": [],
+      "supplies" : [
+        {
+          "_id": 0,
+          "description": "New Amsterdam",
+          "picture": ""
+        },
+        {
+          "_id": 1,
+          "description": "Ballast Point",
+          "picture": ""
+        },
+        {
+          "_id": 2,
+          "description": "Blue Label",
+          "picture": ""
+        },
+        {
+          "_id": 3,
+          "description": "Tennessee Fire",
+          "picture": ""
+        }
+      ]}]
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));

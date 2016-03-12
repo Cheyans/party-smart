@@ -13,7 +13,6 @@ export default class ProfileHostedParties extends React.Component {
     getParty(this.props._id, (partyInfo) => {
       this.setState(partyInfo);
     });
-
   }
 
   render() {
@@ -34,19 +33,15 @@ export default class ProfileHostedParties extends React.Component {
       date = new Date(this.state.dateTime);
     }
     return (
-      <tr>
-      <td className="btn filterable-cell" to="location.href='party-info.html'">
-          <div className="pull-left">
-          {this.state.title}
-          </div>
-          <div className="pull-right">
-            <span className="label label-success">{attendees.length}</span>
-            <span className="label label-warning">{invited.length}</span>
-            <span className="label label-danger">{declined.length}</span>
-            <span className="label label-default">{date.getMonth()}/{date.getDay()}/{date.getYear()-100}</span>
-          </div>
-        </td>
-      </tr>
+      <a href="#" className="list-group-item">
+        <h4 className="list-group-item-heading">{this.state.title}</h4>
+        <p className="list-group-item-text">
+          <span className="label label-success">{attendees.length}</span>
+          <span className="label label-warning">{invited.length}</span>
+          <span className="label label-danger">{declined.length}</span>
+          <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
+        </p>
+      </a>
     )
   }
 }

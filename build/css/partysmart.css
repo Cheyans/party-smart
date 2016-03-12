@@ -265,6 +265,23 @@ tbody td, thead th {
 
 /*--------------------Account Info--------------------*/
 
+.table-outline {
+    border: .5px solid #E8E8E8;
+}
+
+.previous-table{
+  height:209px;
+}
+
+.friends-table{
+  margin-top: 10px;
+  height: 350px;
+}
+
+.span-of-table {
+    max-height: 200px !important;
+}​
+
 .header-margin-info {
   margin-left: 15px;
   margin-right: 15px;
