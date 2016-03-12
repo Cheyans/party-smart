@@ -199,6 +199,10 @@ export function addDocument(collectionName, newDoc) {
   return newDoc;
 }
 
+export function getNextCollectionID(collectionName){
+  return data[collectionName].length;
+}
+
 /**
  * Reset our browser-local database.
  */
@@ -221,6 +225,8 @@ class ResetDatabase extends React.Component {
     );
   }
 }
+
+
 
 // ReactDOM.render(
 //   <ResetDatabase />,
