@@ -28,7 +28,7 @@ export default class App extends React.Component {
             </Link>
             <div className="navbar-right">
               {adminBtn}
-              <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
+              <Link className="nav-host btn btn-default btn-lg nav-btn" to="host" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complain.html" role="button">Complain</Link>
               <Link className="nav-profile btn btn-default btn-lg nav-btn" to="account-info.html" role="button">
                 <img className="nav-profile-img img-circle" src={this.state.picture}/>&emsp;{this.state.fname}

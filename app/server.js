@@ -44,8 +44,8 @@ export function createNewParty(party){
         };
         console.log(newParty);
         addDocument("parties", newParty);
-
 }
+
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.
