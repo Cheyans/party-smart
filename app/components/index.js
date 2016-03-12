@@ -10,8 +10,8 @@ export default class IndexPage extends React.Component {
         </h2>
         <div className="description text">
           <p>
-            Register a party with us so that you are aware of the situation around you.
-            If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
+            Register a party with us to be notified when neighbors are disturbed <i>without involving any authorities</i>.
+            If you feel like there is a party near you that is too disruptive you can file a complaint anonymously and receive fast results.
           </p>
         </div>
         <div className="panel panel-default container">
