@@ -21,7 +21,7 @@ export function getInviteInfo(id,cb){
       }
     }
   }
-  return emulateServerReturn(inv,cb);
+  return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
 }
 
 export function getDeclinedInfo(id,cb){
@@ -37,7 +37,23 @@ export function getDeclinedInfo(id,cb){
       }
     }
   }
-  return emulateServerReturn(inv,cb);
+  return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
+}
+
+export function getGoingInfo(id,cb){
+  var size = readDocumentLength('parties');
+  var inv = [];
+  var index = 0;
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.attending.length;z++){
+      if(curParty.attending[z]===parseInt(id)){
+        inv[index]=curParty._id;
+        index++;
+      }
+    }
+  }
+  return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
 }
 
 export function getPrevParties(id,cb){
@@ -76,24 +92,7 @@ export function getPrevParties(id,cb){
       }
     }
   }
-  debugger;
   return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
-}
-
-export function getGoingInfo(id,cb){
-  var size = readDocumentLength('parties');
-  var inv = [];
-  var index = 0;
-  for(var i = 0;i<size;i++){
-    var curParty = readDocument('parties',i);
-    for(var z = 0; z < curParty.attending.length;z++){
-      if(curParty.attending[z]===parseInt(id)){
-        inv[index]=curParty._id;
-        index++;
-      }
-    }
-  }
-  return emulateServerReturn(inv,cb);
 }
 
 

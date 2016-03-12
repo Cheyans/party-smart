@@ -5,12 +5,13 @@ import ProfileHostedParties from './profile-hostedparties';
 import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
 import ProfilePreviousParties from './profile-prevparties.js';
 
-
 export default class Profile extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      futureHostingParties: [],
+      futureInvParties: [],
       prevParties: []
     };
   }
@@ -74,7 +75,7 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Invited To:</h3>
               </div>
               <div className="panel-body">
-                <table className="table table-striped account-info-table">
+                <table className="table account-info-table">
                     <ProfileInvitedIntermediate key={0} _id={this.props.params.id}></ProfileInvitedIntermediate>
                 </table>
               </div>
@@ -84,7 +85,7 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Hosting:</h3>
               </div>
               <div className="panel-body">
-                <table className="table table-striped account-info-table">
+                <table className="table account-info-table">
                   <tbody>
                     {hosts.map((party,i) => {
                       return (
@@ -102,9 +103,7 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
-                    <div className="input-group pull-right">
-                    </div>
-                <table className="table table-striped">
+                <table className="table">
                   <tbody>
                   {friends.map((friend,i) => {
                     return (

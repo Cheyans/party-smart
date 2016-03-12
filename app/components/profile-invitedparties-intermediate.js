@@ -28,17 +28,40 @@ export default class ProfileInvitedIntermediate extends React.Component {
   }
 
   render() {
+    var curDate = new Date(Date.now());
+    var testDate = new Date();
     var invited = []
     var declined = []
     var going = []
     if(this.state.inviteInfo.length >0){
-      invited = this.state.inviteInfo;
+      var index = 0;
+      for(var i = 0;i<this.state.inviteInfo.length;i++){
+        testDate = new Date(this.state.inviteInfo[i].dateTime);
+        if(testDate.getDate()>curDate.getDate()){
+        invited[index]=this.state.inviteInfo[i]._id;
+        index++;
+        }
+      }
     }
     if(this.state.declinedInfo.length >0){
-      declined = this.state.declinedInfo;
+      index = 0;
+      for(i = 0;i<this.state.declinedInfo.length;i++){
+        testDate = new Date(this.state.declinedInfo[i].dateTime);
+        if(testDate.getDate()>curDate.getDate()){
+        declined[index]=this.state.inviteInfo[i]._id;
+        index++;
+        }
+      }
     }
     if(this.state.goingInfo.length >0){
-      going = this.state.goingInfo;
+      index = 0;
+      for(i = 0;i<this.state.goingInfo.length;i++){
+        testDate = new Date(this.state.goingInfo[i].dateTime);
+        if(testDate.getDate()>curDate.getDate()){
+        going[index]=this.state.goingInfo[i]._id;
+        index++;
+        }
+      }
     }
     return (
       <tbody>
@@ -57,8 +80,7 @@ export default class ProfileInvitedIntermediate extends React.Component {
           <ProfileInvitedParties key={i} _id={party} type="Declined"></ProfileInvitedParties>
       )
       })}
-
     </tbody>
-    )
-}
+  );
+  }
 }
