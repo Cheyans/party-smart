@@ -1,4 +1,5 @@
 import React from 'react';
+import PartyInfoInvited from './party-info-invited';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
 
@@ -102,18 +103,7 @@ export default class PartyInfo extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Alicia
-                        <span className="label label-success pull-right going-invited-margin">Going</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Bernard
-                        <span className="label label-success pull-right going-invited-margin">Going</span>
-                      </td>
-                    </tr>
+                    <PartyInfoInvited user={this.state.host.fname} picture={this.state.host.picture}></PartyInfoInvited>
                     <tr>
                       <td className="filterable-cell">
                         <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Caighla
