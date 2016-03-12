@@ -40,6 +40,46 @@ export function getDeclinedInfo(id,cb){
   return emulateServerReturn(inv,cb);
 }
 
+export function getPrevParties(id,cb){
+  var size = readDocumentLength('parties');
+  var inv = [];
+  var index = 0;
+  var curDate = new Date(Date.now());
+  var parDate = new Date();
+  for(var i = 0;i<size;i++){
+    var curParty = readDocument('parties',i);
+    for(var z = 0; z < curParty.attending.length;z++){
+      if(curParty.attending[z]===parseInt(id)){
+        parDate = new Date(curParty.dateTime);
+        if(parDate.getTime() < curDate.getTime()){
+        inv[index]=curParty._id;
+        index++;
+        }
+      }
+    }
+    for(z = 0; z < curParty.notattending.length;z++){
+      if(curParty.notattending[z]===parseInt(id)){
+        parDate = new Date(curParty.dateTime);
+        if(parDate.getTime() < curDate.getTime()){
+        inv[index]=curParty._id;
+        index++;
+        }
+      }
+    }
+    for(z = 0; z < curParty.invited.length;z++){
+      if(curParty.invited[z]===parseInt(id)){
+        parDate = new Date(curParty.dateTime);
+        if(parDate.getTime() < curDate.getTime()){
+        inv[index]=curParty._id;
+        index++;
+        }
+      }
+    }
+  }
+  debugger;
+  return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
+}
+
 export function getGoingInfo(id,cb){
   var size = readDocumentLength('parties');
   var inv = [];
@@ -55,6 +95,7 @@ export function getGoingInfo(id,cb){
   }
   return emulateServerReturn(inv,cb);
 }
+
 
 export function getAdminInformation(page, pageSize, cb) {
   pageSize = pageSize > 1000? 1000 : pageSize;

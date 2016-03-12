@@ -1,26 +1,37 @@
 import React from 'react';
-import {getAuthorData} from '../server';
+import {getAuthorData, getPrevParties} from '../server';
 import ProfileFriends from './profile-friends';
 import ProfileHostedParties from './profile-hostedparties';
 import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
+import ProfilePreviousParties from './profile-prevparties.js';
+
 
 export default class Profile extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      prevParties: []
+    };
   }
 
   componentDidMount() {
     getAuthorData(0, (userData) => {
       this.setState(userData);
     });
+    getPrevParties(0, (prevParties) => {
+      this.setState({prevParties : prevParties});
+    });
   }
 
   render() {
     var friends = []
     var hosts = []
+    var prevParties = []
 
+    if(this.state.prevParties){
+      prevParties = this.state.prevParties;
+    }
     if(this.state.friends){
       friends = this.state.friends;
     }
@@ -46,20 +57,14 @@ export default class Profile extends React.Component {
             <br />
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Previous Parties:</h3>
+                <h3 className="panel-title">Previous:</h3>
               </div>
               <div className="panel-body">
-                <br />
-                <div className="panel panel-default">
-                  <div className="panel-body">
-                    This is some event
-                  </div>
-                </div>
-                <div className="panel panel-default">
-                  <div className="panel-body">
-                    This is some other event
-                  </div>
-                </div>
+                {prevParties.map((friend,i) => {
+                  return (
+                    <ProfilePreviousParties key={i} party = {this.state.prevParties[i]}></ProfilePreviousParties>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -76,7 +81,7 @@ export default class Profile extends React.Component {
             </div>
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Parties Hosting:</h3>
+                <h3 className="panel-title">Hosting:</h3>
               </div>
               <div className="panel-body">
                 <table className="table table-striped account-info-table">
@@ -94,7 +99,7 @@ export default class Profile extends React.Component {
           <div className="col-md-3">
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Find A Friend</h3>
+                <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
                     <div className="input-group pull-right">
