@@ -46,7 +46,6 @@ export function getHostedParties(id, cb){
   var hosts = [];
   var index = 0;
   for(var i = 0;i<size;i++){
-    debugger;
     var curParty = readDocument('parties',i);
       if(curParty.host===parseInt(id)){
         hosts[index]=curParty._id;
