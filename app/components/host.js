@@ -3,10 +3,12 @@ import {createNewParty} from '../server';
 import Item from './host-item';
 
 var inputs;
+var adminThis;
 
 export default class Host extends React.Component {
   constructor(props) {
     super(props);
+    adminThis = this;
     this.state = {
       contents: [],
       currentlyInvited: [],
@@ -69,14 +71,14 @@ export default class Host extends React.Component {
     }
   }
 
-  deleteItem() {}
-  //addListElement(element, listName){
-  //listItems[listName].push(element);
-  //}
-
-  //removeListElement(element, listName){
-  //delete listItems[listName][element];
-  //}
+  deleteItem(item, type) {
+    if (type === "invite") {
+      this.state.currentlyInvited.splice(this.state.currentlyInvited.indexOf(item), 1);
+    } else {
+      this.state.suppliesRequested.splice(this.state.currentlyInvited.indexOf(item), 1);
+    }
+    this.forceUpdate();
+  }
 
   handleKeyUp(e) {
     if (e.key === "Enter") {
@@ -191,7 +193,8 @@ export default class Host extends React.Component {
                     <tbody>
                       <tr>
                         {this.state.currentlyInvited.map((invited, i) => {
-                          return <Item key={i} name={invited} delete={this.deleteItem} type="invite"></Item>
+                          var type = "invite";
+                          return <Item key={i} name={invited} delete={() => this.deleteItem(invited, type)} hostThis={adminThis} type={type}></Item>
                         })}
                       </tr>
                     </tbody>
@@ -207,8 +210,9 @@ export default class Host extends React.Component {
                     </thead>
                     <tbody>
                       <tr>
-                        {this.state.suppliesRequested.map((invited, i) => {
-                          return <Item key={i} name={invited} delete={this.deleteItem()} type="supply"></Item>
+                        {this.state.suppliesRequested.map((supply, i) => {
+                          var type = "supply";
+                          return <Item key={i} name={supply} delete={() => this.deleteItem(supply, type)} hostThis={adminThis} type={type}></Item>
                         })}
                       </tr>
                     </tbody>
