@@ -4,7 +4,6 @@ import {Link} from 'react-router';
 export default class ProfilePreviousPartiesNat extends React.Component {
 
   render(){
-    debugger;
     var date = new Date(this.props.party.dateTime);
     return(
         <Link to={"party"+"/"+this.props.user._id+"/"+this.props.party._id} className="list-group-item">
