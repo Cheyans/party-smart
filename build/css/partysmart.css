@@ -8,6 +8,10 @@ html {
   font-family: "Lustria";
 }
 
+.btn {
+  letter-spacing: 0.075em;
+}
+
 /*--------------------Navbar--------------------*/
 
 .navbar-fixed-top {
@@ -235,36 +239,40 @@ html {
 .admin table {
   text-align: center !important;
 }
-.admin .settings {
-  min-width: 160px;
-  background-color: white !important;
-  letter-spacing: 0.1em;
-  display: inline-block;
-  padding: 6px 12px;
-}
+
 .admin .mdi {
   font-size: 18px;
 }
 .admin .griddle-filter {
   width: auto;
-  float: none;
-  padding: 0% 25% 1.5% 25%;
+  float: right;
+  margin-left: 25%;
   height: 0px;
-}
-.admin .griddle-settings-toggle {
-  width: auto;
-  float: none;
-  padding: 0 6.5%;
-}
-.admin .swap-option {
-  float:right;
-  height: 0px;
-  padding: 1% 6.5% 0 0;
 }
 
-/*.admin .row {
-  width: 150%;
-}*/
+.admin .griddle > .top-section {
+  margin-bottom: 0.75%;
+}
+
+.admin .settings {
+  min-width: 160px;
+  background-color: white !important;
+  display: inline-block;
+  padding: 6px 12px;
+}
+
+.admin .griddle-settings-toggle {
+  width: 0 !important;
+}
+.admin .swap-option {
+  float:left;
+  margin-left: 15%;
+  position: absolute;
+  padding: 6px 30px 6px 30px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/*Modal*/
 
 .admin .modal-text {
   margin-bottom: -2.5%;

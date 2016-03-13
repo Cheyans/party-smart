@@ -1,5 +1,6 @@
 import React from 'react';
 import {ModalDialog, ModalContainer} from 'react-modal-dialog';
+import Griddle from 'griddle-react';
 
 const MAX_COMLPAINTS = 10;
 const WARN_COMPLAINTS = 5;
@@ -130,6 +131,41 @@ export function getUserModal(data, adminThis) {
   )
 }
 
+export class AdminCustomRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editedToggled: false
+    }
+  }
+
+  handleClick() {
+    this.setState({
+      editToggled: !this.state.editToggled
+    });
+  }
+
+  render() {
+    if (this.state.editToggled) {
+      var rowStyle = {
+        width: "100%",
+        height: "100%",
+        color: "#CCC"
+      };
+      var buttonStyle = {
+        position: "absolute",
+        right: 0
+      };
+      return (
+        <div><input type="text" value={this.props.data} style={rowStyle}/>
+          <button onClick={this.handleClick} style={buttonStyle}>Done</button>
+        </div>
+      )
+    }
+    return <div onClick={this.handleClick}>{this.props.data}</div>;
+  }
+}
+
 export var userColumnMetaData = [
   {
     "columnName": "picture",
@@ -148,7 +184,8 @@ export var userColumnMetaData = [
     "displayName": "Email"
   }, {
     "columnName": "admin",
-    "displayName": "Admin"
+    "displayName": "Admin",
+    "customComponent": AdminCustomRow
   }, {
     "columnName": "total complaints",
     "displayName": "Total Complaints"

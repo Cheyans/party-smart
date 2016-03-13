@@ -73,10 +73,10 @@ export default class AdminPage extends React.Component {
     return (
       <div className = "admin">
         <span className="swap-option btn" aria-hidden="true" onClick = {() => this.swapTables(this.state)}>{this.getColumnTitle()}</span>
-        <Griddle results={this.state[this.state.columnName]} columns={this.state.columns} rowMetadata={rowMetaData} columnMetadata={this.state.columnMetaData}
+        <Griddle results={this.state[this.state.columnName]} columns={this.state.columns} rowMetadata={rowMetaData} columnMetadata={userColumnMetaData}
           settingsToggleClassName={"settings btn"} useGriddleStyles={false} bodyHeight={800} resultsPerPage={50}
           sortAscendingComponent={<span className="mdi mdi-arrow-up-bold"></span>} sortDescendingComponent={<span className="mdi mdi-arrow-down-bold"></span>}
-          showFilter={true} onRowClick={this.showModal} enableInfiniteScroll={true} showSettings={true} />
+          showFilter={true} onRowClick={this.showModal} enableInfiniteScroll={true} showSettings={true}/>
           {this.state.modal}
       </div>
     )
