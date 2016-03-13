@@ -318,7 +318,6 @@ html {
   font-family: 'Roboto', sans-serif;
   text-align: center;
 }
-
 .complaint .container.complain {
   align: center;
   padding-left: 15%;
@@ -342,9 +341,14 @@ html {
   padding: 12px;
 }
 
-
 /* Modal Complaint*/
 
+.complaint-modal .submit-btn {
+  float: left;
+}
+.complaint-modal .close-btn {
+  float: right;
+}
 .complaint-modal .modal-text {
   width: 50vw;
   height: 150px;

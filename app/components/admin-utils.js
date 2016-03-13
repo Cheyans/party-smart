@@ -76,6 +76,7 @@ export function getPartyModal(data, adminThis) {
                 <div key={i} className="modal-text">
                   <p className="modal-text">{new Date(complaints.dateTime).toLocaleString()}</p>
                   <p>{complaints.message || "No complaint message"}</p>
+                  <hr/>
                 </div>
               )
             })}
@@ -98,6 +99,7 @@ export function getPartyModal(data, adminThis) {
                   <p className="modal-text">Supply Item:&emsp;{supply.description}</p>
                   <p>Claimed By:&emsp;
                     {supply.name || "Nobody"}</p>
+                  <hr/>
                 </div>
               );
             })

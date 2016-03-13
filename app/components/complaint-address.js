@@ -77,8 +77,8 @@ export default class AddressEntry extends React.Component {
             <ModalDialog className="complaint-modal" onClose={this.handleClose}>
               <textarea className="modal-text" placeholder="Enter a complaint..." value={this.state.value} onChange={(e) => this.handleChange(e)}/>
               <hr></hr>
-              <button type="submit" className="btn btn-default btn-right-address" onClick={(e) => this.handlePost(e)}>Submit</button>
-              <button type="close " className="btn btn-default btn-left-address" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+              <button type="submit" className="btn btn-default submit-btn" onClick={(e) => this.handlePost(e)}>Submit</button>
+              <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
             </ModalDialog>
           </ModalContainer>
 }
