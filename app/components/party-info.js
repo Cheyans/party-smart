@@ -10,7 +10,7 @@ export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      party: 0,
+      party: 1,
       host: {},
       attending: [],
       invited: [],
@@ -75,8 +75,8 @@ export default class PartyInfo extends React.Component {
               <div className="panel-body">
                 <ul className="nav nav-tabs">
                   <li role="presentation" className="active"><a href="#">Home</a></li>
-                  <li role="presentation"><a href="#">Supplies</a></li>
-                  <li role="presentation"><a href="#">Complaints  <span className="badge background-color badge-warning">1</span></a></li>
+                  <li role="presentation" className=""><a href="#">Supplies</a></li>
+                  <li role="presentation" className=""><a href="#">Complaints  <span className="badge background-color badge-warning">1</span></a></li>
                 </ul>
                 <div className="row search-padding">
                   <div className="col-lg-6 search-text-margin">
@@ -101,20 +101,22 @@ export default class PartyInfo extends React.Component {
                     </a>
                   </div>
                   <div className="media-body">
-                    <h4 className="media-heading">
-                            Party Details
-                          </h4>
-                    <address>
-                      <strong>{this.state.party.title}</strong><br/>
-                      {this.state.address}<br/>
-                    {this.state.city} {this.state.state}, {this.state.zip}<br/>
-                    </address>
+                    <h4 className="media-heading">{this.state.title}</h4>
 
                     <address>
+                      {this.state.address}<br/>
+                      {this.state.city} {this.state.state}, {this.state.zip}<br/>
+                    </address>
+
+
                       <strong>Party Host</strong><br/>
                       {this.state.host.fname} {this.state.host.lname} <br/>
-                    <a href="mailto:#">{this.state.host.email}</a>
-                          </address>
+                      <a href="mailto:#">{this.state.host.email}</a>
+                      <br/><br/>
+
+                    <strong>Description</strong><br/>
+                    {this.state.description}
+
                   </div>
                 </div>
               </div>
