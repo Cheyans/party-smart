@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-
-
 export default class HomePage extends React.Component {
   render() {
     return (
@@ -12,8 +10,8 @@ export default class HomePage extends React.Component {
         </h2>
         <div className="description text">
           <p>
-            Register a party with us so that you are aware of the situation around you.
-            If you feel like there is a party near you that is too loud you can file a complaint for receiving fast results.
+            Register a party with us to be notified when neighbors are disturbed <i>without involving any authorities</i>.
+            If you feel like there is a party near you that is too disruptive you can file a complaint anonymously and receive fast results.
           </p>
         </div>
         <div className="panel panel-default container">
@@ -31,7 +29,7 @@ export default class HomePage extends React.Component {
               </Link>
             </div>
             <div className="col-md-4">
-              <Link className="btn service-button text" to="party" role="button">
+              <Link className="btn service-button text" to="profile/0" role="button">
                 <span className="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
                 <h4 className="service-text">Request to Attend a Party</h4>
               </Link>

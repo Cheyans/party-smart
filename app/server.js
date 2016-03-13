@@ -52,7 +52,7 @@ export function getHostedParties(id, cb) {
       index++;
     }
   }
-  return emulateServerReturn(hosts,cb);
+  return emulateServerReturn(hosts, cb);
 }
 
 export function getInviteInfo(id, cb) {
@@ -215,6 +215,29 @@ export function createNewParty(party) {
     "supplies": party.supplies
   };
   addDocument("parties", newParty);
+}
+
+
+export function getInvitedData(idList, cb) {
+  var people = [];
+  for (var i = 0; i < idList.length; i++) {
+    people.push(readDocument('users', idList[i]));
+  }
+  return emulateServerReturn(people, cb);
+}
+
+export function setPartyPrivate(partyId, cb) {
+  var party = readDocument('parties', partyId);
+  party["private status"] = "true";
+  writeDocument('parties', party);
+  return emulateServerReturn("true", cb);
+}
+
+export function setPartyOpen(partyId, cb) {
+  var party = readDocument('parties', partyId);
+  party["private status"] = "false";
+  writeDocument('parties', party);
+  return emulateServerReturn("false", cb);
 }
 
 export function addComplaint(partyId, complaint, cb) {

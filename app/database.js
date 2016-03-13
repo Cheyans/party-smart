@@ -104,7 +104,7 @@ var initialData = {
       "host": 2,
       "attending": [1],
       "invited": [
-        0, 2, 4
+        0, 1, 3
       ],
       "not attending": [3],
       "complaints": [],
@@ -140,7 +140,7 @@ var initialData = {
       "host": 1,
       "attending": [0],
       "invited": [
-        2, 4
+        2, 3
       ],
       "not attending": [3],
       "complaints": [],
@@ -174,9 +174,7 @@ var initialData = {
       "country": "USA",
       "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
-      "attending": [
-        1, 2, 3
-      ],
+      "attending": [1, 2, 3],
       "invited": [],
       "not attending": [0],
       "complaints": [],

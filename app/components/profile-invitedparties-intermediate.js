@@ -2,10 +2,7 @@ import React from 'react';
 import {getInviteInfo,getDeclinedInfo,getGoingInfo} from '../server';
 import ProfileInvitedParties from './profile-invitedparties.js';
 
-
-
 export default class ProfileInvitedIntermediate extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
