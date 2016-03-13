@@ -49,7 +49,7 @@ var initialData = {
       "_id": 0,
       "title": "testParty1",
       "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
-      "private_status": "false",
+      "private status": "false",
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
@@ -61,7 +61,7 @@ var initialData = {
         1, 2, 3
       ],
       "invited": [4],
-      "declined": [],
+      "not attending": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -120,7 +120,7 @@ var initialData = {
       "_id": 1,
       "title": "testParty2",
       "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private_status": "false",
+      "private status": "false",
       "address": "google maps address format, we'll figure it out later",
       "city": "Amherst",
       "zip": "01003",
@@ -130,9 +130,9 @@ var initialData = {
       "host": 2,
       "attending": [1],
       "invited": [
-        2, 4
+        2, 3
       ],
-      "declined": [3],
+      "not attending": [3],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",

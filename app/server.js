@@ -46,23 +46,23 @@ export function getPartyData(id, cb) {
 export function getInvitedData(idList, cb) {
   var people = [];
   for (var i = 0; i < idList.length; i++) {
-    people.push(readDocument('users', idList[i]), cb);
+    people.push(readDocument('users', idList[i]));
   }
   return emulateServerReturn(people, cb);
 }
 
 export function setPartyPrivate(partyId, cb) {
   var party = readDocument('parties', partyId);
-  party.private_status = "true";
+  party["private status"] = "true";
   writeDocument('parties', party);
-  return emulateServerReturn(readDocument('parties', partyId), cb);
+  return emulateServerReturn("true", cb);
 }
 
 export function setPartyOpen(partyId, cb) {
   var party = readDocument('parties', partyId);
-  party.private_status = "false";
+  party["private status"] = "false";
   writeDocument('parties', party);
-  return emulateServerReturn(readDocument('parties', partyId), cb);
+  return emulateServerReturn("false", cb);
 }
 
 /**

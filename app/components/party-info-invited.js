@@ -14,7 +14,7 @@ export default class PartyInfoInvited extends React.Component {
 
 
   render() {
-    if (this.props.status == "going") {
+    if (this.props.status === "going") {
       return (
         <tr>
           <td className="filterable-cell">
@@ -25,7 +25,7 @@ export default class PartyInfoInvited extends React.Component {
       )
     }
 
-    else if (this.props.status == "pending") {
+    else if (this.props.status === "pending") {
       return (
         <tr>
           <td className="filterable-cell">
@@ -36,7 +36,7 @@ export default class PartyInfoInvited extends React.Component {
       )
     }
 
-    else if (this.props.status == "declined") {
+    else if (this.props.status === "not attending") {
       return (
         <tr>
           <td className="filterable-cell">

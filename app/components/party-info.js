@@ -14,7 +14,7 @@ export default class PartyInfo extends React.Component {
       host: {},
       attending: [],
       invited: [],
-      declined: []
+      "not attending": []
     };
   }
 
@@ -26,8 +26,8 @@ export default class PartyInfo extends React.Component {
           partyData.attending = attendingData;
           getInvitedData(partyData.invited, (invitedData) => {
             partyData.invited = invitedData;
-            getInvitedData(partyData.declined, (declinedData) => {
-              partyData.declined = declinedData;
+            getInvitedData(partyData["not attending"], (declinedData) => {
+              partyData["not attending"] = declinedData;
             });
           });
         });
@@ -36,24 +36,23 @@ export default class PartyInfo extends React.Component {
     });
   }
 
+
   handlePrivateClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      var callbackFunction = (updatedPrivateStatus) => {
-        this.setState(updatedPrivateStatus);
-      };
+      setPartyPrivate(this.state._id, (updatedPrivateStatus) => {
+        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+      });
     }
-    setPartyPrivate(this.state._id, callbackFunction);
   }
 
   handleOpenClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      var callbackFunction = (updatedPrivateStatus) => {
-        this.setState(updatedPrivateStatus);
-      };
+      setPartyOpen(this.state._id, (updatedPrivateStatus) => {
+        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+      });
     }
-    setPartyOpen(this.state._id, callbackFunction);
   }
 
   render() {
@@ -61,7 +60,7 @@ export default class PartyInfo extends React.Component {
     var buttonPrivate = "btn btn-default active";
     var buttonOpen = "btn btn-default";
     var statusText = "This party is PRIVATE";
-    if (this.state.private_status == "false") {
+    if (this.state["private status"] === "false") {
       buttonPrivate = "btn btn-default";
       buttonOpen = "btn btn-default active";
       statusText = "This party is OPEN";
@@ -74,9 +73,17 @@ export default class PartyInfo extends React.Component {
             <div className="panel panel-default">
               <div className="panel-body">
                 <ul className="nav nav-tabs">
-                  <li role="presentation" className="active"><a href="#">Home</a></li>
-                  <li role="presentation" className=""><a href="#">Supplies</a></li>
-                  <li role="presentation" className=""><a href="#">Complaints  <span className="badge background-color badge-warning">1</span></a></li>
+                  <li role="presentation" className="active">
+                    <a href="#">Home</a>
+                  </li>
+                  <li role="presentation" className="">
+                    <a href="#">Supplies</a>
+                  </li>
+                  <li role="presentation" className="">
+                    <a href="#">Complaints
+                      <span className="badge background-color badge-warning">1</span>
+                    </a>
+                  </li>
                 </ul>
                 <div className="row search-padding">
                   <div className="col-lg-6 search-text-margin">
@@ -88,7 +95,7 @@ export default class PartyInfo extends React.Component {
                       <span className="input-group-btn">
                         <button className="btn btn-default" type="button">
                           <span className="mdi mdi-magnify" aria-hidden="true"></span>
-                      </button>
+                        </button>
                       </span>
                     </div>
                   </div>
@@ -105,14 +112,17 @@ export default class PartyInfo extends React.Component {
 
                     <address>
                       {this.state.address}<br/>
-                      {this.state.city} {this.state.state}, {this.state.zip}<br/>
+                      {this.state.city}
+                      {this.state.state},
+                      {this.state.zip}<br/>
                     </address>
 
-
-                      <strong>Party Host</strong><br/>
-                      {this.state.host.fname} {this.state.host.lname} <br/>
-                      <a href="mailto:#">{this.state.host.email}</a>
-                      <br/><br/>
+                    <strong>Party Host</strong><br/>
+                    {this.state.host.fname}
+                    {this.state.host.lname}
+                    <br/>
+                    <a href="mailto:#">{this.state.host.email}</a>
+                    <br/><br/>
 
                     <strong>Description</strong><br/>
                     {this.state.description}
@@ -135,10 +145,12 @@ export default class PartyInfo extends React.Component {
                 <br/>
                 <br/>
                 <strong>Private Party:</strong>
-                <br/> Address will NOT be shown to people making complaints
+                <br/>
+                Address will NOT be shown to people making complaints
                 <br/>
                 <strong>Open Party:</strong>
-                <br/> Address will be shown to people making complaints
+                <br/>
+                Address will be shown to people making complaints
                 <br/>
                 <br/>
               </div>
@@ -157,21 +169,21 @@ export default class PartyInfo extends React.Component {
                   </thead>
                   <tbody>
 
-                    {this.state.attending.map((attending,i) => {
+                    {this.state.attending.map((attending, i) => {
                       return (
                         <PartyInfoInvited key={i} id={attending} status="going"></PartyInfoInvited>
                       )
                     })}
 
-                    {this.state.invited.map((invited,i) => {
+                    {this.state.invited.map((invited, i) => {
                       return (
                         <PartyInfoInvited key={i} id={invited} status="pending"></PartyInfoInvited>
                       )
                     })}
 
-                    {this.state.declined.map((declined,i) => {
+                    {this.state["not attending"].map((not_attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={declined} status="declined"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={not_attending} status="not attending"></PartyInfoInvited>
                       )
                     })}
 
@@ -182,10 +194,6 @@ export default class PartyInfo extends React.Component {
           </div>
         </div>
       </div>
-
-
-
-
 
     )
   }
