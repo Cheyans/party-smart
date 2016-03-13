@@ -17,8 +17,8 @@ var initialData = {
       "friends": [1, 2]
     }, {
       "_id": 1,
-      "fname": "c",
-      "lname": "d",
+      "fname": "Tim",
+      "lname": "Richards",
       "phone_number": "999999999",
       "email": "c@umass.edu",
       "picture": "img/guy.jpg",
@@ -26,8 +26,8 @@ var initialData = {
       "friends": [2, 3]
     }, {
       "_id": 2,
-      "fname": "e",
-      "lname": "f",
+      "fname": "Alex",
+      "lname": "Redden",
       "phone_number": "999999999",
       "email": "e@umass.edu",
       "picture": "img/guy.jpg",
@@ -35,8 +35,8 @@ var initialData = {
       "friends": [0, 3]
     }, {
       "_id": 3,
-      "fname": "g",
-      "lname": "h",
+      "fname": "John",
+      "lname": "Vilk",
       "phone_number": "999999999",
       "email": "g@umass.edu",
       "picture": "img/guy.jpg",
@@ -57,10 +57,12 @@ var initialData = {
       "state": "MA",
       "country": "USA",
       "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-      "host": 1,
+      "host": 0,
       "attending": [
         1, 2, 3
       ],
+      "invited": [4],
+      "not attending": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -98,9 +100,121 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+      "dateTime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1],
+      "invited": [
+        0, 2, 4
+      ],
+      "not attending": [3],
+      "complaints": [],
+      "supplies": [
+        {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 2,
+          "claimed_by": 3
+        }, {
+          "supply_id": 3,
+          "claimed_by": null
+        }, {
+          "supply_id": 4,
+          "claimed_by": 2
+        }
+      ]
+    }, {
+      "_id": 2,
+      "title": "testParty3",
+      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+      "private status": "false",
+      "address": "94 Pleasant Street",
+      "city": "Amherst",
+      "zip": "01003",
+      "state": "MA",
+      "country": "USA",
+      "dateTime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
+      "host": 1,
+      "attending": [0],
+      "invited": [
+        2, 4
+      ],
+      "not attending": [3],
+      "complaints": [],
+      "supplies": [
+        {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 2,
+          "claimed_by": 3
+        }, {
+          "supply_id": 3,
+          "claimed_by": null
+        }, {
+          "supply_id": 4,
+          "claimed_by": 2
+        }
+      ]
+    }, {
+      "_id": 3,
+      "title": "testParty4",
+      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+      "private status": "false",
+      "address": "94 Pleasant Street",
+      "city": "Amherst",
+      "zip": "01003",
+      "state": "MA",
+      "country": "USA",
+      "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+      "host": 2,
+      "attending": [
+        1, 2, 3
+      ],
+      "invited": [],
+      "not attending": [0],
+      "complaints": [],
+      "supplies": [
+        {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 1,
+          "claimed_by": 2
+        }, {
+          "supply_id": 2,
+          "claimed_by": 3
+        }, {
+          "supply_id": 3,
+          "claimed_by": null
+        }, {
+          "supply_id": 4,
+          "claimed_by": 2
+        }
+      ]
+    }, {
+      "_id": 4,
+      "title": "testParty5",
+      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+      "private status": "false",
+      "address": "94 Pleasant Street",
+      "city": "Amherst",
+      "zip": "01003",
+      "state": "MA",
+      "country": "USA",
+      "dateTime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
+      "host": 2,
+      "attending": [
+        1, 3
+      ],
+      "invited": [],
+      "not attending": [0],
       "complaints": [],
       "supplies": []
     }
@@ -145,10 +259,18 @@ function JSONClone(obj) {
  * Doesn't do any tricky document joins, as we will cover that in the latter
  * half of the course. :)
  */
+
 export function readDocument(collection, id) {
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
   return JSONClone(data[collection][id]);
+}
+
+export function readDocumentLength(collection) {
+  // Clone the data. We do this to model a database, where you receive a
+  // *copy* of an object and not the object itself.
+
+  return JSONClone(data[collection].length);
 }
 
 /**

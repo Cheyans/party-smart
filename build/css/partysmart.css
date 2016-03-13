@@ -310,6 +310,52 @@ html {
 
 /*--------------------Account Info--------------------*/
 
+.profile table {
+  width: 100%;
+}
+.profile thead, .profile tbody, .profile tr, .profile td, .profile th {
+  display: block;
+}
+.profile tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+.profile thead .profile th {
+  height: 30px;
+  /*text-align: left;*/
+}
+.profile tbody {
+  height: auto;
+  overflow-y: auto;
+}
+.profile thead {
+  /* fallback */
+}
+
+.profile tbody td, .profile thead th {
+  width: 100%;
+  float: left;
+}
+
+.table-outline {
+    border: .5px solid #E8E8E8;
+}
+
+.previous-table{
+  height:209px;
+}
+
+.friends-table{
+  margin-top: 10px;
+  height: 350px;
+}
+
+.span-of-table {
+    max-height: 200px !important;
+}​
+
 .header-margin-info {
   margin-left: 15px;
   margin-right: 15px;
@@ -317,6 +363,18 @@ html {
 .img-size {
   max-width: 200px;
 }
+.profile-margin-top{
+  margin-top: 50px;
+}
+.table-header-margin-bottom{
+  margin-bottom: 15px;
+}
+
+.account-info-inv-header{
+  margin-bottom: 20px;
+}
+
+
 .account-info-table .row-btn {
   width: 100%;
   background-color: inherit;

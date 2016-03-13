@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default class IndexPage extends React.Component {
+
+
+export default class HomePage extends React.Component {
   render() {
     return (
       <div className="index">
@@ -36,6 +38,7 @@ export default class IndexPage extends React.Component {
             </div>
           </div>
         </div>
+        {this.props.children}
       </div>
     )
   }

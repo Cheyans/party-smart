@@ -197,11 +197,6 @@ export default class PartyInfo extends React.Component {
           </div>
         </div>
       </div>
-
-
-
-
-
     )
   }
 }
