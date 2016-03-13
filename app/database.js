@@ -13,18 +13,28 @@ var initialData = {
       "phone_number": "999999999",
       "email": "a@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": [1, 2]
-    }, {
+      "admin": true,
+      "friends": [
+        1,2
+      ]
+
+    },
+    {
       "_id": 1,
       "fname": "c",
       "lname": "d",
       "phone_number": "999999999",
       "email": "c@umass.edu",
       "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": [2, 3]
-    }, {
+      "admin": true,
+      "friends": [
+        2,3
+      ],
+      "hostedParties": [
+        1
+      ]
+    },
+    {
       "_id": 2,
       "fname": "e",
       "lname": "f",
@@ -61,6 +71,8 @@ var initialData = {
       "attending": [
         1, 2, 3
       ],
+      "invited": [4],
+      "notattending": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -96,35 +108,154 @@ var initialData = {
       "address": "95 Pleasant Street",
       "city": "Amherst",
       "zip": "01003",
-      "state": "MA",
-      "country": "USA",
-      "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+      "state": "Massachusetts",
+      "country": "United States of America",
+      "dateTime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1],
+      "invited": [
+        0, 2, 4
+      ],
+      "notattending": [3],
       "complaints": [],
-      "supplies": []
-    }
+      "supplies" : [
+        {
+          "_id": 0,
+          "description": "New Amsterdam",
+          "picture": ""
+        },
+        {
+          "_id": 1,
+          "description": "Ballast Point",
+          "picture": ""
+        },
+        {
+          "_id": 2,
+          "description": "Blue Label",
+          "picture": ""
+        },
+        {
+          "_id": 3,
+          "description": "Tennessee Fire",
+          "picture": ""
+        }
+      ]
+}, {
+  "_id": 2,
+  "title": "testParty3",
+  "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+  "private status": false,
+  "address": "google maps address format, we'll figure it out later",
+  "city": "Amherst",
+  "zip": "01003",
+  "state": "Massachusetts",
+  "country": "United States of America",
+  "dateTime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
+  "host": 1,
+  "attending": [0],
+  "invited": [
+     2, 4
   ],
-
-  "supplies": [
+  "notattending": [3],
+  "complaints": [],
+  "supplies" : [
     {
       "_id": 0,
       "description": "New Amsterdam",
       "picture": ""
-    }, {
+    },
+    {
       "_id": 1,
       "description": "Ballast Point",
       "picture": ""
-    }, {
+    },
+    {
       "_id": 2,
       "description": "Blue Label",
       "picture": ""
-    }, {
+    },
+    {
       "_id": 3,
       "description": "Tennessee Fire",
       "picture": ""
     }
-  ]
+  ]},{
+    "_id": 3,
+    "title": "testParty4",
+    "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+    "private status": false,
+    "address": "google maps address format, we'll figure it out later",
+    "city": "Amherst",
+    "zip": "01003",
+    "state": "Massachusetts",
+    "country": "United States of America",
+    "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+    "host": 2,
+    "attending": [1,2,3],
+    "invited": [
+    ],
+    "notattending": [0],
+    "complaints": [],
+    "supplies" : [
+      {
+        "_id": 0,
+        "description": "New Amsterdam",
+        "picture": ""
+      },
+      {
+        "_id": 1,
+        "description": "Ballast Point",
+        "picture": ""
+      },
+      {
+        "_id": 2,
+        "description": "Blue Label",
+        "picture": ""
+      },
+      {
+        "_id": 3,
+        "description": "Tennessee Fire",
+        "picture": ""
+      }
+    ]},{
+      "_id": 4,
+      "title": "testParty5",
+      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+      "private status": false,
+      "address": "google maps address format, we'll figure it out later",
+      "city": "Amherst",
+      "zip": "01003",
+      "state": "Massachusetts",
+      "country": "United States of America",
+      "dateTime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
+      "host": 2,
+      "attending": [1,3],
+      "invited": [
+      ],
+      "notattending": [0],
+      "complaints": [],
+      "supplies" : [
+        {
+          "_id": 0,
+          "description": "New Amsterdam",
+          "picture": ""
+        },
+        {
+          "_id": 1,
+          "description": "Ballast Point",
+          "picture": ""
+        },
+        {
+          "_id": 2,
+          "description": "Blue Label",
+          "picture": ""
+        },
+        {
+          "_id": 3,
+          "description": "Tennessee Fire",
+          "picture": ""
+        }
+      ]}]
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
@@ -140,15 +271,25 @@ function JSONClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+
 /**
  * Emulates reading a "document" from a NoSQL database.
  * Doesn't do any tricky document joins, as we will cover that in the latter
  * half of the course. :)
  */
+
+
 export function readDocument(collection, id) {
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
   return JSONClone(data[collection][id]);
+}
+
+export function readDocumentLength(collection) {
+  // Clone the data. We do this to model a database, where you receive a
+  // *copy* of an object and not the object itself.
+
+  return JSONClone(data[collection].length);
 }
 
 /**
@@ -175,6 +316,7 @@ export function addDocument(collectionName, newDoc) {
   writeDocument(collectionName, newDoc);
   return newDoc;
 }
+
 
 /**
  * Reset our browser-local database.
