@@ -61,7 +61,7 @@ var initialData = {
         1, 2, 3
       ],
       "invited": [4],
-      "not attending": [],
+      "declined": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -132,7 +132,7 @@ var initialData = {
       "invited": [
         2, 4
       ],
-      "not attending": [3],
+      "declined": [3],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",

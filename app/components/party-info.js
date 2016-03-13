@@ -10,7 +10,9 @@ export default class PartyInfo extends React.Component {
     this.state = {
       party: 0,
       host: {},
-      attending: []
+      attending: [],
+      invited: [],
+      declined: []
     };
   }
 
@@ -18,13 +20,20 @@ export default class PartyInfo extends React.Component {
     getPartyData(this.state.party, (partyData) => {
       getAuthorData(partyData.host, (hostData) => {
         partyData.host = hostData;
-        //this.setState(partyData);
         getInvitedData(partyData.attending, (attendingData) => {
           partyData.attending = attendingData;
-          this.setState(partyData);
+          getInvitedData(partyData.invited, (invitedData) => {
+            partyData.invited = invitedData;
+            getInvitedData(partyData.declined, (declinedData) => {
+              partyData.declined = declinedData;
+            });
+          });
         });
+        this.setState(partyData);
       });
     });
+
+
   }
 
   render() {
@@ -109,87 +118,29 @@ export default class PartyInfo extends React.Component {
                 <table className="table table-striped">
                   <thead>
                     <tr>
-                      <th>Invited By You</th>
+                      <th>Invited</th>
                     </tr>
                   </thead>
                   <tbody>
 
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Caighla
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Dan
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Dellois
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Nelly
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Patricia
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Quixan
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Zelda
-                        <span className="label label-danger pull-right going-invited-margin">Not Going</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table className="table table-striped">
-                  <thead>
-                    <hr/>
-                    <tr>
-                      <th>Invited By Others</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Benny
-                        <span className="label label-success pull-right going-invited-margin">Going</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Cameron
-                        <span className="label label-warning pull-right going-invited-margin">Invited</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Dennis
-                        <span className="label label-danger pull-right going-invited-margin">Not Going</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="filterable-cell">
-                        <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Julia
-                        <span className="label label-danger pull-right going-invited-margin">Not Going</span>
-                      </td>
-                    </tr>
+                    {this.state.attending.map((attending,i) => {
+                      return (
+                        <PartyInfoInvited key={i} id={attending} status="going"></PartyInfoInvited>
+                      )
+                    })}
+
+                    {this.state.invited.map((invited,i) => {
+                      return (
+                        <PartyInfoInvited key={i} id={invited} status="pending"></PartyInfoInvited>
+                      )
+                    })}
+
+                    {this.state.declined.map((declined,i) => {
+                      return (
+                        <PartyInfoInvited key={i} id={declined} status="declined"></PartyInfoInvited>
+                      )
+                    })}
+
                   </tbody>
                 </table>
               </div>
