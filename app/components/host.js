@@ -144,47 +144,50 @@ export default class Host extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className = 'row row-padding'>
-                <div className="col-md-6">
+                <div className='row row-padding'>
+                  <div className='col-sm-6'>
                 <div className="form-group">
                   <input className="form-control" placeholder="Who do you want to invite?" required="true" type="text" id="invited"/>
-                  <a className="btn btn-default col-lg-9" href="#" role="button" onClick={() => this.addInvitee()}>
+                  <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addInvitee()}>
                     Add Person
                   </a>
                 </div>
-              </div>
-              <div className='col-md-6'>
-                <div className="form-group">
-                  <input className="form-control" placeholder="What do you need?" required="true" type="text" id="supplies"/>
-                  <a className="btn btn-default col-lg-9" href="#" role="button" onClick={() => this.addSupply()}>
-                    Add Supply
-                  </a>
                 </div>
+
+                <div className="col-md-6">
+
+                  <div className="form-group">
+                    <input className="form-control" placeholder="What do you need?" required="true" type="text" id="supplies"/>
+                    <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addSupply()}>
+                      Add Supply
+                    </a>
+                  </div>
                 </div>
+
               </div>
               </fieldset>
-              <div className="row row-padding">
+
                 <img className="col-lg-12 map" src="img/map.jpg" width="100%"/>
                 <div className="col-lg-12">
                   <div className="col-md-6">
 
-                    <table className="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Currently Invited</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.currentlyInvited.map((invited, i) => {
-                          debugger;
-                          return <Item key={i} name={invited} delete={this.deleteItem} type="invite"></Item>
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="col-md-6">
+                     <table className="table table-striped">
+                       <thead>
+                         <tr>
+                           <th>Currently Invited</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+                         {this.state.currentlyInvited.map((invited, i) => {
+                           debugger;
+                           return <Item key={i} name={invited} delete={this.deleteItem} type="invite"></Item>
+                         })}
+                       </tbody>
+                     </table>
+                   </div>
 
-                    <table className="table table-striped">
+                    <div className="col-md-6">
+                      <table className="table table-striped">
                       <thead>
                         <tr>
                           <th>Supplies Requested</th>
@@ -196,8 +199,9 @@ export default class Host extends React.Component {
                         })}
                       </tbody>
                     </table>
+                      </div>
                   </div>
-                </div>
+
 
                 <div className="col-lg-12">
                   <a className="btn btn-default col-lg-9" href="#" role="button" onClick={() => this.postParty()}>
@@ -211,7 +215,7 @@ export default class Host extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+
     )
   }
 }
