@@ -4,9 +4,10 @@ import {IndexRoute, Router, Route, hashHistory} from 'react-router';
 import Page from './components/page';
 import IndexPage from './components/index';
 import PartyInfo from './components/party-info';
-// import Complain from './components/complain';
+import Complaint from './components/complaint';
+import AdminPage from './components/admin';
+
 // import Host from './components/host';
-import AdminPage from './components/admin.js';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -14,6 +15,7 @@ ReactDOM.render((
       <IndexRoute component={IndexPage}/>
       <Route path="admin" component={AdminPage}></Route>
       <Route path="party" component={PartyInfo}></Route>
+      <Route path="complaint" component={Complaint}/>
     </Route>
   </Router>
 ), document.getElementById('app'));

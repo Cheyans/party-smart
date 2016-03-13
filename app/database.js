@@ -44,24 +44,23 @@ var initialData = {
       "friends": []
     }
   ],
+
   "parties": [
     {
       "_id": 0,
       "title": "testParty1",
       "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "google maps address format, we'll figure it out later",
+      "private status": false,
+      "address": "95 Pleasant Street",
       "city": "Amherst",
       "zip": "01003",
       "state": "MA",
-      "country": "USA",
-      "dateTime": "Fri Mar 11 2017 14:29:01 GMT-0500 (EST)",
-      "host": 0,
+      "country": "United States of America",
+      "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+      "host": 1,
       "attending": [
         1, 2, 3
       ],
-      "invited": [4],
-      "not attending": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -69,33 +68,6 @@ var initialData = {
         }, {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
           "message": "turn your shit down bruh"
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
         }
       ],
       "supplies": [
@@ -120,40 +92,20 @@ var initialData = {
       "_id": 1,
       "title": "testParty2",
       "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "google maps address format, we'll figure it out later",
+      "private status": false,
+      "address": "95 Pleasant Street",
       "city": "Amherst",
       "zip": "01003",
       "state": "MA",
-      "country": "USA",
+      "country": "United States of America",
       "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1],
-      "invited": [
-        2, 4
-      ],
-      "not attending": [3],
-      "complaints": [
-        {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }
-      ],
+      "complaints": [],
       "supplies": []
     }
   ],
+
   "supplies": [
     {
       "_id": 0,
@@ -232,13 +184,16 @@ export function resetDatabase() {
   data = JSONClone(initialData);
 }
 
-export function getCollection(collection) {
+/*
+*Returns a cloned collection
+*/
+export function readCollection(collection) {
   return JSONClone(data[collection]);
 }
 
 export function getLimitedDBDump(page, pageSize) {
-  var users = getCollection('users');
-  var parties = getCollection('parties');
+  var users = readCollection('users');
+  var parties = readCollection('parties');
   var requestedUsers = [];
   var requestedParties = [];
   var index = pageSize * page

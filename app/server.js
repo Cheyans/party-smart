@@ -3,7 +3,7 @@ import {
   writeDocument,
   addDocument,
   getLimitedDBDump,
-  getCollection
+  readCollection
 } from './database.js';
 
 export function updateUserData(data) {
@@ -27,13 +27,15 @@ export function getAuthorData(id, cb) {
 export function getAdminInformation(page, pageSize, cb) {
   pageSize = pageSize > 1000 ? 1000 : pageSize;
   var data = getLimitedDBDump(page, pageSize);
-  var supplies = getCollection('supplies');
+  var supplies = readCollection('supplies');
   var users = data['users'];
   for (var user of users) {
     user['total complaints'] = 0;
     user['friends'] = user['friends'].map((friend) => {
       var user = users[friend];
-      return {name: [user.fname, user.lname].join(" ")}
+      return {
+        name: [user.fname, user.lname].join(" ")
+      }
     })
     for (var party of data['parties']) {
       if (party['host'] === user['_id']) {
@@ -68,6 +70,33 @@ export function getAdminInformation(page, pageSize, cb) {
 
 export function getPartyData(id, cb) {
   return emulateServerReturn(readDocument('parties', id), cb);
+}
+
+export function addComplaint(partyId, complaint, cb) {
+  var party = readDocument('parties', partyId);
+  party.complaints.push(complaint)
+  return emulateServerReturn(writeDocument('parties', party), cb);
+}
+
+export function getNearByParties(coordinates, cb) {
+  //need to loop through party objects and match our address
+  //we are going to chage the formatting of the database so we are actually goign to
+  //compare our coordinates with GPScoordinates and output the address as well
+  var parties = readCollection('parties');
+  var nearByParties = [];
+  for (var party of parties) {
+    var address = party['address'];
+    if (address === coordinates) {
+      nearByParties.push({
+        'id': party['_id'],
+        'address': party['address'],
+        'city': party['city'],
+        'zip': party['zip'],
+        'state': party['state']
+      });
+    }
+  }
+  return emulateServerReturn(nearByParties, cb);
 }
 
 /**
