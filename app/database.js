@@ -29,9 +29,6 @@ var initialData = {
       "admin": true,
       "friends": [
         2,3
-      ],
-      "hostedParties": [
-        1
       ]
     },
     {

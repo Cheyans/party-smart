@@ -6,7 +6,6 @@ export default class ProfilePreviousPartiesAtt extends React.Component {
   render(){
     var date = new Date(this.props.party.dateTime);
     return(
-
         <Link to={"party"+"/"+this.props.user._id+"/"+this.props.party._id} className="list-group-item">
           <h4 className="list-group-item-heading">{this.props.party.title}</h4>
           <p className="list-group-item-text">

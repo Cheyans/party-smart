@@ -313,7 +313,7 @@ html {
 .profile table {
   width: 100%;
 }
-.profile thead, tbody, tr, td, th {
+.profile thead, .profile tbody, .profile tr, .profile td, .profile th {
   display: block;
 }
 .profile tr:after {
@@ -322,7 +322,7 @@ html {
   visibility: hidden;
   clear: both;
 }
-.profile thead th {
+.profile thead .profile th {
   height: 30px;
   /*text-align: left;*/
 }
@@ -333,7 +333,7 @@ html {
 .profile thead {
   /* fallback */
 }
-.profile tbody td, thead th {
+.profile tbody, .profile td, .profile thead, .profile th {
   width: 100%;
   float: left;
 }
