@@ -3,6 +3,8 @@ import PartyInfoInvited from './party-info-invited';
 import {getInvitedData} from '../server';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
+import {setPartyPrivate} from '../server';
+import {setPartyOpen} from '../server';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
@@ -32,11 +34,38 @@ export default class PartyInfo extends React.Component {
         this.setState(partyData);
       });
     });
+  }
 
+  handlePrivateClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      var callbackFunction = (updatedPrivateStatus) => {
+        this.setState(updatedPrivateStatus);
+      };
+    }
+    setPartyPrivate(this.state._id, callbackFunction);
+  }
 
+  handleOpenClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      var callbackFunction = (updatedPrivateStatus) => {
+        this.setState(updatedPrivateStatus);
+      };
+    }
+    setPartyOpen(this.state._id, callbackFunction);
   }
 
   render() {
+
+    var buttonPrivate = "btn btn-default active";
+    var buttonOpen = "btn btn-default";
+    var statusText = "This party is PRIVATE";
+    if (this.state.private_status == "false") {
+      buttonPrivate = "btn btn-default";
+      buttonOpen = "btn btn-default active";
+      statusText = "This party is OPEN";
+    }
 
     return (
       <div className="container party-info">
@@ -93,12 +122,15 @@ export default class PartyInfo extends React.Component {
                 <br/>
                 <div className="btn-group btn-group-justified" role="group" aria-label="...">
                   <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-default active">Private Party</button>
+                    <button onClick={(e) => this.handlePrivateClick(e)} type="button" className={buttonPrivate}>Private Party</button>
                   </div>
                   <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-default">Open Party</button>
+                    <button onClick={(e) => this.handleOpenClick(e)} type="button" className={buttonOpen}>Open Party</button>
                   </div>
                 </div>
+                <br/>
+                <strong>{statusText}</strong>
+                <br/>
                 <br/>
                 <strong>Private Party:</strong>
                 <br/> Address will NOT be shown to people making complaints
