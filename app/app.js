@@ -5,7 +5,6 @@ import Page from './components/page';
 import Index from './components/index';
 import Host from './components/host';
 // import Complain from './components/complain';
-// import Host from './components/host';
 // import Admin from './components/admin';
 
 ReactDOM.render((
