@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default class IndexPage extends React.Component {
+export default class HomePage extends React.Component {
   render() {
     return (
       <div className="index">
@@ -23,19 +23,20 @@ export default class IndexPage extends React.Component {
               </a>
             </div>
             <div className="col-md-4">
-              <a className="btn service-button text" href="complain.html" role="button">
+              <Link className="btn service-button text" to="complaint" role="button">
                 <span className="icon mdi mdi-comment-alert" aria-hidden="true"></span>
                 <h4 className="service-text">File a Complaint</h4>
-              </a>
+              </Link>
             </div>
             <div className="col-md-4">
-              <Link className="btn service-button text" to="party" role="button">
+              <Link className="btn service-button text" to="profile/0" role="button">
                 <span className="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
                 <h4 className="service-text">Request to Attend a Party</h4>
               </Link>
             </div>
           </div>
         </div>
+        {this.props.children}
       </div>
     )
   }

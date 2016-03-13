@@ -8,9 +8,8 @@ import {setPartyOpen} from '../server';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      party: 1,
       host: {},
       attending: [],
       invited: [],
@@ -19,7 +18,7 @@ export default class PartyInfo extends React.Component {
   }
 
   componentDidMount() {
-    getPartyData(this.state.party, (partyData) => {
+    getPartyData(this.props.params.partyId, (partyData) => {
       getAuthorData(partyData.host, (hostData) => {
         partyData.host = hostData;
         getInvitedData(partyData.attending, (attendingData) => {
@@ -35,7 +34,6 @@ export default class PartyInfo extends React.Component {
       });
     });
   }
-
 
   handlePrivateClick(clickEvent) {
     clickEvent.preventDefault();
@@ -194,7 +192,6 @@ export default class PartyInfo extends React.Component {
           </div>
         </div>
       </div>
-
     )
   }
 }

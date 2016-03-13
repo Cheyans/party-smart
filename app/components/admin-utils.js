@@ -1,3 +1,7 @@
+import React from 'react';
+import {ModalDialog, ModalContainer} from 'react-modal-dialog';
+import {AdministratorRow, AvatarRow} from './admin-components';
+
 const MAX_COMLPAINTS = 10;
 const WARN_COMPLAINTS = 5;
 
@@ -52,10 +56,88 @@ export var rowMetaData = {
   }
 };
 
+export function getPartyModal(data, adminThis) {
+  return (
+    <ModalContainer onClose={adminThis.hideModal}>
+      <ModalDialog className="admin-modal" onClose={adminThis.hideModal}>
+        <h3>
+          <strong>Party:&emsp;</strong>{data.title}</h3>
+        <h4>
+          <strong>Hosted By:&emsp;</strong>{data.host}</h4>
+        <div className="row">
+          <div className="col-md-4">
+            <h4>Complaints</h4>
+            {data.complaints.map((complaints, i) => {
+              return (
+                <div key={i} className="modal-text">
+                  <p className="modal-text">{new Date(complaints.dateTime).toLocaleString()}</p>
+                  <p>{complaints.message || "No complaint message"}</p>
+                  <hr/>
+                </div>
+              )
+            })}
+          </div>
+          <div className="col-md-4">
+            <h4>Attendees</h4>
+            {data.attending.map((attendee, i) => {
+              return (
+                <p key={i}>{attendee.name}</p>
+              );
+            })
+}
+          </div>
+          <div className="col-md-4">
+
+            <h4>Supplies</h4>
+            {data.supplies.map((supply, i) => {
+              return (
+                <div key={i} className="modal-text">
+                  <p className="modal-text">Supply Item:&emsp;{supply.description}</p>
+                  <p>Claimed By:&emsp;
+                    {supply.name || "Nobody"}</p>
+                  <hr/>
+                </div>
+              );
+            })
+}
+          </div>
+        </div>
+      </ModalDialog>
+    </ModalContainer>
+  )
+}
+
+export function getUserModal(data, adminThis) {
+  return (
+    <ModalContainer onClose={adminThis.hideModal}>
+      <ModalDialog className="admin-modal" onClose={adminThis.hideModal}>
+        <div className="row">
+          <div className="col-md-5">
+            <img className="modal-avatar" src={data.picture}></img>
+          </div>
+          <div className="col-md-7">
+            <h3>
+              <strong>Name:&emsp;</strong>{[data.fname, data.lname].join(" ")}</h3>
+            <h4>Friends:</h4>
+            {data.friends.map((friends, i) => {
+              return (
+                <div key={i}>
+                  <p>{friends.name}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </ModalDialog>
+    </ModalContainer>
+  )
+}
+
 export var userColumnMetaData = [
   {
     "columnName": "picture",
-    "displayName": "Avatar"
+    "displayName": "Avatar",
+    "customComponent": AvatarRow
   }, {
     "columnName": "fname",
     "displayName": "First Name"
@@ -70,7 +152,8 @@ export var userColumnMetaData = [
     "displayName": "Email"
   }, {
     "columnName": "admin",
-    "displayName": "Admin"
+    "displayName": "Admin",
+    "customComponent": AdministratorRow
   }, {
     "columnName": "total complaints",
     "displayName": "Total Complaints"
