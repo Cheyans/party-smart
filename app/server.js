@@ -51,8 +51,7 @@ export function getHostedParties(id, cb) {
       index++;
     }
   }
-  return emulateServerReturn(hosts, cb);
-
+  return emulateServerReturn(hosts,cb);
 }
 
 export function getInviteInfo(id, cb) {

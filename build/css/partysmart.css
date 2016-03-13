@@ -322,7 +322,7 @@ html {
   visibility: hidden;
   clear: both;
 }
-.profile thead th {
+.profile thead .profile th {
   height: 30px;
   /*text-align: left;*/
 }
@@ -333,6 +333,7 @@ html {
 .profile thead {
   /* fallback */
 }
+
 .profile tbody td, .profile thead th {
   width: 100%;
   float: left;
