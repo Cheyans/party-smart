@@ -4,7 +4,8 @@ import {
   addDocument,
   readDocumentLength,
   getLimitedDBDump,
-  readCollection
+  readCollection,
+  getNextCollectionID
 } from './database.js';
 
 export function updateUserData(data) {
@@ -193,6 +194,27 @@ export function getAdminInformation(page, pageSize, cb) {
 
 export function getPartyData(id, cb) {
   return emulateServerReturn(readDocument('parties', id), cb);
+}
+
+export function createNewParty(party) {
+  var dateTime = [party.time, party.date].join(" ");
+  var newParty = {
+    "_id": getNextCollectionID("parties"),
+    "title": party.title,
+    "description": party.description,
+    "private status": false,
+    "address": party.address,
+    "city": party.city,
+    "zip": party.zip,
+    "state": party.state,
+    "country": party.country,
+    "dateTime": new Date(dateTime).toString(),
+    "host": party.host,
+    "attendees": party.attendees,
+    "complaints": party.complaints,
+    "supplies": party.supplies
+  };
+  addDocument("parties", newParty);
 }
 
 export function addComplaint(partyId, complaint, cb) {

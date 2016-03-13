@@ -19,10 +19,10 @@ export default class HomePage extends React.Component {
         <div className="panel panel-default container">
           <div className="row panel-body services">
             <div className="col-md-4">
-              <a className="btn service-button text" href="party-registration.html" role="button">
+              <Link className="btn service-button text" to="host" role="button">
                 <span className="icon mdi mdi-file-document" aria-hidden="true"></span>
                 <h4 className="service-text">Register a Party</h4>
-              </a>
+              </Link>
             </div>
             <div className="col-md-4">
               <Link className="btn service-button text" to="complaint" role="button">

@@ -298,6 +298,10 @@ export function addDocument(collectionName, newDoc) {
   return newDoc;
 }
 
+export function getNextCollectionID(collectionName){
+  return data[collectionName].length;
+}
+
 /**
  * Reset our browser-local database.
  */

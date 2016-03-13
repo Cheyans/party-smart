@@ -31,7 +31,7 @@ export default class Page extends React.Component {
             <div className="navbar-right">
               <ResetDatabase className="nav-logout btn btn-default btn-lg nav-btn" role="button">Reset Database</ResetDatabase>
               {adminBtn}
-              <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
+              <Link className="nav-host btn btn-default btn-lg nav-btn" to="host" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complaint" role="button">Complain</Link>
               <Link className="nav-profile btn btn-default btn-lg nav-btn" to={"/profile/"+this.state._id} role="button" authorData={this.state}>
 

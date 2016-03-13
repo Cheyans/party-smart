@@ -2,9 +2,14 @@ import React from 'react';
 import {createNewParty} from '../server';
 import Item from './host-item';
 
+
+var inputs;
+var adminThis;
+
 export default class Host extends React.Component {
   constructor(props) {
     super(props);
+    adminThis = this;
     this.state = {
       contents: [],
       currentlyInvited: [],
@@ -14,8 +19,9 @@ export default class Host extends React.Component {
     };
   }
 
-  postParty() {
-    var inputs = [
+
+  componentDidMount() {
+    inputs = [
       document.getElementById('title'),
       document.getElementById('description'),
       document.getElementById('address'),
@@ -25,9 +31,19 @@ export default class Host extends React.Component {
       document.getElementById('country'),
       document.getElementById('time'),
       document.getElementById('date')
-      //document.getElementById('invite'),
-      //document.getElementById('supplies')
+
     ];
+  }
+
+  clearFields() {
+    for (var input of inputs) {
+      input.value = "";
+    }
+    document.getElementById('invited').value = "";
+    document.getElementById('supplies').value = "";
+  }
+
+  postParty() {
     var newParty = {};
     for (var input of inputs) {
       if (input.value != "") {
@@ -49,14 +65,6 @@ export default class Host extends React.Component {
     }
   }
 
-  deleteInvitee(){
-    var deleted = document.getElementById('invited')
-    if(this.deleteItem){
-      this.state.currentlyInvited.remove(deleted.value);
-      this.forceUpdate();
-    }
-
-  }
 
   //adding inputted supplies onto an empty array
   addSupply() {
@@ -67,11 +75,15 @@ export default class Host extends React.Component {
     }
   }
 
-  deleteSupply(){
 
+  deleteItem(item, type) {
+    if (type === "invite") {
+      this.state.currentlyInvited.splice(this.state.currentlyInvited.indexOf(item), 1);
+    } else {
+      this.state.suppliesRequested.splice(this.state.currentlyInvited.indexOf(item), 1);
+    }
+    this.forceUpdate();
   }
-
-
 
   handleKeyUp(e) {
     if (e.key === "Enter") {
@@ -152,75 +164,79 @@ export default class Host extends React.Component {
                 </div>
                 <div className='row row-padding'>
                   <div className='col-sm-6'>
-                <div className="form-group">
-                  <input className="form-control" placeholder="Who do you want to invite?" required="true" type="text" id="invited"/>
-                  <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addInvitee()}>
-                    Add Person
-                  </a>
+                    <div className="form-group">
+                      <input className="form-control" placeholder="Who do you want to invite?" required="true" type="text" id="invited"/>
+                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addInvitee()}>
+                        Add Person
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+
+                    <div className="form-group">
+                      <input className="form-control" placeholder="What do you need?" required="true" type="text" id="supplies"/>
+                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addSupply()}>
+                        Add Supply
+                      </a>
+                    </div>
+                  </div>
+
                 </div>
+              </fieldset>
+
+              <img className="col-lg-12 map" src="img/map.jpg" width="100%"/>
+              <div className="col-lg-12">
+                <div className="col-md-6">
+
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Currently Invited</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {this.state.currentlyInvited.map((invited, i) => {
+                          var type = "invite";
+                          return <Item key={i} name={invited} delete={() => this.deleteItem(invited, type)} hostThis={adminThis} type={type}></Item>
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
 
                 <div className="col-md-6">
-
-                  <div className="form-group">
-                    <input className="form-control" placeholder="What do you need?" required="true" type="text" id="supplies"/>
-                    <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addSupply()}>
-                      Add Supply
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-              </fieldset>
-
-                <img className="col-lg-12 map" src="img/map.jpg" width="100%"/>
-                <div className="col-lg-12">
-                  <div className="col-md-6">
-
-                     <table className="table table-striped">
-                       <thead>
-                         <tr>
-                           <th>Currently Invited</th>
-                         </tr>
-                       </thead>
-                       <tbody>
-                         {this.state.currentlyInvited.map((invited, i) => {
-                           debugger;
-                           return <Item key={i} name={invited} delete={this.deleteItem} type="invite"></Item>
-                         })}
-                       </tbody>
-                     </table>
-                   </div>
-
-                    <div className="col-md-6">
-                      <table className="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Supplies Requested</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.suppliesRequested.map((invited, i) => {
-                          return <Item key={i} name={invited} delete={this.deleteItem()} type="supply"></Item>
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Supplies Requested</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {this.state.suppliesRequested.map((supply, i) => {
+                          var type = "supply";
+                          return <Item key={i} name={supply} delete={() => this.deleteItem(supply, type)} hostThis={adminThis} type={type}></Item>
                         })}
-                      </tbody>
-                    </table>
-                      </div>
-                  </div>
-
-
-                <div className="col-lg-12">
-                  <a className="btn btn-default col-lg-9" href="#" role="button" onClick={() => this.postParty()}>
-                    Create Party
-                  </a>
-                  <a className="btn btn-default col-lg-3" href="#" role="button">
-                    Clear All Fields
-                  </a>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+
+              <div className="col-lg-12">
+                <a className="btn btn-default col-lg-9" href="#" role="button" onClick={() => this.postParty()}>
+                  Create Party
+                </a>
+                <a className="btn btn-default col-lg-3" href="#" role="button" onClick={() => this.clearFields()}>
+                  Clear All Fields
+                </a>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
     )
   }

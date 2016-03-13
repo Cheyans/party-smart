@@ -106,23 +106,10 @@ html {
   margin-top: 12px;
 }
 
-/*--------------------Party Registration--------------------*/
+/*--------------------Party Host--------------------*/
 
-.registration .map {
-  padding-bottom: 25px;
-}
-.registration .mdi-map-marker {
-  font-size: 18px;
-}
-.registration .mdi-close-box {
-  font-size: 20px;
-  color: maroon;
-}
-.registration .address {
-  width: 93.3333%;
-}
-.registration .autolocate {
-  width: 0;
+.host {
+  margin-top: 60px;
 }
 
 /*--------------------Party Info--------------------*/
