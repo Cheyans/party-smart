@@ -310,6 +310,34 @@ html {
 
 /*--------------------Account Info--------------------*/
 
+.profile table {
+  width: 100%;
+}
+.profile thead, tbody, tr, td, th {
+  display: block;
+}
+.profile tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+.profile thead th {
+  height: 30px;
+  /*text-align: left;*/
+}
+.profile tbody {
+  height: auto;
+  overflow-y: auto;
+}
+.profile thead {
+  /* fallback */
+}
+.profile tbody td, thead th {
+  width: 100%;
+  float: left;
+}
+
 .table-outline {
     border: .5px solid #E8E8E8;
 }
@@ -334,8 +362,6 @@ html {
 .img-size {
   max-width: 200px;
 }
-<<<<<<< HEAD
-=======
 .profile-margin-top{
   margin-top: 50px;
 }
@@ -347,7 +373,7 @@ html {
   margin-bottom: 20px;
 }
 
->>>>>>> feature/profile
+
 .account-info-table .row-btn {
   width: 100%;
   background-color: inherit;

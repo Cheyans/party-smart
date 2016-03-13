@@ -46,15 +46,15 @@ export function getHostedParties(id, cb){
   var hosts = [];
   var index = 0;
   for(var i = 0;i<size;i++){
+    debugger;
     var curParty = readDocument('parties',i);
-    for(var z = 0; z < curParty.invited.length;z++){
       if(curParty.host===parseInt(id)){
         hosts[index]=curParty._id;
         index++;
       }
-    }
   }
   return emulateServerReturn(hosts,cb);
+
 }
 
 export function getInviteInfo(id,cb){

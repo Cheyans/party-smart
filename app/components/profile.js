@@ -55,10 +55,9 @@ export default class Profile extends React.Component {
     if(this.state.hostedParties){
       hosts = this.state.hostedParties;
     }
-    debugger;
     return (
-      <div>
-      <div className="container profile-margin-top">
+      <div className="profile">
+      <div className="container profile-margin-top account-info">
         <br />
         <div className="row">
           <div className="col-md-4">
@@ -88,7 +87,11 @@ export default class Profile extends React.Component {
                               <ProfilePreviousPartiesAtt key={i} party = {prevParties.attended[i]} user={this.state.userData}></ProfilePreviousPartiesAtt>
                             )
                           })}
-
+                          {prevParties.invited.map((inv,i) => {
+                            return (
+                              <ProfilePreviousPartiesInv key={i} party = {prevParties.invited[i]} user={this.state.userData}></ProfilePreviousPartiesInv>
+                            )
+                          })}
                           {prevParties.notattended.map((Nat,i) => {
                             return (
                               <ProfilePreviousPartiesNat key={i} party = {prevParties.notattended[i]} user={this.state.userData}></ProfilePreviousPartiesNat>

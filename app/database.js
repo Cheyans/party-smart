@@ -67,7 +67,7 @@ var initialData = {
       "state": "MA",
       "country": "USA",
       "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-      "host": 1,
+      "host": 0,
       "attending": [
         1, 2, 3
       ],
