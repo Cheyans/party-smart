@@ -241,6 +241,13 @@ html {
 .admin .mdi {
   font-size: 18px;
 }
+
+.admin .avatar {
+  width: 40px;
+}
+
+/*Header*/
+
 .admin .griddle-filter {
   width: auto;
   float: right;

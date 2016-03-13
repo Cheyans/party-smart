@@ -1,6 +1,6 @@
 import React from 'react';
 import {ModalDialog, ModalContainer} from 'react-modal-dialog';
-import Griddle from 'griddle-react';
+import {AdministratorRow, AvatarRow} from './admin-components';
 
 const MAX_COMLPAINTS = 10;
 const WARN_COMPLAINTS = 5;
@@ -133,45 +133,11 @@ export function getUserModal(data, adminThis) {
   )
 }
 
-export class AdminCustomRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editedToggled: false
-    }
-  }
-
-  handleClick() {
-    this.setState({
-      editToggled: !this.state.editToggled
-    });
-  }
-
-  render() {
-    if (this.state.editToggled) {
-      var rowStyle = {
-        width: "100%",
-        height: "100%",
-        color: "#CCC"
-      };
-      var buttonStyle = {
-        position: "absolute",
-        right: 0
-      };
-      return (
-        <div><input type="text" value={this.props.data} style={rowStyle}/>
-          <button onClick={this.handleClick} style={buttonStyle}>Done</button>
-        </div>
-      )
-    }
-    return <div onClick={this.handleClick}>{this.props.data}</div>;
-  }
-}
-
 export var userColumnMetaData = [
   {
     "columnName": "picture",
-    "displayName": "Avatar"
+    "displayName": "Avatar",
+    "customComponent": AvatarRow
   }, {
     "columnName": "fname",
     "displayName": "First Name"
@@ -187,7 +153,7 @@ export var userColumnMetaData = [
   }, {
     "columnName": "admin",
     "displayName": "Admin",
-    "customComponent": AdminCustomRow
+    "customComponent": AdministratorRow
   }, {
     "columnName": "total complaints",
     "displayName": "Total Complaints"
