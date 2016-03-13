@@ -275,6 +275,10 @@ html {
 }
 
 /*Modal*/
+.admin-modal {
+  margin-top: 60px;
+  width: 35vw !important;
+}
 
 .admin-modal .modal-avatar {
   width: 10vw;
