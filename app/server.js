@@ -74,7 +74,10 @@ export function getPartyData(id, cb) {
 
 export function addComplaint(partyId, complaint, cb) {
   var party = readDocument('parties', partyId);
-  party.complaints.push(complaint)
+  party.complaints.push({
+    dateTime: new Date().toString(),
+    message: complaint
+  })
   return emulateServerReturn(writeDocument('parties', party), cb);
 }
 

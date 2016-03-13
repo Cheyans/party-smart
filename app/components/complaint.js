@@ -1,6 +1,6 @@
 import React from 'react';
 import {getNearByParties} from '../server';
-import AddressEntry from './addressentry'
+import AddressEntry from './complaint-address'
 
 export default class Complaint extends React.Component {
 
@@ -16,19 +16,17 @@ export default class Complaint extends React.Component {
       data = this.state.nbp;
     }
     return (
-      <div className="container complain panel panel-default">
-      <div className="complaint-header">
-        Select a Party to Report:
+      <div className="container complaint panel panel-default">
+        <div className="header">
+          Select a Party to Report
         </div>
-        <img className="imageComplain" src="img/map.jpg" width="100%" />
+        <img className="image" src="img/map.jpg" width="100%"/>
         <div className="panel-footer">
           <div className="list-group">
             {data.map((address, i) => {
-              return (
-                <AddressEntry key={i} data={address}/>);
-                }
-              )
-            }
+              return (<AddressEntry key={i} data={address}/>);
+            })
+}
           </div>
         </div>
       </div>

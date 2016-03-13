@@ -7,7 +7,6 @@ html {
   height: 100%;
   font-family: "Lustria";
 }
-
 .btn {
   letter-spacing: 0.075em;
 }
@@ -239,7 +238,6 @@ html {
 .admin table {
   text-align: center !important;
 }
-
 .admin .mdi {
   font-size: 18px;
 }
@@ -249,23 +247,20 @@ html {
   margin-left: 25%;
   height: 0px;
 }
-
 .admin .griddle > .top-section {
   margin-bottom: 0.75%;
 }
-
 .admin .settings {
   min-width: 160px;
   background-color: white !important;
   display: inline-block;
   padding: 6px 12px;
 }
-
 .admin .griddle-settings-toggle {
   width: 0 !important;
 }
 .admin .swap-option {
-  float:left;
+  float: left;
   margin-left: 15%;
   position: absolute;
   padding: 6px 30px 6px 30px;
@@ -277,7 +272,6 @@ html {
 .admin .modal-text {
   margin-bottom: -2.5%;
 }
-
 
 /*--------------------Party Denial--------------------*/
 
@@ -318,41 +312,45 @@ html {
 }
 
 /*--------------------Complaint--------------------*/
-.container.complain{
+
+.complaint {
+  margin-top: 60px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.complaint .container.complain {
   align: center;
   padding-left: 15%;
-  padding-right:15%;
+  padding-right: 15%;
 }
-.imageComplain{
-  width:100%;
+.complaint .image {
+  width: 100%;
 }
-.list-group{
+.complaint .list-group {
   padding-left: 25%;
-  padding-right:25%;
+  padding-right: 25%;
 }
-.panel-default.complain {
+.complaint .panel-default.complain {
   padding-top: 55px;
   padding-bottom: 30px;
   text-align: center;
 }
-.complaint-header{
+.complaint .header {
   font-size: 150%;
-  font-style: oblique;
-  color: #891C1D;
+  text-align: center;
+  padding: 12px;
 }
 
-.btn-left-address{
-  float: right;
-}
-/*--------------------ComplaintModal--------------------*/
 
-.modal-text{
-  width: 500px;
+/* Modal Complaint*/
+
+.complaint-modal .modal-text {
+  width: 50vw;
   height: 150px;
 }
 
 /*--------------------Needs Category--------------------*/
-
 
 .going-invited-margin {
   margin-top: 2px;
