@@ -43,6 +43,14 @@ export function getPartyData(id, cb) {
   return emulateServerReturn(readDocument('parties', id), cb);
 }
 
+export function getInvitedData(idList, cb) {
+  var people = [];
+  for (var i = 0; i < idList.length; i++) {
+    people.push(emulateServerReturn(readDocument('users', idList[i]), cb));
+  }
+  return people;
+}
+
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.

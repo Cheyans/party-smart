@@ -1,5 +1,6 @@
 import React from 'react';
 import PartyInfoInvited from './party-info-invited';
+import {getInvitedData} from '../server';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
 
@@ -8,7 +9,7 @@ export default class PartyInfo extends React.Component {
     super(props)
     this.state = {
       party: 0,
-      host: {}
+      host: {},
       attending: []
     };
   }
@@ -17,17 +18,16 @@ export default class PartyInfo extends React.Component {
     getPartyData(this.state.party, (partyData) => {
       getAuthorData(partyData.host, (hostData) => {
         partyData.host = hostData;
-        this.setState(partyData);
+        //this.setState(partyData);
+        getInvitedData(partyData.attending, (attendingData) => {
+          partyData.attending = attendingData;
+          this.setState(partyData);
+        });
       });
     });
   }
 
   render() {
-    var attending = [];
-
-    if (this.state.attending) {
-      attending = this.state.attending;
-    }
 
     return (
       <div className="container party-info">
@@ -67,9 +67,9 @@ export default class PartyInfo extends React.Component {
                             Party Details
                           </h4>
                     <address>
-                      <strong>{this.state.title}</strong><br/>
+                      <strong>{this.state.party.title}</strong><br/>
                       {this.state.address}<br/>
-                      {this.state.city} {this.state.state}, {this.state.zip}<br/>
+                    {this.state.city} {this.state.state}, {this.state.zip}<br/>
                     </address>
 
                     <address>
@@ -113,12 +113,7 @@ export default class PartyInfo extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <PartyInfoInvited user={this.state.host.fname} picture={this.state.host.picture}></PartyInfoInvited>
-                      {attending.map((user,i) => {
-                        return (
-                          <PartyInfoInvited key={i} id={user}></PartyInfoInvited>
-                        )
-                      })}
+
                     <tr>
                       <td className="filterable-cell">
                         <img src="img/guy.jpg" className="img-circle" width="18px" height="18px" /> Caighla
