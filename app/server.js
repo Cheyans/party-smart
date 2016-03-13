@@ -85,41 +85,50 @@ export function getGoingInfo(id,cb){
 
 export function getPrevParties(id,cb){
   var size = readDocumentLength('parties');
-  var inv = [];
   var index = 0;
   var curDate = new Date(Date.now());
   var parDate = new Date();
+  var prevParties = {
+    attended:[],
+    notattended:[],
+    invited:[]
+  }
   for(var i = 0;i<size;i++){
     var curParty = readDocument('parties',i);
     for(var z = 0; z < curParty.attending.length;z++){
       if(curParty.attending[z]===parseInt(id)){
         parDate = new Date(curParty.dateTime);
         if(parDate.getTime() < curDate.getTime()){
-        inv[index]=curParty._id;
+        prevParties.attended[index]=curParty._id;
         index++;
         }
       }
     }
+    index = 0;
     for(z = 0; z < curParty.notattending.length;z++){
       if(curParty.notattending[z]===parseInt(id)){
         parDate = new Date(curParty.dateTime);
         if(parDate.getTime() < curDate.getTime()){
-        inv[index]=curParty._id;
+        prevParties.notattended[index]=curParty._id;
         index++;
         }
       }
     }
+    index = 0;
     for(z = 0; z < curParty.invited.length;z++){
       if(curParty.invited[z]===parseInt(id)){
         parDate = new Date(curParty.dateTime);
         if(parDate.getTime() < curDate.getTime()){
-        inv[index]=curParty._id;
+        prevParties.invited[index]=curParty._id;
         index++;
         }
       }
     }
   }
-  return emulateServerReturn(inv.map((id) => readDocument('parties',id)),cb);
+  prevParties.attended = prevParties.attended.map((att) => readDocument('parties',att));
+  prevParties.notattended = prevParties.notattended.map((nat) => readDocument('parties',nat));
+  prevParties.invited = prevParties.invited.map((inv) => readDocument('parties',inv));
+  return emulateServerReturn(prevParties,cb);
 }
 
 

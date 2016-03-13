@@ -3,14 +3,20 @@ import {getAuthorData, getPrevParties, getHostedParties} from '../server';
 import ProfileFriends from './profile-friends';
 import ProfileHostedParties from './profile-hostedparties';
 import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
-import ProfilePreviousParties from './profile-prevparties.js';
+import ProfilePreviousPartiesAtt from './profile-prevpartiesatt.js';
+import ProfilePreviousPartiesNat from './profile-prevpartiesnat.js';
+import ProfilePreviousPartiesInv from './profile-prevpartiesinv.js';
 
 export default class Profile extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      prevParties: [],
+      prevParties: {
+        attended:[],
+        notattended:[],
+        invited:[]
+      },
       hostedParties: [],
       userData: {
         _id:"",
@@ -49,6 +55,7 @@ export default class Profile extends React.Component {
     if(this.state.hostedParties){
       hosts = this.state.hostedParties;
     }
+    debugger;
     return (
       <div>
       <div className="container profile-margin-top">
@@ -75,11 +82,19 @@ export default class Profile extends React.Component {
                   <tbody className = "span-of-table">
                     <tr>
                       <td>
-                        {prevParties.map((friend,i) => {
-                          return (
-                            <ProfilePreviousParties key={i} party = {this.state.prevParties[i]} user={this.state.userData}></ProfilePreviousParties>
-                          )
-                        })}
+                        <div className="list-group">
+                          {prevParties.attended.map((att,i) => {
+                            return (
+                              <ProfilePreviousPartiesAtt key={i} party = {prevParties.attended[i]} user={this.state.userData}></ProfilePreviousPartiesAtt>
+                            )
+                          })}
+
+                          {prevParties.notattended.map((Nat,i) => {
+                            return (
+                              <ProfilePreviousPartiesNat key={i} party = {prevParties.notattended[i]} user={this.state.userData}></ProfilePreviousPartiesNat>
+                            )
+                          })}
+                        </div>
                       </td>
                     </tr>
                   </tbody>
