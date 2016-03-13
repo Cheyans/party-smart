@@ -7,8 +7,6 @@ import PartyInfo from './components/party-info';
 import Complaint from './components/complaint';
 import AdminPage from './components/admin';
 import Profile from './components/profile';
-// import Complain from './components/complain';
-// import Host from './components/host';
 
 ReactDOM.render((
   <Router history={hashHistory}>

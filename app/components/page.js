@@ -19,7 +19,6 @@ export default class Page extends React.Component {
     var adminBtn = "";
     if (this.state.admin) {
       adminBtn = <Link className="nav-admin btn btn-default btn-lg nav-btn" to="admin" role="button">Administration</Link>;
-      //debugger;
     }
     return (
       <div>
@@ -31,13 +30,12 @@ export default class Page extends React.Component {
             <div className="navbar-right">
               <ResetDatabase className="nav-logout btn btn-default btn-lg nav-btn" role="button">Reset Database</ResetDatabase>
               {adminBtn}
-              <Link className="nav-host btn btn-default btn-lg nav-btn" to="party-registration.html" role="button">Host</Link>
+              <Link className="nav-host btn btn-default btn-lg nav-btn" to="host" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complaint" role="button">Complain</Link>
               <Link className="nav-profile btn btn-default btn-lg nav-btn" to={"/profile/"+this.state._id} role="button" authorData={this.state}>
-
                 <img className="nav-profile-img img-circle" src={this.state.picture}/>&emsp;{this.state.fname}
               </Link>
-              <Link className="nav-logout btn btn-default btn-lg nav-btn" to="index.html" role="button">LogOut</Link>
+              <Link className="nav-logout btn btn-default btn-lg nav-btn" to="/" role="button">LogOut</Link>
             </div>
           </div>
         </nav>
