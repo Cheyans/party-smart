@@ -38,7 +38,7 @@ export class AdministratorRow extends React.Component {
 export class AvatarRow extends React.Component {
   render() {
     return (
-      <img className="avatar" src={this.props.data}></img>
+      <img className="table-avatar" src={this.props.data}></img>
     )
   }
 }

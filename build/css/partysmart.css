@@ -242,7 +242,7 @@ html {
   font-size: 18px;
 }
 
-.admin .avatar {
+.admin .table-avatar {
   width: 40px;
 }
 
@@ -276,7 +276,12 @@ html {
 
 /*Modal*/
 
-.admin .modal-text {
+.admin-modal .modal-avatar {
+  width: 10vw;
+}
+
+
+.admin-modal .modal-text {
   margin-bottom: -2.5%;
 }
 

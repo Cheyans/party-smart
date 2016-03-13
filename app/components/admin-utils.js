@@ -58,12 +58,12 @@ export var rowMetaData = {
 
 export function getPartyModal(data, adminThis) {
   var style = {
-    width: "750px",
+    width: "40vw",
     marginTop: "60px"
   }
   return (
     <ModalContainer onClose={adminThis.hideModal}>
-      <ModalDialog onClose={adminThis.hideModal} style={style}>
+      <ModalDialog className="admin-modal" onClose={adminThis.hideModal} style={style}>
         <h3>
           <strong>Party:&emsp;</strong>{data.title}</h3>
         <h4>
@@ -113,21 +113,29 @@ export function getPartyModal(data, adminThis) {
 
 export function getUserModal(data, adminThis) {
   var style = {
-    marginTop: "60px"
+    marginTop: "60px",
+    width: "35vw"
   }
   return (
     <ModalContainer onClose={adminThis.hideModal}>
-      <ModalDialog onClose={adminThis.hideModal} style={style}>
-        <h3>
-          <strong>Name:&emsp;</strong>{[data.fname, data.lname].join(" ")}</h3>
-        <h4>Friends:</h4>
-        {data.friends.map((friends, i) => {
-          return (
-            <div key={i}>
-              <p>{friends.name}</p>
-            </div>
-          )
-        })}
+      <ModalDialog className="admin-modal" onClose={adminThis.hideModal} style={style}>
+        <div className="row">
+          <div className="col-md-5">
+            <img className="modal-avatar" src={data.picture}></img>
+          </div>
+          <div className="col-md-7">
+            <h3>
+              <strong>Name:&emsp;</strong>{[data.fname, data.lname].join(" ")}</h3>
+            <h4>Friends:</h4>
+            {data.friends.map((friends, i) => {
+              return (
+                <div key={i}>
+                  <p>{friends.name}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </ModalDialog>
     </ModalContainer>
   )
