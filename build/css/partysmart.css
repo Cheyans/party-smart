@@ -1,40 +1,14 @@
 /*--------------------Global--------------------*/
+
 html {
   height: 100%;
 }
-
 .app {
   height: 100%;
-  padding-top: 60px;
-  font-family: "Merriweather";
+  font-family: "Lustria";
 }
-
-table {
-  width: 100%;
-}
-thead, tbody, tr, td, th {
-  display: block;
-}
-tr:after {
-  content: ' ';
-  display: block;
-  visibility: hidden;
-  clear: both;
-}
-thead th {
-  height: 30px;
-  /*text-align: left;*/
-}
-tbody {
-  height: auto;
-  overflow-y: auto;
-}
-thead {
-  /* fallback */
-}
-tbody td, thead th {
-  width: 100%;
-  float: left;
+.btn {
+  letter-spacing: 0.075em;
 }
 
 /*--------------------Navbar--------------------*/
@@ -44,6 +18,7 @@ tbody td, thead th {
   background: rgba(248, 248, 248, 0.6);
   border-style: solid;
   border-color: gainsboro;
+  margin-bottom: 60px;
 }
 
 /*Brand*/
@@ -51,7 +26,7 @@ tbody td, thead th {
 .navbar-brand {
   font-size: 35px;
   font-family: "Lato";
-  padding: 5px 16px 7.5px 16px;
+  padding: 5px 16px 8px 16px;
   height: inherit;
   margin: -1px 0 0 5px;
   border-bottom: 3px solid #891C1D;
@@ -80,7 +55,7 @@ tbody td, thead th {
   background-color: inherit;
   transition: .3s;
   box-shadow: none;
-  padding: 16px 16px 2.5px 16px;
+  padding: 16px 16px 31px 16px;
   border-bottom: 3px solid #891C1D !important;
 }
 .nav-profile-img {
@@ -131,28 +106,17 @@ tbody td, thead th {
   margin-top: 12px;
 }
 
-/*--------------------Party Registration--------------------*/
+/*--------------------Party Host--------------------*/
 
-.registration .map {
-  padding-bottom: 25px;
-}
-.registration .mdi-map-marker {
-  font-size: 18px;
-}
-.registration .mdi-close-box {
-  font-size: 23px;
-  color: maroon;
-}
-.registration .address {
-  width: 93.3333%;
-}
-.registration .autolocate {
-  width: 0;
+.host {
+  margin-top: 60px;
 }
 
 /*--------------------Party Info--------------------*/
 
-
+.party-info {
+  padding-top: 60px;
+}
 .search-text-margin {
   margin-top: 7px;
 }
@@ -165,6 +129,8 @@ tbody td, thead th {
 .index {
   padding-top: 0px;
   font-family: "Lato", sans-serif;
+  background: url('../img/background2.png') no-repeat center;
+  background-size: cover;
 }
 
 /*Background*/
@@ -174,35 +140,28 @@ tbody td, thead th {
   border: 0px;
   width: 100%;
 }
-
 .index .panel-body {
   padding: 4.6875% 25%;
 }
-.index .background {
-  background: url('../img/background2.png') no-repeat center;
-}
 
 /*Content*/
+
 .index .text {
   color: white;
-  text-shadow: 0px 4px 3px rgba(0,0,0,0.2),
-               0px 8px 13px rgba(0,0,0,0.05),
-               0px 18px 23px rgba(0,0,0,0.05);
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.2), 0px 8px 13px rgba(0, 0, 0, 0.05), 0px 18px 23px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
-
 .index .title {
   margin-top: 0px;
   font-weight: 100;
-  padding-top: 6.5%;
+  padding-top: 12%;
   font-size: 60px;
 }
-
 .index .description {
   margin: 0 12.5% 0 12.5%;
   padding-right: 17.5%;
   padding-left: 17.5%;
-  padding-top: 9.375%;
+  padding-top: 4.6875%;
   padding-bottom: 4.6875%;
   font-size: 20px;
 }
@@ -220,6 +179,7 @@ tbody td, thead th {
 }
 
 /*icons*/
+
 .index .service-button {
   color: inherit;
   border-radius: 0px;
@@ -234,8 +194,86 @@ tbody td, thead th {
   padding: 12px 16px 2.5px 16px;
 }
 .index .service-button:hover, .index .service-button:active {
-  background-color: rgba(255,255,255,0.2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
   color: white !important;
+}
+
+/*--------------------Homepage--------------------*/
+
+.admin {
+  padding-top: 60px;
+  font-family: 'Roboto', sans-serif;
+}
+.admin .griddle-row {
+  cursor: pointer;
+}
+.admin .future-date, .admin .low-complaints {
+  background-color: white;
+}
+.admin .near-date, .admin .medium-complaints {
+  background-color: rgba(255, 165, 0, 0.3);
+}
+.admin .overdue-date, .admin .high-complaints {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+.admin th {
+  background-color: white !important;
+  border-bottom: 1px solid #d9dce6 !important;
+  padding: 20px 0 18px 0 !important;
+  text-align: center !important;
+}
+.admin table {
+  text-align: center !important;
+}
+.admin .mdi {
+  font-size: 18px;
+}
+
+.admin .table-avatar {
+  width: 40px;
+}
+
+/*Header*/
+
+.admin .griddle-filter {
+  width: auto;
+  float: right;
+  margin-left: 25%;
+  height: 0px;
+}
+.admin .griddle > .top-section {
+  margin-bottom: 0.75%;
+}
+.admin .settings {
+  min-width: 160px;
+  background-color: white !important;
+  display: inline-block;
+  padding: 6px 12px;
+}
+.admin .griddle-settings-toggle {
+  width: 0 !important;
+}
+.admin .swap-option {
+  float: left;
+  margin-left: 15%;
+  position: absolute;
+  padding: 6px 30px 6px 30px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/*Modal*/
+.admin-modal {
+  margin-top: 60px;
+  width: 35vw !important;
+}
+
+.admin-modal .modal-avatar {
+  width: 10vw;
+}
+
+
+.admin-modal .modal-text {
+  margin-bottom: -2.5%;
 }
 
 /*--------------------Party Denial--------------------*/
@@ -264,9 +302,8 @@ tbody td, thead th {
   margin-right: 15px;
 }
 .img-size {
-  max-width:200px;
+  max-width: 200px;
 }
-
 .account-info-table .row-btn {
   width: 100%;
   background-color: inherit;
@@ -277,13 +314,51 @@ tbody td, thead th {
   box-shadow: inherit;
 }
 
+/*--------------------Complaint--------------------*/
+
+.complaint {
+  margin-top: 60px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+.complaint .container.complain {
+  align: center;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+.complaint .image {
+  width: 100%;
+}
+.complaint .list-group {
+  padding-left: 25%;
+  padding-right: 25%;
+}
+.complaint .panel-default.complain {
+  padding-top: 55px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+.complaint .header {
+  font-size: 150%;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Modal Complaint*/
+
+.complaint-modal .submit-btn {
+  float: left;
+}
+.complaint-modal .close-btn {
+  float: right;
+}
+.complaint-modal .modal-text {
+  width: 50vw;
+  height: 150px;
+}
+
 /*--------------------Needs Category--------------------*/
 
-.row-padding {
-  padding-bottom: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
 .going-invited-margin {
   margin-top: 2px;
 }

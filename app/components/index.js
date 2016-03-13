@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default class HomePage extends React.Component {
+export default class IndexPage extends React.Component {
   render() {
     return (
-      <div className="background">
+      <div className="index">
         <h2 className="title text">
           Hosting parties made smart
         </h2>
@@ -23,13 +23,13 @@ export default class HomePage extends React.Component {
               </Link>
             </div>
             <div className="col-md-4">
-              <Link className="btn service-button text" to="complain.html" role="button">
+              <Link className="btn service-button text" to="complaint" role="button">
                 <span className="icon mdi mdi-comment-alert" aria-hidden="true"></span>
                 <h4 className="service-text">File a Complaint</h4>
               </Link>
             </div>
             <div className="col-md-4">
-              <Link className="btn service-button text" to="#" role="button">
+              <Link className="btn service-button text" to="party" role="button">
                 <span className="icon mdi mdi-account-multiple-plus" aria-hidden="true"></span>
                 <h4 className="service-text">Request to Attend a Party</h4>
               </Link>
