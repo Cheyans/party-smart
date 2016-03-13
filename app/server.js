@@ -189,7 +189,6 @@ export function getAdminInformation(page, pageSize, cb) {
         });
         delete party['invited'];
         delete party['not attending'];
-        break;
       }
     }
   }

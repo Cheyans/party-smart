@@ -333,7 +333,8 @@ html {
 .profile thead {
   /* fallback */
 }
-.profile tbody, .profile td, .profile thead, .profile th {
+
+.profile tbody td, .profile thead th {
   width: 100%;
   float: left;
 }
