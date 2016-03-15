@@ -2,7 +2,7 @@ import React from 'react';
 import {getUserName} from '../server';
 import {Link} from 'react-router'
 
-export default class ProfileHostedParties extends React.Component {
+export class ProfileHostedParties extends React.Component {
   render() {
     var date = new Date(this.props.party.dateTime);
     return (
@@ -19,7 +19,7 @@ export default class ProfileHostedParties extends React.Component {
   }
 }
 
-export default class ProfileFriends extends React.Component {
+export class ProfileFriends extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
@@ -41,7 +41,7 @@ export default class ProfileFriends extends React.Component {
   }
 }
 
-export default class ProfilePartiesInv extends React.Component {
+export class ProfilePartiesInv extends React.Component {
   render(){
     var date = new Date(this.props.party.dateTime);
     return(
@@ -57,7 +57,7 @@ export default class ProfilePartiesInv extends React.Component {
   }
 }
 
-export default class ProfilePartiesNat extends React.Component {
+export class ProfilePartiesNat extends React.Component {
   render() {
     var date = new Date(this.props.party.dateTime);
     return (
@@ -73,7 +73,7 @@ export default class ProfilePartiesNat extends React.Component {
   }
 }
 
-export default class ProfilePartiesAtt extends React.Component {
+export class ProfilePartiesAtt extends React.Component {
   render(){
     var date = new Date(this.props.party.dateTime);
     return(
