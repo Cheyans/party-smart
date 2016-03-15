@@ -1,8 +1,45 @@
 import React from 'react';
-import {getAuthorData, getPrevParties, getHostedParties, getProfileParties} from '../server';
-import ProfileFriends from './profile-friends';
-import ProfileHostedParties from './profile-hostedparties';
+import {getAuthorData, getUserName, getProfileParties} from '../server';
 import {Link} from 'react-router'
+
+class ProfileHostedParties extends React.Component {
+  render() {
+    var date = new Date(this.props.party.dateTime);
+    return (
+      <Link to={"party"+"/"+this.props.user._id+"/"+this.props.party._id} className="list-group-item">
+        <h4 className="list-group-item-heading">{this.props.party.title}</h4>
+        <p className="list-group-item-text">
+          <span className="label label-success">{this.props.party.attending.length}</span>
+          <span className="label label-warning">{this.props.party.invited.length}</span>
+          <span className="label label-danger">{this.props.party["not attending"].length}</span>
+          <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
+        </p>
+      </Link>
+    )
+  }
+}
+
+class ProfileFriends extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  componentDidMount() {
+    getUserName(this.props.id, (userData) => {
+      this.setState(userData);
+    });
+  }
+  render() {
+    return (
+      <tr>
+        <td className="filterable-cell">
+          <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
+          <div className="pull-right">{this.state.fname} {this.state.lname}</div>
+        </td>
+      </tr>
+    )
+  }
+}
 
 class ProfilePartiesInv extends React.Component {
   render(){
@@ -77,10 +114,6 @@ export default class Profile extends React.Component {
     getAuthorData(0, (userData) => {
       this.setState({userData : userData});
     });
-    getHostedParties(0, (hostedParties)=> {
-      this.setState({hostedParties : hostedParties});
-    });
-
     getProfileParties(0, (profileParties)=> {
       this.setState({profileParties : profileParties});
     });
@@ -88,7 +121,6 @@ export default class Profile extends React.Component {
 
   render() {
     var friends = [];
-    var hosts = [];
     var prevParties = {
       "attended":[],
       "notattending":[],
@@ -99,7 +131,7 @@ export default class Profile extends React.Component {
       "notattending":[],
       "invited":[]
     };
-    var hostedParties =  [];
+    var hostedParties = [];
     if(this.state.profileParties){
       prevParties.attended = this.state.profileParties.prevParties.attended;
       prevParties.notattending = this.state.profileParties.prevParties["not attending"];
@@ -107,15 +139,10 @@ export default class Profile extends React.Component {
       futureParties.attended = this.state.profileParties.futureParties.attended;
       futureParties.notattending = this.state.profileParties.futureParties["not attending"];
       futureParties.invited = this.state.profileParties.futureParties.invited;
-      hostedParties = this.state.profileParties.hostedParties;
-      debugger;
+      hostedParties = this.state.profileParties.hostingParties;
     }
     if(this.state.userData.friends){
       friends = this.state.userData.friends;
-    }
-
-    if(this.state.hostedParties.length >0){
-      hosts = this.state.hostedParties;
     }
     return (
       <div className="profile">
@@ -207,9 +234,9 @@ export default class Profile extends React.Component {
                   <tbody className = "span-of-table">
                     <tr>
                       <td>
-                        {hosts.map((party,i) => {
+                        {hostedParties.map((party,i) => {
                           return (
-                            <ProfileHostedParties key={i} _id={party} attendees={[]} user={this.state.userData}></ProfileHostedParties>
+                            <ProfileHostedParties key={i} party={hostedParties[i]} user={this.state.userData}></ProfileHostedParties>
                           )
                         })}
                       </td>

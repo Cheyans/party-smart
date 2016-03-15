@@ -2,7 +2,6 @@ import {
   readDocument,
   writeDocument,
   addDocument,
-  readDocumentLength,
   getLimitedDBDump,
   readCollection,
   getNextCollectionID
@@ -39,66 +38,6 @@ export function getUserName(id, cb) {
 
 export function getParty(id, cb) {
   return emulateServerReturn(readDocument('parties', id), cb);
-}
-
-export function getHostedParties(id, cb) {
-  var size = readDocumentLength('parties');
-  var hosts = [];
-  var index = 0;
-  for (var i = 0; i < size; i++) {
-    var curParty = readDocument('parties', i);
-    if (curParty.host === parseInt(id)) {
-      hosts[index] = curParty._id;
-      index++;
-    }
-  }
-  return emulateServerReturn(hosts, cb);
-}
-
-export function getInviteInfo(id, cb) {
-  var size = readDocumentLength('parties');
-  var inv = [];
-  var index = 0;
-  for (var i = 0; i < size; i++) {
-    var curParty = readDocument('parties', i);
-    for (var z = 0; z < curParty.invited.length; z++) {
-      if (curParty.invited[z] === parseInt(id)) {
-        inv[index] = curParty._id;
-        index++;
-      }
-    }
-  }
-  return emulateServerReturn(inv.map((id) => readDocument('parties', id)), cb);
-}
-
-export function getDeclinedInfo(id, cb) {
-  var inv = [];
-  var index = 0;
-  var parties = readCollection('parties');
-  for (var party of parties) {
-    for (var z = 0; z < party["not attending"].length; z++) {
-      if (party["not attending"][z] === parseInt(id)) {
-        inv[index] = party._id;
-        index++;
-      }
-    }
-  }
-  return emulateServerReturn(inv.map((id) => readDocument('parties', id)), cb);
-}
-
-export function getGoingInfo(id, cb) {
-  var inv = [];
-  var index = 0;
-  var parties = readCollection('parties');
-  for (var party of parties) {
-    for (var z = 0; z < party.attending.length; z++) {
-      if (party.attending[z] === parseInt(id)) {
-        inv[index] = party._id;
-        index++;
-      }
-    }
-  }
-  return emulateServerReturn(inv.map((id) => readDocument('parties', id)), cb);
 }
 
 export function getProfileParties(id, cb) {
