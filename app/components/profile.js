@@ -1,11 +1,56 @@
 import React from 'react';
-import {getAuthorData, getPrevParties, getHostedParties} from '../server';
+import {getAuthorData, getPrevParties, getHostedParties, getProfileParties} from '../server';
 import ProfileFriends from './profile-friends';
 import ProfileHostedParties from './profile-hostedparties';
-import ProfileInvitedIntermediate from './profile-invitedparties-intermediate';
-import ProfilePreviousPartiesAtt from './profile-prevpartiesatt.js';
-import ProfilePreviousPartiesNat from './profile-prevpartiesnat.js';
-import ProfilePreviousPartiesInv from './profile-prevpartiesinv.js';
+import {Link} from 'react-router'
+
+class ProfilePartiesInv extends React.Component {
+  render(){
+    var date = new Date(this.props.party.dateTime);
+    return(
+        <Link to={"party"+"/"+this.props.user._id+"/"+this.props.party._id} className="list-group-item">
+          <h4 className="list-group-item-heading">{this.props.party.title}</h4>
+          <p className="list-group-item-text">
+            <span className='label label-warning'>Was Invited</span>
+            <span className='label label-info'>{this.props.party.attending.length}</span>
+            <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
+          </p>
+        </Link>
+    );
+  }
+}
+
+class ProfilePartiesNat extends React.Component {
+  render() {
+    var date = new Date(this.props.party.dateTime);
+    return (
+      <Link to={"party" + "/" + this.props.user._id + "/" + this.props.party._id} className="list-group-item">
+        <h4 className="list-group-item-heading">{this.props.party.title}</h4>
+        <p className="list-group-item-text">
+          <span className='label label-danger'>Did not attend</span>
+          <span className='label label-info'>{this.props.party.attending.length}</span>
+          <span className="label label-default pull-right">{date.getMonth() + 1}/{date.getDate() + 1}/{date.getYear() - 100}</span>
+        </p>
+      </Link>
+    );
+  }
+}
+
+class ProfilePartiesAtt extends React.Component {
+  render(){
+    var date = new Date(this.props.party.dateTime);
+    return(
+        <Link to={"party"+"/"+this.props.user._id+"/"+this.props.party._id} className="list-group-item">
+          <h4 className="list-group-item-heading">{this.props.party.title}</h4>
+          <p className="list-group-item-text">
+            <span className='label label-success'>Attended</span>
+            <span className='label label-info'>{this.props.party.attending.length}</span>
+            <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
+          </p>
+        </Link>
+    );
+  }
+}
 
 export default class Profile extends React.Component {
 
@@ -32,17 +77,39 @@ export default class Profile extends React.Component {
     getAuthorData(0, (userData) => {
       this.setState({userData : userData});
     });
-    getPrevParties(0, (prevParties) => {
-      this.setState({prevParties : prevParties});
-    });
     getHostedParties(0, (hostedParties)=> {
       this.setState({hostedParties : hostedParties});
+    });
+
+    getProfileParties(0, (profileParties)=> {
+      this.setState({profileParties : profileParties});
     });
   }
 
   render() {
-    var friends = []
-    var hosts = []
+    var friends = [];
+    var hosts = [];
+    var prevParties = {
+      "attended":[],
+      "notattending":[],
+      "invited":[]
+    };
+    var futureParties =  {
+      "attended":[],
+      "notattending":[],
+      "invited":[]
+    };
+    var hostedParties =  [];
+    if(this.state.profileParties){
+      prevParties.attended = this.state.profileParties.prevParties.attended;
+      prevParties.notattending = this.state.profileParties.prevParties["not attending"];
+      prevParties.invited = this.state.profileParties.prevParties.invited;
+      futureParties.attended = this.state.profileParties.futureParties.attended;
+      futureParties.notattending = this.state.profileParties.futureParties["not attending"];
+      futureParties.invited = this.state.profileParties.futureParties.invited;
+      hostedParties = this.state.profileParties.hostedParties;
+      debugger;
+    }
     if(this.state.userData.friends){
       friends = this.state.userData.friends;
     }
@@ -77,19 +144,19 @@ export default class Profile extends React.Component {
                     <tr>
                       <td>
                         <div className="list-group">
-                          {this.state.prevParties.attended.map((att,i) => {
+                          {prevParties.attended.map((att,i) => {
                             return (
-                              <ProfilePreviousPartiesAtt key={i} party = {this.state.prevParties.attended[i]} user={this.state.userData}></ProfilePreviousPartiesAtt>
+                              <ProfilePartiesAtt key={i} party = {prevParties.attended[i]} user={this.state.userData}></ProfilePartiesAtt>
                             )
                           })}
-                          {this.state.prevParties.invited.map((inv,i) => {
+                          {prevParties.invited.map((inv,i) => {
                             return (
-                              <ProfilePreviousPartiesInv key={i} party = {this.stateprevParties.invited[i]} user={this.state.userData}></ProfilePreviousPartiesInv>
+                              <ProfilePartiesInv key={i} party = {prevParties.invited[i]} user={this.state.userData}></ProfilePartiesInv>
                             )
                           })}
-                          {this.state.prevParties['not attending'].map((Nat,i) => {
+                          {prevParties.notattending.map((Nat,i) => {
                             return (
-                              <ProfilePreviousPartiesNat key={i} party = {this.state.prevParties['not attending'][i]} user={this.state.userData}></ProfilePreviousPartiesNat>
+                              <ProfilePartiesNat key={i} party = {prevParties.notattending[i]} user={this.state.userData}></ProfilePartiesNat>
                             )
                           })}
                         </div>
@@ -110,7 +177,21 @@ export default class Profile extends React.Component {
                   <tbody className = "span-of-table">
                     <tr>
                       <td>
-                        <ProfileInvitedIntermediate key={0} _id={this.props.params.id} user={this.state.userData}></ProfileInvitedIntermediate>
+                        {futureParties.attended.map((att,i) => {
+                          return (
+                            <ProfilePartiesAtt key={i} party = {futureParties.attended[i]} user={this.state.userData}></ProfilePartiesAtt>
+                          )
+                        })}
+                        {futureParties.invited.map((inv,i) => {
+                          return (
+                            <ProfilePartiesInv key={i} party = {futureParties.invited[i]} user={this.state.userData}></ProfilePartiesInv>
+                          )
+                        })}
+                        {futureParties.notattending.map((Nat,i) => {
+                          return (
+                            <ProfilePartiesNat key={i} party = {futureParties.notattending[i]} user={this.state.userData}></ProfilePartiesNat>
+                          )
+                        })}
                       </td>
                     </tr>
                   </tbody>

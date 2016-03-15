@@ -101,51 +101,83 @@ export function getGoingInfo(id, cb) {
   return emulateServerReturn(inv.map((id) => readDocument('parties', id)), cb);
 }
 
-export function getPrevParties(id, cb) {
+export function getProfileParties(id, cb) {
   var parties = readCollection('parties');
-  var index = 0;
+  var indexPrev = 0;
+  var indexFuture = 0;
+  var indexHost = 0;
   var curDate = new Date();
   var parDate = new Date();
-  var prevParties = {
-    attended: [],
-    "not attending": [],
-    invited: []
+  var profileParties = {
+    prevParties: {
+      attended: [],
+      "not attending": [],
+      invited: []
+    },
+    futureParties: {
+      attended: [],
+      "not attending": [],
+      invited: []
+    },
+    hostingParties:[]
   }
   for (var party of parties) {
     for (var z = 0; z < party.attending.length; z++) {
       if (party.attending[z] === parseInt(id)) {
         parDate = new Date(party.dateTime);
-        if (parDate.getTime() < curDate.getTime()) {
-          prevParties.attended[index] = party._id;
-          index++;
+      if (parDate.getTime() < curDate.getTime()) {
+        profileParties.prevParties.attended[indexPrev] = party._id;
+        indexPrev++;
+      }else
+      if (parDate.getTime() > curDate.getTime()) {
+        profileParties.futureParties.attended[indexFuture] = party._id;
+        indexFuture++;
         }
       }
     }
-    index = 0;
+    indexFuture = 0;
+    indexPrev = 0;
     for (z = 0; z < party["not attending"].length; z++) {
       if (party["not attending"][z] === parseInt(id)) {
         parDate = new Date(party.dateTime);
         if (parDate.getTime() < curDate.getTime()) {
-          prevParties["not attending"][index] = party._id;
-          index++;
+          profileParties.prevParties["not attending"][indexPrev] = party._id;
+          indexPrev++;
+        }else
+        if (parDate.getTime() > curDate.getTime()) {
+          profileParties.futureParties["not attending"][indexFuture] = party._id;
+          indexFuture++;
+          }
         }
       }
-    }
-    index = 0;
+    indexFuture = 0;
+    indexPrev = 0;
     for (z = 0; z < party.invited.length; z++) {
       if (party.invited[z] === parseInt(id)) {
         parDate = new Date(party.dateTime);
         if (parDate.getTime() < curDate.getTime()) {
-          prevParties.invited[index] = party._id;
-          index++;
+          profileParties.prevParties.invited[indexPrev] = party._id;
+          indexPrev++;
+        }else
+        if (parDate.getTime() > curDate.getTime()) {
+          profileParties.futureParties.invited[indexFuture] = party._id;
+          indexFuture++;
+          }
         }
       }
+      if(party.host === parseInt(id)){
+        profileParties.hostingParties[indexHost] = party._id;
+        indexHost++;
+      }
     }
-  }
-  prevParties.attended = prevParties.attended.map((att) => readDocument('parties', att));
-  prevParties["not attending"] = prevParties["not attending"].map((nat) => readDocument('parties', nat));
-  prevParties.invited = prevParties.invited.map((inv) => readDocument('parties', inv));
-  return emulateServerReturn(prevParties, cb);
+  profileParties.hostingParties = profileParties.hostingParties.map((host) => readDocument('parties', host));
+  profileParties.futureParties.attended = profileParties.futureParties.attended.map((att) => readDocument('parties', att));
+  profileParties.futureParties["not attending"] = profileParties.futureParties["not attending"].map((nat) => readDocument('parties', nat));
+  profileParties.futureParties.invited = profileParties.futureParties.invited.map((inv) => readDocument('parties', inv));
+  profileParties.prevParties.attended = profileParties.prevParties.attended.map((att) => readDocument('parties', att));
+  profileParties.prevParties["not attending"] = profileParties.prevParties["not attending"].map((nat) => readDocument('parties', nat));
+  profileParties.prevParties.invited = profileParties.prevParties.invited.map((inv) => readDocument('parties', inv));
+  return emulateServerReturn(profileParties, cb);
 }
 
 
