@@ -1,7 +1,64 @@
 import React from 'react';
-import {getAuthorData} from '../server';
+import {getAuthorData, setPartyPrivate, setPartyOpen} from '../server';
 
-export default class PartyInfoInvited extends React.Component {
+export class PrivacyButton extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
+  handlePrivateClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      setPartyPrivate(this.props.partyId, (updatedPrivateStatus) => {
+        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+      });
+    }
+  }
+
+  handleOpenClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      setPartyOpen(this.props.partyId, (updatedPrivateStatus) => {
+        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+      });
+    }
+  }
+
+render(){
+  var buttonPrivate = "btn btn-default active";
+  var buttonOpen = "btn btn-default";
+  var statusText = "This party is PRIVATE";
+  if (this.state["private status"] === "false") {
+    buttonPrivate = "btn btn-default";
+    buttonOpen = "btn btn-default active";
+    statusText = "This party is OPEN";
+  }
+
+  var userId = parseInt(this.props.userId);
+  if(this.props.host===userId){
+    return(
+      <div>
+    <div className="btn-group btn-group-justified" role="group" aria-label="...">
+      <div className="btn-group" role="group">
+        <button onClick={(e) => this.handlePrivateClick(e)} type="button" className={buttonPrivate}>Private Party</button>
+      </div>
+      <div className="btn-group" role="group">
+        <button onClick={(e) => this.handleOpenClick(e)} type="button" className={buttonOpen}>Open Party</button>
+      </div>
+    </div>
+    <br/>
+    <strong>{statusText}</strong>
+    <br/>
+    </div>
+  )}
+  else return (<div/>)
+  }
+}
+
+
+
+export class PartyInfoInvited extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}

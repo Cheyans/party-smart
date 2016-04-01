@@ -1,5 +1,5 @@
 import React from 'react';
-import {PartyInfoInvited,HostView} from './party-info-components';
+import {PartyInfoInvited,PrivacyButton} from './party-info-components';
 import {getInvitedData} from '../server';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
@@ -8,7 +8,9 @@ export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      host: {},
+      host: {
+        _id:null
+      },
       attending: [],
       invited: [],
       "not attending": []
@@ -33,12 +35,7 @@ export default class PartyInfo extends React.Component {
     });
   }
 
-
-
   render() {
-
-
-
     return (
       <div className="container party-info">
         <div className="row">
@@ -105,7 +102,7 @@ export default class PartyInfo extends React.Component {
               </div>
               <div className="panel-footer">
                 <br/>
-                <HostView key={0} userId={this.props.params.userId} hostData={this.state.hostData}></HostView>
+                <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
                 <br/>
                 <strong>Private Party:</strong>
                 <br/>
