@@ -1,10 +1,8 @@
 import React from 'react';
-import PartyInfoInvited from './party-info-invited';
+import {PartyInfoInvited,HostView} from './party-info-components';
 import {getInvitedData} from '../server';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
-import {setPartyPrivate} from '../server';
-import {setPartyOpen} from '../server';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
@@ -35,34 +33,11 @@ export default class PartyInfo extends React.Component {
     });
   }
 
-  handlePrivateClick(clickEvent) {
-    clickEvent.preventDefault();
-    if (clickEvent.button === 0) {
-      setPartyPrivate(this.state._id, (updatedPrivateStatus) => {
-        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
-      });
-    }
-  }
 
-  handleOpenClick(clickEvent) {
-    clickEvent.preventDefault();
-    if (clickEvent.button === 0) {
-      setPartyOpen(this.state._id, (updatedPrivateStatus) => {
-        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
-      });
-    }
-  }
 
   render() {
 
-    var buttonPrivate = "btn btn-default active";
-    var buttonOpen = "btn btn-default";
-    var statusText = "This party is PRIVATE";
-    if (this.state["private status"] === "false") {
-      buttonPrivate = "btn btn-default";
-      buttonOpen = "btn btn-default active";
-      statusText = "This party is OPEN";
-    }
+
 
     return (
       <div className="container party-info">
@@ -130,17 +105,7 @@ export default class PartyInfo extends React.Component {
               </div>
               <div className="panel-footer">
                 <br/>
-                <div className="btn-group btn-group-justified" role="group" aria-label="...">
-                  <div className="btn-group" role="group">
-                    <button onClick={(e) => this.handlePrivateClick(e)} type="button" className={buttonPrivate}>Private Party</button>
-                  </div>
-                  <div className="btn-group" role="group">
-                    <button onClick={(e) => this.handleOpenClick(e)} type="button" className={buttonOpen}>Open Party</button>
-                  </div>
-                </div>
-                <br/>
-                <strong>{statusText}</strong>
-                <br/>
+                <HostView key={0} userId={this.props.params.userId} hostData={this.state.hostData}></HostView>
                 <br/>
                 <strong>Private Party:</strong>
                 <br/>
