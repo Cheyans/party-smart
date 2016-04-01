@@ -57,7 +57,8 @@ export default class Host extends React.Component {
   }
 
   //adding inputted users onto an empty array
-  addInvitee() {
+  addInvitee(e) {
+    e.preventDefault();
     var invited = document.getElementById('invited');
     if (invited.value) {
       this.state.currentlyInvited.push(invited.value);
@@ -67,7 +68,8 @@ export default class Host extends React.Component {
 
 
   //adding inputted supplies onto an empty array
-  addSupply() {
+  addSupply(e) {
+    e.preventDefault();
     var supply = document.getElementById('supplies');
     if (supply.value) {
       this.state.suppliesRequested.push(supply.value);
@@ -166,7 +168,7 @@ export default class Host extends React.Component {
                   <div className='col-sm-6'>
                     <div className="form-group">
                       <input className="form-control" placeholder="Who do you want to invite?" required="true" type="text" id="invited"/>
-                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addInvitee()}>
+                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={(e) => this.addInvitee(e)}>
                         Add Person
                       </a>
                     </div>
@@ -176,7 +178,7 @@ export default class Host extends React.Component {
 
                     <div className="form-group">
                       <input className="form-control" placeholder="What do you need?" required="true" type="text" id="supplies"/>
-                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={() => this.addSupply()}>
+                      <a className="btn btn-default col-lg-6" href="#" role="button" onClick={(e) => this.addSupply(e)}>
                         Add Supply
                       </a>
                     </div>
