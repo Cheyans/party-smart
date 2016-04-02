@@ -2,14 +2,10 @@
 ## Details
 All requests must provide `Authorization` with appropriate token value unless stated
 
-All `/GET` example objects are representations of `data` defined by [JSend](https://labs.omniti.com/labs/jsend#Sohowsitwork)
-
-All `/POST`, `/PUT`, and `/DELETE` requests should only send an unwrapped json object
-
 ## GET Definitions
 
 ### Users
-Fetches basic user information
+Fetches user information
 ```javascript
 /GET /users/:id
 {
