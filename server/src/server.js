@@ -14,15 +14,6 @@ app.use(bodyParser.json());
 app.use(express.static("../../client/build"));
 
 // Fetch user id
-<<<<<<< HEAD
-app.get(`/users/:id`, function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get('Authorization'));
-  var userIdRequested = parseInt(req.params.userid);
-  if(userIdRequested === userIdRequesting) {
-    res.status(401).end();
-  }else
-  res.status(401).end();
-=======
 app.get("/users/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
@@ -50,7 +41,24 @@ app.get("/users/:id/parties", function(req, res) {
   } else {
     res.status(401).end();
   }
->>>>>>> b44f401ff5f13e6271868a148446c02d6f4f9cf7
+});
+
+// Fetch party information
+app.get("/parties/:partyId", function(req, res) {
+  var partyIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var partyIdRequested = parseInt(req.params.partyId);
+  var partyData = []
+  if(partyIdRequested === partyIdRequesting) {
+    partyData = readDocument("parties", partyIdRequested);
+    partyData.host = readDocument("users", partyData.host);
+    partyData.attending = partyData.attending.map((user) => (readDocument("users", user)));
+    partyData.invited = partyData.invited.map((user) => (readDocument("users", user)));
+    partyData.declined = partyData.declined.map((user) => (readDocument("users", user)));
+    res.send(partyData);
+  }else{
+    // 401: Unauthorized request.
+    res.status(401).end();
+  }
 });
 
 function getBasicUserInfo(userId) {
@@ -63,25 +71,6 @@ function getBasicUserInfo(userId) {
   }
 }
 
-<<<<<<< HEAD
-// Fetch party information
-app.get("/parties/:partyId", function(req, res) {
-  var partyIdRequesting = getUserIdFromToken(req.get("Authorization"));
-  var partyIdRequested = parseInt(req.params.partyId);
-  var partyData = []
-  if(partyIdRequested === partyIdRequesting) {
-    partyData = readDocument("parties", partyIdRequested);
-    partyData.host = readDocument("users", partyData.host);
-    partyData.attending = partyData.attending.map((user) => (readDocument("users", user)));
-    partyData.invited = partyData.invited.map((user) => (readDocument("users", user)));
-    partyData.declined = partyData["not attending"].map((user) => (readDocument("users", user)));
-    res.send(partyData);
-  }else{
-    // 401: Unauthorized request.
-    res.status(401).end();
-  }
-});
-=======
 function getBasicPartyInfo(userId) {
   var parties = getCollection("parties");
   var userStatus;
@@ -90,8 +79,8 @@ function getBasicPartyInfo(userId) {
 
     if (party.attending.indexOf(userId) != -1) {
       userStatus = "attending";
-    } else if (party["not attending"].indexOf(userId) != -1) {
-      userStatus = "not attending";
+    } else if (party.declined.indexOf(userId) != -1) {
+      userStatus = "declined";
     } else {
       userStatus = "invited";
     }
@@ -105,7 +94,6 @@ function getBasicPartyInfo(userId) {
     }
   });
 }
->>>>>>> b44f401ff5f13e6271868a148446c02d6f4f9cf7
 
 /**
  * Get the user ID from a token. Returns -1 (an invalid ID) if it fails.

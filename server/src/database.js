@@ -57,7 +57,7 @@ var initialData = {
         1, 2, 3
       ],
       "invited": [],
-      "not attending": [],
+      "declined": [],
       "complaints": [
         {
           "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
@@ -101,7 +101,7 @@ var initialData = {
       "invited": [
         0, 1, 3
       ],
-      "not attending": [3],
+      "declined": [3],
       "complaints": [],
       "supplies": [
         {
@@ -137,7 +137,7 @@ var initialData = {
       "invited": [
         2, 3
       ],
-      "not attending": [3],
+      "declined": [3],
       "complaints": [],
       "supplies": [
         {
@@ -171,7 +171,7 @@ var initialData = {
       "host": 2,
       "attending": [1, 2, 3],
       "invited": [],
-      "not attending": [0],
+      "declined": [0],
       "complaints": [],
       "supplies": [
         {
@@ -207,7 +207,7 @@ var initialData = {
         1, 3
       ],
       "invited": [],
-      "not attending": [0],
+      "declined": [0],
       "complaints": [],
       "supplies": []
     }
