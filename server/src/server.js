@@ -46,7 +46,7 @@ app.get("/users/:id/parties", function(req, res) {
 function getBasicUserInfo(userId) {
   var user = readDocument("users", userId);
   return {
-    id: user._id,
+    id: user._id.toString(),
     fname: user.fname,
     lname: user.lname,
     picture: user.picture
@@ -68,7 +68,7 @@ function getBasicPartyInfo(userId) {
     }
 
     return {
-      id: party._id,
+      id: party._id.toString(),
       title: party.title,
       dateTime: party.dateTime,
       host: [host.fname, host.lname].join(" "),
