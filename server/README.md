@@ -34,7 +34,7 @@ Fetches list of basic party information
     {
       "id": "Party id as string",
       "title": "Party title",
-      "dateTime": "Date time",
+      "datetime": "Date time",
       "host": "Host Name",
       "status": "User attending status"
     }
@@ -51,13 +51,13 @@ Fetches detailed party information
   "id": "Party id as string",
   "title": "Party title",
   "description": "(Nullable) Party description",
-  "private status": "Party privacy status",
+  "private_status": "Party privacy status",
   "address": "Street Address",
   "city": "City",
   "zip": "Zipcode as string",
   "state": "State abbreviation",
   "country": "Country abbreviation",
-  "dateTime": "Date time",
+  "datetime": "Date time",
   "host": "Host Name",
   "attending": [
     {
@@ -85,7 +85,7 @@ Fetches detailed party information
   ],
   "complaints": [
     {
-      "dateTime": "Date Time",
+      "datetime": "Date Time",
       "message": "(Nullable) Message"
     }
   ],
@@ -94,7 +94,7 @@ Fetches detailed party information
       "id": "Supply id as string",
       "name": "First Name",
       "picture": "Url for picture relative to server",
-      "claimed by": "(Nullable) Who currently claims supply item"
+      "claimed_by": "(Nullable) Who currently claims supply item as string"
     }
   ]
 }
@@ -174,13 +174,13 @@ Fetches admin information
       "id": "Party id as string",
       "title": "Party title",
       "description": "(Nullable) Party description",
-      "private status": "Party privacy status",
+      "private_status": "Party privacy status",
       "address": "Street Address",
       "city": "City",
       "zip": "Zipcode as string",
       "state": "State abbreviation",
       "country": "Country abbreviation",
-      "dateTime": "Date time",
+      "datetime": "Date time",
       "host id": "Host id as string",
       "host": "Host Name",
       "attending": [
@@ -209,7 +209,7 @@ Fetches admin information
       ],
       "complaints": [
         {
-          "dateTime": "Date Time",
+          "datetime": "Date Time",
           "message": "(Nullable) Message"
         }
       ],
@@ -218,7 +218,7 @@ Fetches admin information
           "id": "Supply id as string",
           "name": "First Name",
           "picture": "Url for picture relative to server",
-          "claimed by": "(Nullable) Who currently claims supply item"
+          "claimed_by": "(Nullable) Who currently claims supply item as string"
         }
       ]
     }
@@ -273,7 +273,7 @@ Create new party
   "id": "User id as string",
   "title": "Party title",
   "description": "(Nullable) Party description",
-  "private status": "Party privacy status",
+  "private_status": "Party privacy status",
   "address": "Street Address",
   "city": "City",
   "zip": "Zipcode as string",
@@ -296,7 +296,7 @@ Create a new complaint
 /POST /complaints
 {
   "id": "Party id as string",
-  "dateTime": "Date Time",
+  "datetime": "Date Time",
   "message": "(Nullable) Message"
 }
 ```
