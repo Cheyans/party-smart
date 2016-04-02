@@ -2,6 +2,49 @@ import React from 'react';
 import {getUserName} from '../server';
 import {Link} from 'react-router'
 
+export class FriendsSearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputText: "Search All..."
+    }
+  }
+
+  handleFriendsClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({inputText: "Search Friends..."})
+    }
+  }
+
+  handleAllClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({inputText: "Search All..."})
+    }
+  }
+
+  render() {
+    return(
+    <div className="input-group">
+      <input type="text" className="form-control" placeholder={this.state.inputText}/>
+      <span className="input-group-btn">
+          <button type="button" className="btn btn-success">Go</button>
+          <button type="button" className="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span className="caret"></span>
+            <span className="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul className="dropdown-menu">
+            <li><a onClick={(e) => this.handleFriendsClick(e)} type="button">Friends</a></li>
+            <li><a onClick={(e) => this.handleAllClick(e)} type="button">All</a></li>
+          </ul>
+      </span>
+    </div>
+  );
+  }
+}
+
+
 export class ProfileHostedParties extends React.Component {
   render() {
     var date = new Date(this.props.party.dateTime);

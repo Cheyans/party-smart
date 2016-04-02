@@ -13,12 +13,13 @@ app.use(bodyParser.json());
 app.use(express.static('../../client/build'));
 
 // Fetch user id
-app.get(`/users/:id`, undefined, function(req, res) {
+app.get(`/users/:id`, function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get('Authorization'));
   var userIdRequested = parseInt(req.params.userid);
   if(userIdRequested === userIdRequesting) {
-
-  }
+    res.status(401).end();
+  }else
+  res.status(401).end();
 });
 
 function getBasicUserInfo(userId) {
@@ -30,6 +31,24 @@ function getBasicUserInfo(userId) {
     picture: user.picture
   }
 }
+
+// Fetch party information
+app.get("/parties/:partyId", function(req, res) {
+  var partyIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var partyIdRequested = parseInt(req.params.partyId);
+  var partyData = []
+  if(partyIdRequested === partyIdRequesting) {
+    partyData = readDocument("parties", partyIdRequested);
+    partyData.host = readDocument("users", partyData.host);
+    partyData.attending = partyData.attending.map((user) => (readDocument("users", user)));
+    partyData.invited = partyData.invited.map((user) => (readDocument("users", user)));
+    partyData.declined = partyData["not attending"].map((user) => (readDocument("users", user)));
+    res.send(partyData);
+  }else{
+    // 401: Unauthorized request.
+    res.status(401).end();
+  }
+});
 
 /**
  * Get the user ID from a token. Returns -1 (an invalid ID) if it fails.

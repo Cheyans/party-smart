@@ -1,6 +1,6 @@
 import React from 'react';
 import {getAuthorData, getProfileParties} from '../server';
-import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends} from './profile-components';
+import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends, FriendsSearchBar} from './profile-components';
 
 export default class Profile extends React.Component {
 
@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Previous:</h3>
               </div>
               <div className="panel-body">
-                <table className="table account-info-table previous-table table-outline">
+                <table className="table account-info-table table-outline">
                   <tbody className = "span-of-table">
                     <tr>
                       <td>
@@ -165,12 +165,7 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="Search..."/>
-                  <span className="input-group-btn">
-                    <button className="btn btn-default" type="button">Go!</button>
-                  </span>
-                </div>
+                <FriendsSearchBar />
                 <table className="table table-outline friends-table">
                   <tbody className = "">
                     {friends.map((friend,i) => {

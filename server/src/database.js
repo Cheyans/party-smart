@@ -56,7 +56,7 @@ var initialData = {
       "attending": [
         1, 2, 3
       ],
-      "invited": [4],
+      "invited": [],
       "not attending": [],
       "complaints": [
         {

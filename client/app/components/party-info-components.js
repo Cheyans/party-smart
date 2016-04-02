@@ -26,6 +26,7 @@ export class PrivacyButton extends React.Component{
   }
 
 render(){
+
   var buttonPrivate = "btn btn-default active";
   var buttonOpen = "btn btn-default";
   var statusText = "This party is PRIVATE";
@@ -34,7 +35,7 @@ render(){
     buttonOpen = "btn btn-default active";
     statusText = "This party is OPEN";
   }
-
+  debugger;
   var userId = parseInt(this.props.userId);
   if(this.props.host===userId){
     return(

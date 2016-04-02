@@ -188,7 +188,6 @@ export function createNewParty(party) {
   addDocument("parties", newParty);
 }
 
-
 export function getInvitedData(idList, cb) {
   var people = [];
   for (var i = 0; i < idList.length; i++) {
@@ -240,6 +239,15 @@ export function getNearByParties(coordinates, cb) {
   }
   return emulateServerReturn(nearByParties, cb);
 }
+
+export function getPartyInfoData(partyId, cb) {
+   // We don't need to send a body, so pass in 'undefined' for the body.
+   sendXHR('GET', '/parties/' + partyId , undefined, (xhr) => {
+     // Call the callback with the data.
+     cb(JSON.parse(xhr.responseText));
+   });
+ }
+
 
 export function resetDatabase() {
   var xhr = new XMLHttpRequest();

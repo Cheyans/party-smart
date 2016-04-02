@@ -330,13 +330,9 @@ html {
     border: .5px solid #E8E8E8;
 }
 
-.previous-table{
-  height:209px;
-}
-
 .friends-table{
   margin-top: 10px;
-  height: 350px;
+
 }
 
 .span-of-table {
