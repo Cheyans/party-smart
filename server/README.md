@@ -5,7 +5,7 @@ All requests must provide `Authorization` with appropriate token value unless st
 ## GET Definitions
 
 ### Users
-Fetches basic user information
+Fetches user information
 ```javascript
 /GET /users/:id
 {
