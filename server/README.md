@@ -75,7 +75,7 @@ Fetches detailed party information
       "picture": "Url for picture relative to server"
     }
   ],
-  "not attending": [
+  "declined": [
     {
       "id": "User id as string",
       "fname": "First Name",
@@ -199,7 +199,7 @@ Fetches admin information
           "picture": "Url for picture relative to server"
         }
       ],
-      "not attending": [
+      "declined": [
         {
           "id": "User id as string",
           "fname": "First Name",
