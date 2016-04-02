@@ -241,6 +241,17 @@ export function getNearByParties(coordinates, cb) {
   return emulateServerReturn(nearByParties, cb);
 }
 
+export function resetDatabase() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/resetdb');
+  xhr.addEventListener('load', function() {
+    window.alert("Database reset! Refreshing the page now...");
+    document.location.reload(false);
+  });
+  xhr.send();
+}
+
+
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.

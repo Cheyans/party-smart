@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {getAuthorData} from '../server';
-import {ResetDatabase} from '../database';
+import {getAuthorData, resetDatabase} from '../server';
 
 export default class Page extends React.Component {
   constructor(props) {
@@ -28,7 +27,7 @@ export default class Page extends React.Component {
               <span className="mdi mdi-magnify" aria-hidden="true"></span><span className="left-brand-title">Party</span><span className="right-brand-title">Smart</span>
             </Link>
             <div className="navbar-right">
-              <ResetDatabase className="nav-logout btn btn-default btn-lg nav-btn" role="button">Reset Database</ResetDatabase>
+              <button className="btn btn-default btn-lg nav-btn" type="button" onClick={() => resetDatabase()}>Reset Database</button>
               {adminBtn}
               <Link className="nav-host btn btn-default btn-lg nav-btn" to="host" role="button">Host</Link>
               <Link className="nav-complain nav-host btn btn-default btn-lg nav-btn" to="complaint" role="button">Complain</Link>

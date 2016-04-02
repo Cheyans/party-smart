@@ -1,0 +1,9 @@
+# Global
+.DS_Store/
+node_modules/
+
+# Client
+client/build/js/app.js
+
+# Server
+server/src/database.json

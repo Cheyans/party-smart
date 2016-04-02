@@ -330,18 +330,3 @@ export function getLimitedDBDump(page, pageSize) {
   }
   return JSONClone({users: requestedUsers, parties: requestedParties});
 }
-
-/**
- * Reset database button.
- */
-export class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
-}
