@@ -51,7 +51,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+      "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
       "host": 0,
       "attending": [
         1, 2, 3
@@ -60,10 +60,10 @@ var initialData = {
       "declined": [],
       "complaints": [
         {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
           "message": null
         }, {
-          "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+          "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
           "message": "turn your shit down bruh"
         }
       ],
@@ -81,7 +81,7 @@ var initialData = {
           "supply_id": 3,
           "claimed_by": null
         }, {
-          "supply_id": 4,
+          "supply_id": 3,
           "claimed_by": 2
         }
       ]
@@ -95,7 +95,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
+      "datetime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1],
       "invited": [
@@ -117,7 +117,7 @@ var initialData = {
           "supply_id": 3,
           "claimed_by": null
         }, {
-          "supply_id": 4,
+          "supply_id": 3,
           "claimed_by": 2
         }
       ]
@@ -131,7 +131,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
+      "datetime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
       "host": 1,
       "attending": [0],
       "invited": [
@@ -153,7 +153,7 @@ var initialData = {
           "supply_id": 3,
           "claimed_by": null
         }, {
-          "supply_id": 4,
+          "supply_id": 3,
           "claimed_by": 2
         }
       ]
@@ -167,7 +167,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+      "datetime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [1, 2, 3],
       "invited": [],
@@ -187,7 +187,7 @@ var initialData = {
           "supply_id": 3,
           "claimed_by": null
         }, {
-          "supply_id": 4,
+          "supply_id": 3,
           "claimed_by": 2
         }
       ]
@@ -201,7 +201,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
+      "datetime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
       "host": 2,
       "attending": [
         1, 3
@@ -216,19 +216,19 @@ var initialData = {
   "supplies": [
     {
       "_id": 0,
-      "description": "New Amsterdam",
+      "name": "New Amsterdam",
       "picture": ""
     }, {
       "_id": 1,
-      "description": "Ballast Point",
+      "name": "Ballast Point",
       "picture": ""
     }, {
       "_id": 2,
-      "description": "Blue Label",
+      "name": "Blue Label",
       "picture": ""
     }, {
       "_id": 3,
-      "description": "Tennessee Fire",
+      "name": "Tennessee Fire",
       "picture": ""
     }
   ]

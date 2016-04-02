@@ -44,22 +44,44 @@ app.get("/users/:id/parties", function(req, res) {
 });
 
 // Fetch party information
-app.get("/parties/:partyId", function(req, res) {
-  var partyIdRequesting = getUserIdFromToken(req.get("Authorization"));
-  var partyIdRequested = parseInt(req.params.partyId);
-  var partyData = []
-  if(partyIdRequested === partyIdRequesting) {
-    partyData = readDocument("parties", partyIdRequested);
-    partyData.host = readDocument("users", partyData.host);
-    partyData.attending = partyData.attending.map((user) => (readDocument("users", user)));
-    partyData.invited = partyData.invited.map((user) => (readDocument("users", user)));
-    partyData.declined = partyData.declined.map((user) => (readDocument("users", user)));
-    res.send(partyData);
+app.get("/parties/:id", function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var partyIdRequested = parseInt(req.params.id);
+  var party = readDocument("parties", partyIdRequested);
+  if(userIdRequesting === party.host) {
+    party.id = party._id.toString();
+    delete party._id;
+
+    party.host = getBasicUserInfo(party.host);
+
+    party.attending = party.attending.map(getBasicUserInfo);
+    party.invited = party.invited.map(getBasicUserInfo);
+    party.declined = party.declined.map(getBasicUserInfo);
+    party.supplies = party.supplies.map((supply) => {
+      return getSupplyInfo(supply.supply_id, supply.claimed_by);
+    });
+
+    res.send(party);
   }else{
-    // 401: Unauthorized request.
     res.status(401).end();
   }
 });
+
+function getSupplyInfo(supplyId, claimedById) {
+  var supply = readDocument("supplies", supplyId);
+  var supplyInfo = {
+    id: supply._id.toString(),
+    name: supply.name,
+    picture: supply.picture,
+    claimed_by: null
+  };
+
+  if(claimedById != null) {
+    var claimedBy = readDocument("users", claimedById);
+    supplyInfo.claimed_by = [claimedBy.fname, claimedBy.lname].join(" ");
+  }
+  return supplyInfo;
+}
 
 function getBasicUserInfo(userId) {
   var user = readDocument("users", userId);
