@@ -48,7 +48,8 @@ app.get("/parties/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
   var party = readDocument("parties", partyIdRequested);
-  if(userIdRequesting === party.host) {
+
+  if (verifyPartyAccess(party, userIdRequesting)) {
     party.id = party._id.toString();
     delete party._id;
 
@@ -62,26 +63,11 @@ app.get("/parties/:id", function(req, res) {
     });
 
     res.send(party);
-  }else{
+  } else {
     res.status(401).end();
   }
 });
 
-function getSupplyInfo(supplyId, claimedById) {
-  var supply = readDocument("supplies", supplyId);
-  var supplyInfo = {
-    id: supply._id.toString(),
-    name: supply.name,
-    picture: supply.picture,
-    claimed_by: null
-  };
-
-  if(claimedById != null) {
-    var claimedBy = readDocument("users", claimedById);
-    supplyInfo.claimed_by = [claimedBy.fname, claimedBy.lname].join(" ");
-  }
-  return supplyInfo;
-}
 
 function getBasicUserInfo(userId) {
   var user = readDocument("users", userId);
@@ -115,6 +101,29 @@ function getBasicPartyInfo(userId) {
       status: userStatus
     }
   });
+}
+
+function getSupplyInfo(supplyId, claimedById) {
+  var supply = readDocument("supplies", supplyId);
+  var supplyInfo = {
+    id: supply._id.toString(),
+    name: supply.name,
+    picture: supply.picture,
+    claimed_by: null
+  };
+
+  if (claimedById != null) {
+    var claimedBy = readDocument("users", claimedById);
+    supplyInfo.claimed_by = [claimedBy.fname, claimedBy.lname].join(" ");
+  }
+  return supplyInfo;
+}
+
+function verifyPartyAccess(party, userId) {
+  return userId === party.host ||
+    party.attending.indexOf(userId) != -1 ||
+    party.invited.indexOf(userId) != -1 ||
+    party.declined.indexOf(userId) != -1;
 }
 
 /**
