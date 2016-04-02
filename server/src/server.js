@@ -13,11 +13,21 @@ app.use(bodyParser.json());
 app.use(express.static('../../client/build'));
 
 // Fetch user id
-app.get(`/users/:id`, undefined, function(req, res) {
+app.get('/users/:id', function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get('Authorization'));
   var userIdRequested = parseInt(req.params.userid);
-  if(userIdRequested === userIdRequesting) {
+  if (userIdRequested === userIdRequesting) {
+    var user = readDocument('users', userIdRequested);
 
+    user.friends = user.friends.map(getBasicUserInfo);
+    user.id = user._id.toString();
+
+    delete user.admin;
+    delete user._id;
+
+    res.send(user);
+  } else {
+    res.status(401).end();
   }
 });
 
@@ -56,19 +66,19 @@ function getUserIdFromToken(authorizationLine) {
   }
 }
 
+// Reset database.
+app.post('/resetdb', function(req, res) {
+  console.log("Resetting database...");
+  database.resetDatabase();
+  res.send();
+});
+
 app.use(function(err, req, res, next) {
   if (err.name === 'JsonSchemaValidation') {
     res.status(400).end();
   } else {
     next(err);
   }
-});
-
-// Reset database.
-app.post('/resetdb', function(req, res) {
-  console.log("Resetting database...");
-  database.resetDatabase();
-  res.send();
 });
 
 app.listen(3000, function() {
