@@ -13,7 +13,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json());
 app.use(express.static("../../client/build"));
 
-// Fetch user id
+// Fetch user information
 app.get("/users/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
@@ -32,7 +32,7 @@ app.get("/users/:id", function(req, res) {
   }
 });
 
-// Fetch user id
+// Fetch list of basic party information for user
 app.get("/users/:id/parties", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
