@@ -115,7 +115,7 @@ Fetches parties around user
 `Authorization`
 
 ```javascript
-/GET /parties/nearby
+/GET /nearby_parties
 {
   "complaints": [
     {
