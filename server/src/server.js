@@ -68,6 +68,29 @@ app.get("/parties/:id", function(req, res) {
   }
 });
 
+app.get("/nearby_parties", function(req, res) {
+  var latitude = req.get("Latitude");
+  var longitude = req.get("Longitude");
+  if (latitude && longitude) {
+    var parties = getCollection("parties");
+    var nearbyParties = [];
+    parties.forEach((party) => {
+      var coordinates = party.coordinates;
+      if (withinRange(0.25, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
+        nearbyParties.push({
+          id : party._id.toString(),
+          address: party.address,
+          city: party.city,
+          state: party.state,
+          zip: party.zip
+        });
+      }
+    });
+    res.send(nearbyParties);
+  } else {
+    res.status(400).end();
+  }
+});
 
 function getBasicUserInfo(userId) {
   var user = readDocument("users", userId);
@@ -125,6 +148,26 @@ function verifyPartyAccess(party, userId) {
     party.invited.indexOf(userId) != -1 ||
     party.declined.indexOf(userId) != -1;
 }
+
+//Haversine equation http://www.movable-type.co.uk/scripts/latlong.html
+function withinRange(range, lat1, lon1, lat2, lon2) {
+  var R = 6371000; // meters
+  var φ1 = lat1;
+  var φ2 = lat2;
+  var Δφ = (lat2 - lat1);
+  var Δλ = (lon2 - lon1);
+
+  var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  var d = R * c;
+
+  //Meters to miles
+  return range < 0 || d / 1609.34 < range;
+}
+
 
 /**
  * Get the user ID from a token. Returns -1 (an invalid ID) if it fails.

@@ -1,237 +1,241 @@
 // Your startup's initial mock objects go here
 var initialData = {
-  "users": [
-    {
-      "_id": 0,
-      "fname": "Cheyan",
-      "lname": "Setayesh",
-      "phone_number": "999999999",
-      "email": "a@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": [1, 2]
-    }, {
-      "_id": 1,
-      "fname": "Tim",
-      "lname": "Richards",
-      "phone_number": "999999999",
-      "email": "c@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": [2, 3]
-    }, {
-      "_id": 2,
-      "fname": "Alex",
-      "lname": "Redden",
-      "phone_number": "999999999",
-      "email": "e@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": [0, 3]
-    }, {
-      "_id": 3,
-      "fname": "John",
-      "lname": "Vilk",
-      "phone_number": "999999999",
-      "email": "g@umass.edu",
-      "picture": "img/guy.jpg",
-      "admin": "true",
-      "friends": []
-    }
-  ],
+  "users": [{
+    "_id": 0,
+    "fname": "Cheyan",
+    "lname": "Setayesh",
+    "phone_number": "999999999",
+    "email": "a@umass.edu",
+    "picture": "img/guy.jpg",
+    "admin": "true",
+    "friends": [1, 2]
+  }, {
+    "_id": 1,
+    "fname": "Tim",
+    "lname": "Richards",
+    "phone_number": "999999999",
+    "email": "c@umass.edu",
+    "picture": "img/guy.jpg",
+    "admin": "true",
+    "friends": [2, 3]
+  }, {
+    "_id": 2,
+    "fname": "Alex",
+    "lname": "Redden",
+    "phone_number": "999999999",
+    "email": "e@umass.edu",
+    "picture": "img/guy.jpg",
+    "admin": "true",
+    "friends": [0, 3]
+  }, {
+    "_id": 3,
+    "fname": "John",
+    "lname": "Vilk",
+    "phone_number": "999999999",
+    "email": "g@umass.edu",
+    "picture": "img/guy.jpg",
+    "admin": "true",
+    "friends": []
+  }],
 
-  "parties": [
-    {
-      "_id": 0,
-      "title": "testParty1",
-      "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "96 Pleasant Street",
-      "city": "Amherst",
-      "zip": "01003",
-      "state": "MA",
-      "country": "USA",
+  "parties": [{
+    "_id": 0,
+    "title": "testParty1",
+    "description": "This is a test party, don't forget to check for very long descriptions to see if they look good.",
+    "private status": "false",
+    "address": "96 N Pleasant Street",
+    "city": "Amherst",
+    "zip": "01003",
+    "state": "MA",
+    "country": "USA",
+    "coordinates": {
+      "latitude": 42.3771197,
+      "longitude": -72.520304
+    },
+    "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+    "host": 0,
+    "attending": [
+      1, 2, 3
+    ],
+    "invited": [],
+    "declined": [],
+    "complaints": [{
       "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-      "host": 0,
-      "attending": [
-        1, 2, 3
-      ],
-      "invited": [],
-      "declined": [],
-      "complaints": [
-        {
-          "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": null
-        }, {
-          "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
-          "message": "turn your shit down bruh"
-        }
-      ],
-      "supplies": [
-        {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 2,
-          "claimed_by": 3
-        }, {
-          "supply_id": 3,
-          "claimed_by": null
-        }, {
-          "supply_id": 3,
-          "claimed_by": 2
-        }
-      ]
+      "message": null
     }, {
-      "_id": 1,
-      "title": "testParty2",
-      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "95 Pleasant Street",
-      "city": "Amherst",
-      "zip": "01003",
-      "state": "MA",
-      "country": "USA",
-      "datetime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
-      "host": 2,
-      "attending": [1],
-      "invited": [
-        0, 1, 3
-      ],
-      "declined": [3],
-      "complaints": [],
-      "supplies": [
-        {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 2,
-          "claimed_by": 3
-        }, {
-          "supply_id": 3,
-          "claimed_by": null
-        }, {
-          "supply_id": 3,
-          "claimed_by": 2
-        }
-      ]
+      "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+      "message": "turn your shit down bruh"
+    }],
+    "supplies": [{
+      "supply_id": 1,
+      "claimed_by": 2
     }, {
-      "_id": 2,
-      "title": "testParty3",
-      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "94 Pleasant Street",
-      "city": "Amherst",
-      "zip": "01003",
-      "state": "MA",
-      "country": "USA",
-      "datetime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
-      "host": 1,
-      "attending": [0],
-      "invited": [
-        2, 3
-      ],
-      "declined": [3],
-      "complaints": [],
-      "supplies": [
-        {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 2,
-          "claimed_by": 3
-        }, {
-          "supply_id": 3,
-          "claimed_by": null
-        }, {
-          "supply_id": 3,
-          "claimed_by": 2
-        }
-      ]
+      "supply_id": 1,
+      "claimed_by": 2
     }, {
-      "_id": 3,
-      "title": "testParty4",
-      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "94 Pleasant Street",
-      "city": "Amherst",
-      "zip": "01003",
-      "state": "MA",
-      "country": "USA",
-      "datetime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
-      "host": 2,
-      "attending": [1, 2, 3],
-      "invited": [],
-      "declined": [0],
-      "complaints": [],
-      "supplies": [
-        {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 1,
-          "claimed_by": 2
-        }, {
-          "supply_id": 2,
-          "claimed_by": 3
-        }, {
-          "supply_id": 3,
-          "claimed_by": null
-        }, {
-          "supply_id": 3,
-          "claimed_by": 2
-        }
-      ]
+      "supply_id": 2,
+      "claimed_by": 3
     }, {
-      "_id": 4,
-      "title": "testParty5",
-      "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
-      "private status": "false",
-      "address": "94 Pleasant Street",
-      "city": "Amherst",
-      "zip": "01003",
-      "state": "MA",
-      "country": "USA",
-      "datetime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
-      "host": 2,
-      "attending": [
-        1, 3
-      ],
-      "invited": [],
-      "declined": [0],
-      "complaints": [],
-      "supplies": []
-    }
-  ],
+      "supply_id": 3,
+      "claimed_by": null
+    }, {
+      "supply_id": 3,
+      "claimed_by": 2
+    }]
+  }, {
+    "_id": 1,
+    "title": "testParty2",
+    "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+    "private status": "false",
+    "address": "95 N Pleasant Street",
+    "city": "Amherst",
+    "zip": "01003",
+    "state": "MA",
+    "country": "USA",
+    "coordinates": {
+      "latitude": 42.3771091,
+      "longitude": -72.5198894
+    },
+    "datetime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
+    "host": 2,
+    "attending": [1],
+    "invited": [
+      0, 1, 3
+    ],
+    "declined": [3],
+    "complaints": [],
+    "supplies": [{
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 2,
+      "claimed_by": 3
+    }, {
+      "supply_id": 3,
+      "claimed_by": null
+    }, {
+      "supply_id": 3,
+      "claimed_by": 2
+    }]
+  }, {
+    "_id": 2,
+    "title": "testParty3",
+    "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+    "private status": "false",
+    "address": "94 N Pleasant Street",
+    "city": "Amherst",
+    "zip": "01003",
+    "state": "MA",
+    "country": "USA",
+    "coordinates": {
+      "latitude": 42.3771017,
+      "longitude": -72.51992679999999
+    },
+    "datetime": "Thu Mar 13 2016 01:33:59 GMT-0500 (EST)",
+    "host": 1,
+    "attending": [0],
+    "invited": [
+      2, 3
+    ],
+    "declined": [3],
+    "complaints": [],
+    "supplies": [{
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 2,
+      "claimed_by": 3
+    }, {
+      "supply_id": 3,
+      "claimed_by": null
+    }, {
+      "supply_id": 3,
+      "claimed_by": 2
+    }]
+  }, {
+    "_id": 3,
+    "title": "testParty4",
+    "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+    "private status": "false",
+    "address": "20 N Pleasant St",
+    "city": "Amherst",
+    "zip": "01002",
+    "state": "MA",
+    "country": "USA",
+    "coordinates": {
+      "latitude": 42.37618519999999,
+      "longitude": -72.5198968
+    },
+    "datetime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
+    "host": 2,
+    "attending": [1, 2, 3],
+    "invited": [],
+    "declined": [0],
+    "complaints": [],
+    "supplies": [{
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 1,
+      "claimed_by": 2
+    }, {
+      "supply_id": 2,
+      "claimed_by": 3
+    }, {
+      "supply_id": 3,
+      "claimed_by": null
+    }, {
+      "supply_id": 3,
+      "claimed_by": 2
+    }]
+  }, {
+    "_id": 4,
+    "title": "testParty5",
+    "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
+    "private status": "false",
+    "address": "140 Governors Dr",
+    "city": "Amherst",
+    "zip": "01002",
+    "state": "MA",
+    "country": "USA",
+    "coordinates": {
+      "latitude": 42.39508,
+      "longitude": -72.531313
+    },
+    "datetime": "Thu Mar 29 2016 01:33:59 GMT-0500 (EST)",
+    "host": 2,
+    "attending": [
+      1, 3
+    ],
+    "invited": [],
+    "declined": [0],
+    "complaints": [],
+    "supplies": []
+  }],
 
-  "supplies": [
-    {
-      "_id": 0,
-      "name": "New Amsterdam",
-      "picture": ""
-    }, {
-      "_id": 1,
-      "name": "Ballast Point",
-      "picture": ""
-    }, {
-      "_id": 2,
-      "name": "Blue Label",
-      "picture": ""
-    }, {
-      "_id": 3,
-      "name": "Tennessee Fire",
-      "picture": ""
-    }
-  ]
+  "supplies": [{
+    "_id": 0,
+    "name": "New Amsterdam",
+    "picture": ""
+  }, {
+    "_id": 1,
+    "name": "Ballast Point",
+    "picture": ""
+  }, {
+    "_id": 2,
+    "name": "Blue Label",
+    "picture": ""
+  }, {
+    "_id": 3,
+    "name": "Tennessee Fire",
+    "picture": ""
+  }]
 };
 
 var data;
@@ -349,7 +353,9 @@ module.exports.resetDatabase = resetDatabase;
 // when changed.
 setInterval(function() {
   if (updated) {
-    fs.writeFileSync(path.join(__dirname, 'database.json'), JSON.stringify(data), { encoding: 'utf8' });
+    fs.writeFileSync(path.join(__dirname, 'database.json'), JSON.stringify(data), {
+      encoding: 'utf8'
+    });
     updated = false;
   }
 }, 200);
