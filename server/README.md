@@ -14,13 +14,13 @@ Fetches user information
   "lname": "Setayesh",
   "phone number": "Phone number as string",
   "email": "Email",
-  "picture": "Url for picture relative to server",
+  "picture": "Path to picture ",
   "friends": [
     {
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ]
 }
@@ -64,7 +64,7 @@ Fetches detailed party information
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ],
   "invited": [
@@ -72,7 +72,7 @@ Fetches detailed party information
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ],
   "declined": [
@@ -80,7 +80,7 @@ Fetches detailed party information
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ],
   "complaints": [
@@ -92,8 +92,8 @@ Fetches detailed party information
   "supplies": [
     {
       "id": "Supply id as string",
-      "name": "First Name",
-      "picture": "Url for picture relative to server",
+      "name": "Name",
+      "picture": "Path to picture ",
       "claimed_by": "(Nullable) Who currently claims supply item as string"
     }
   ]
@@ -136,7 +136,7 @@ Searches for user
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ],
   "others": [
@@ -144,7 +144,7 @@ Searches for user
       "id": "User id as string",
       "fname": "First Name",
       "lname": "Last Name",
-      "picture": "Url for picture relative to server"
+      "picture": "Path to picture "
     }
   ]
 }
@@ -157,8 +157,8 @@ Searches for supply
   "supplies:": [
     {
       "id": "Suppply id as string",
-      "name": "First Name",
-      "picture": "Url for picture relative to server"
+      "name": "Name",
+      "picture": "Path to picture "
     }
   ]
 }
@@ -188,7 +188,7 @@ Fetches admin information
           "id": "User id as string",
           "fname": "First Name",
           "lname": "Last Name",
-          "picture": "Url for picture relative to server"
+          "picture": "Path to picture "
         }
       ],
       "invited": [
@@ -196,7 +196,7 @@ Fetches admin information
           "id": "User id as string",
           "fname": "First Name",
           "lname": "Last Name",
-          "picture": "Url for picture relative to server"
+          "picture": "Path to picture "
         }
       ],
       "declined": [
@@ -204,7 +204,7 @@ Fetches admin information
           "id": "User id as string",
           "fname": "First Name",
           "lname": "Last Name",
-          "picture": "Url for picture relative to server"
+          "picture": "Path to picture "
         }
       ],
       "complaints": [
@@ -216,8 +216,8 @@ Fetches admin information
       "supplies": [
         {
           "id": "Supply id as string",
-          "name": "First Name",
-          "picture": "Url for picture relative to server",
+          "name": "Name",
+          "picture": "Path to picture ",
           "claimed_by": "(Nullable) Who currently claims supply item as string"
         }
       ]
@@ -230,13 +230,13 @@ Fetches admin information
       "lname": "Last Name",
       "phone number": "Phone number as string",
       "email": "Email",
-      "picture": "Url for picture relative to server",
+      "picture": "Path to picture ",
       "friends": [
         {
           "id": "User id as string",
           "fname": "First Name",
           "lname": "Last Name",
-          "picture": "Url for picture relative to server"
+          "picture": "Path to picture "
         }
       ]
     }
@@ -257,7 +257,7 @@ Create new user
   "lname": "Last Name",
   "phone number": "Phone number as string",
   "email": "Email",
-  "picture": "Url for picture relative to server",
+  "picture": "Path to picture ",
   "friends": [
     "User id as string"
   ]
@@ -313,7 +313,7 @@ Update user information
   "lname": "Last Name",
   "phone number": "Phone number as string",
   "email": "Email",
-  "picture": "Url for picture relative to server",
+  "picture": "Path to picture ",
   "friends": [
     "User id as string"
   ]
