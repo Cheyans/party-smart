@@ -57,6 +57,10 @@ Fetches detailed party information
   "zip": "Zipcode as string",
   "state": "State abbreviation",
   "country": "Country abbreviation",
+  "coordinates": {
+    "latitude": 42.3771017,
+    "longitude": -72.51992679999999
+  },
   "datetime": "Date time",
   "host": "Host Name",
   "attending": [
@@ -180,6 +184,10 @@ Fetches admin information
       "zip": "Zipcode as string",
       "state": "State abbreviation",
       "country": "Country abbreviation",
+      "coordinates": {
+        "latitude": 42.3771017,
+        "longitude": -72.51992679999999
+      },
       "datetime": "Date time",
       "host id": "Host id as string",
       "host": "Host Name",
