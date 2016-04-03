@@ -149,7 +149,11 @@ function verifyPartyAccess(party, userId) {
     party.declined.indexOf(userId) != -1;
 }
 
-//Haversine equation http://www.movable-type.co.uk/scripts/latlong.html
+/*
+  Return if two coordinates are within provided range in miles of each other
+  Calculations are done using Haversine equation
+  http://www.movable-type.co.uk/scripts/latlong.html
+*/
 function withinRange(range, lat1, lon1, lat2, lon2) {
   var R = 6371000; // meters
   var φ1 = lat1;
@@ -164,7 +168,7 @@ function withinRange(range, lat1, lon1, lat2, lon2) {
 
   var d = R * c;
 
-  //Meters to miles
+  //1609.34 converrts meters to miles
   return range < 0 || d / 1609.34 < range;
 }
 
