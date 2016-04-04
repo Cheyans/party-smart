@@ -44,7 +44,7 @@ app.get("/users/:id/parties", function(req, res) {
 });
 
 // Fetch party information
-app.get("/parties/:id", function(req, res) {
+app.get("/parties/:id/", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
   var party = readDocument("parties", partyIdRequested);
@@ -54,10 +54,9 @@ app.get("/parties/:id", function(req, res) {
     delete party._id;
 
     party.host = getBasicUserInfo(party.host);
-
-    party.attending = party.attending.map(getBasicUserInfo);
-    party.invited = party.invited.map(getBasicUserInfo);
-    party.declined = party.declined.map(getBasicUserInfo);
+    party.attending = party.attending.map((id) => getBasicUserInfo(id));
+    party.invited = party.invited.map((id) => getBasicUserInfo(id));
+    party.declined = party.declined.map((id) => getBasicUserInfo(id));
     party.supplies = party.supplies.map((supply) => {
       return getSupplyInfo(supply.supply_id, supply.claimed_by);
     });

@@ -7,6 +7,22 @@ import {
   getNextCollectionID
 } from "./database.js";
 
+
+export function getAuthorData(user, cb) {
+  // We don't need to send a body, so pass in 'undefined' for the body.
+  sendXHR("GET", "/users/"+ user, undefined, (xhr) => {
+    // Call the callback with the data.
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
+export function getPartyInfoData(partyId, cb) {
+  sendXHR("GET", "/parties/" + partyId, undefined, (xhr) => {
+    // Call the callback with the data.
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 export function updateUserData(data) {
   var updatedUser = {
     "_id": data.id,
@@ -21,12 +37,9 @@ export function updateUserData(data) {
   writeDocument("users", updatedUser);
 }
 
-export function getAuthorData(id, cb) {
-  return emulateServerReturn(readDocument("users", id), cb);
-}
-
 export function getUserName(id, cb) {
-  var user = readDocument("users", id);
+
+  var user = readDocument("users", parseInt(id));
   var info = {
     fname: "",
     lname: ""

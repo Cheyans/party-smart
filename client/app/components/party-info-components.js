@@ -35,7 +35,6 @@ render(){
     buttonOpen = "btn btn-default active";
     statusText = "This party is OPEN";
   }
-  debugger;
   var userId = parseInt(this.props.userId);
   if(this.props.host===userId){
     return(
@@ -64,12 +63,6 @@ export class PartyInfoInvited extends React.Component {
     super(props);
     this.state = {}
   }
-  componentDidMount() {
-    getAuthorData(this.props.id, (userData) => {
-      this.setState(userData);
-    });
-  }
-
 
   render() {
     if (this.props.status === "going") {

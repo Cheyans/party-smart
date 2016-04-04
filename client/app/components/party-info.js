@@ -1,6 +1,6 @@
 import React from 'react';
 import {PartyInfoInvited,PrivacyButton} from './party-info-components';
-import {getInvitedData} from '../server';
+import {getInvitedData,getPartyInfoData} from '../server';
 import {getAuthorData} from '../server';
 import {getPartyData} from '../server';
 
@@ -18,20 +18,8 @@ export default class PartyInfo extends React.Component {
   }
 
   componentDidMount() {
-    getPartyData(this.props.params.partyId, (partyData) => {
-      getAuthorData(partyData.host, (hostData) => {
-        partyData.host = hostData;
-        getInvitedData(partyData.attending, (attendingData) => {
-          partyData.attending = attendingData;
-          getInvitedData(partyData.invited, (invitedData) => {
-            partyData.invited = invitedData;
-            getInvitedData(partyData["not attending"], (declinedData) => {
-              partyData["not attending"] = declinedData;
-            });
-          });
-        });
+    getPartyInfoData(this.props.params.partyId, (partyData) => {
         this.setState(partyData);
-      });
     });
   }
 
@@ -148,19 +136,19 @@ export default class PartyInfo extends React.Component {
 
                     {this.state.attending.map((attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={attending} status="going"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={attending[i]} status="going"></PartyInfoInvited>
                       )
                     })}
 
                     {this.state.invited.map((invited, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={invited} status="pending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={invited[i]} status="pending"></PartyInfoInvited>
                       )
                     })}
 
                     {this.state["not attending"].map((not_attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={not_attending} status="not attending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={not_attending[i]} status="not attending"></PartyInfoInvited>
                       )
                     })}
 
