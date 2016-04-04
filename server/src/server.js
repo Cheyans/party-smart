@@ -11,7 +11,7 @@ var getCollection = database.getCollection;
 var app = express();
 app.use(bodyParser.text());
 app.use(bodyParser.json());
-app.use(express.static("../../client/build"));
+app.use(express.static("../client/build"));
 
 // Fetch user information
 app.get("/users/:id", function(req, res) {
