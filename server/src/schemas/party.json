@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "/",
+    "type": "object",
+    "properties": {
+        "title": {
+            "id": "title",
+            "type": "string"
+        },
+        "description": {
+            "id": "description",
+            "type": "string"
+        },
+        "private_status": {
+            "id": "private_status",
+            "type": "string"
+        },
+        "address": {
+            "id": "address",
+            "type": "string"
+        },
+        "city": {
+            "id": "city",
+            "type": "string"
+        },
+        "zip": {
+            "id": "zip",
+            "type": "string"
+        },
+        "state": {
+            "id": "state",
+            "type": "string"
+        },
+        "country": {
+            "id": "country",
+            "type": "string"
+        },
+        "date": {
+            "id": "date",
+            "type": "string"
+        },
+        "time": {
+            "id": "time",
+            "type": "string"
+        },
+        "phone_number": {
+            "id": "phone_number",
+            "type": "string"
+        },
+        "invited": {
+            "id": "invited",
+            "type": "array",
+            "items": {
+                "id": "0",
+                "type": "string"
+            }
+        },
+        "supplies": {
+            "id": "supplies",
+            "type": "array",
+            "items": {
+                "id": "0",
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "title",
+        "description",
+        "private_status",
+        "address",
+        "city",
+        "zip",
+        "state",
+        "country",
+        "date",
+        "time",
+        "phone_number",
+        "invited",
+        "supplies"
+    ]
+}

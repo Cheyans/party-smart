@@ -51,8 +51,7 @@ export default class Host extends React.Component {
         input.value = "";
       }
     }
-    //hardcoded host
-    newParty.host = 0;
+    
     createNewParty(newParty);
   }
 
