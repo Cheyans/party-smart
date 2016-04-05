@@ -1,18 +1,17 @@
 import React from 'react';
 import {PartyInfoInvited,PrivacyButton} from './party-info-components';
-import {getInvitedData,getPartyInfoData} from '../server';
-import {getAuthorData} from '../server';
-import {getPartyData} from '../server';
+import {getInvitedData,getPartyInfoData,getAuthorData,getPartyData} from '../server';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      host: {
+      "private status":"false",
+      "host": {
         _id:null
       },
-      attending: [],
-      invited: [],
+      "attending": [],
+      "invited": [],
       "not attending": []
     };
   }
@@ -24,7 +23,13 @@ export default class PartyInfo extends React.Component {
   }
 
   render() {
-    debugger;
+    var statusText = "";
+    if(this.props.params.userId!=this.state.host.id){
+      statusText = "This party is PRIVATE";
+      if(this.state["private status"]=="true"){
+        statusText = "This party is OPEN";
+      }
+    }
     return (
       <div className="container party-info">
         <div className="row">
@@ -95,6 +100,7 @@ export default class PartyInfo extends React.Component {
                     </div>
                     <div className="panel-footer">
                       <br/>
+                      <strong>{statusText}</strong>
                       <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host.id}></PrivacyButton>
                       <br/>
                       <strong>Private Party:</strong>
