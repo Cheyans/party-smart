@@ -2,6 +2,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
+var config = require("./config");
+var twilio = require("twilio")(config.accountSid, config.authToken);
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -29,7 +31,6 @@ app.get("/users/:id", function(req, res) {
 
     delete user.admin;
     delete user._id;
-
     res.send(user);
   } else {
     res.status(401).end();
