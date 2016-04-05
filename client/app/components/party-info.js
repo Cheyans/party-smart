@@ -24,6 +24,7 @@ export default class PartyInfo extends React.Component {
   }
 
   render() {
+    debugger;
     return (
       <div className="container party-info">
         <div className="row">
@@ -94,7 +95,7 @@ export default class PartyInfo extends React.Component {
                     </div>
                     <div className="panel-footer">
                       <br/>
-                      <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
+                      <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host.id}></PrivacyButton>
                       <br/>
                       <strong>Private Party:</strong>
                       <br/>
@@ -136,19 +137,19 @@ export default class PartyInfo extends React.Component {
 
                     {this.state.attending.map((attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={attending[i]} status="going"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={attending} status="going"></PartyInfoInvited>
                       )
                     })}
 
                     {this.state.invited.map((invited, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={invited[i]} status="pending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={invited} status="pending"></PartyInfoInvited>
                       )
                     })}
 
                     {this.state["not attending"].map((not_attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={not_attending[i]} status="not attending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={not_attending} status="not attending"></PartyInfoInvited>
                       )
                     })}
 

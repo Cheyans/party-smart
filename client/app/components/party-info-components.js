@@ -26,7 +26,7 @@ export class PrivacyButton extends React.Component{
   }
 
 render(){
-
+  debugger;
   var buttonPrivate = "btn btn-default active";
   var buttonOpen = "btn btn-default";
   var statusText = "This party is PRIVATE";
@@ -35,8 +35,7 @@ render(){
     buttonOpen = "btn btn-default active";
     statusText = "This party is OPEN";
   }
-  var userId = parseInt(this.props.userId);
-  if(this.props.host===userId){
+  if(this.props.host===this.props.userId){
     return(
       <div>
     <div className="btn-group btn-group-justified" role="group" aria-label="...">
@@ -69,7 +68,7 @@ export class PartyInfoInvited extends React.Component {
       return (
         <tr>
           <td className="filterable-cell">
-            <img src={this.props.picture} className="img-circle" width="18px" height="18px" /> {this.state.fname} {this.state.lname}
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
             <span className="label label-success pull-right going-invited-margin">Going</span>
           </td>
         </tr>
@@ -80,7 +79,7 @@ export class PartyInfoInvited extends React.Component {
       return (
         <tr>
           <td className="filterable-cell">
-            <img src={this.props.picture} className="img-circle" width="18px" height="18px" /> {this.state.fname} {this.state.lname}
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
             <span className="label label-warning pull-right going-invited-margin">Pending</span>
           </td>
         </tr>
@@ -91,7 +90,7 @@ export class PartyInfoInvited extends React.Component {
       return (
         <tr>
           <td className="filterable-cell">
-            <img src={this.props.picture} className="img-circle" width="18px" height="18px" /> {this.state.fname} {this.state.lname}
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
             <span className="label label-danger pull-right going-invited-margin">Declined</span>
           </td>
         </tr>

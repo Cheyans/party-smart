@@ -44,7 +44,7 @@ app.get("/users/:id/parties", function(req, res) {
 });
 
 // Fetch party information
-app.get("/parties/:id/", function(req, res) {
+app.get("/parties/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
   var party = readDocument("parties", partyIdRequested);
