@@ -6,6 +6,7 @@ var database = require("./database");
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var addDocument = database.addDocument;
+var deleteDocument = database.deleteDocument;
 var getCollection = database.getCollection;
 
 var app = express();
@@ -18,8 +19,11 @@ app.get("/users/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
   if (userIdRequested === userIdRequesting) {
-    var user = readDocument("users", userIdRequested);
-
+    try {
+      var user = readDocument("users", userIdRequested);
+    } catch (err) {
+      res.status(404).end();
+    }
     user.friends = user.friends.map(getBasicUserInfo);
     user.id = user._id.toString();
 
@@ -37,7 +41,12 @@ app.get("/users/:id/parties", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
   if (userIdRequested === userIdRequesting) {
-    res.send(getBasicPartyInfo(userIdRequested));
+    try {
+      var partyInfo = getBasicPartyInfo(userIdRequested);
+    } catch (err) {
+      res.status(404).end();
+    }
+    res.send(partyInfo);
   } else {
     res.status(401).end();
   }
@@ -47,8 +56,11 @@ app.get("/users/:id/parties", function(req, res) {
 app.get("/parties/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
-  var party = readDocument("parties", partyIdRequested);
-
+  try {
+    var party = readDocument("parties", partyIdRequested);
+  } catch (err) {
+    res.status(404).end();
+  }
   if (verifyPartyAccess(party, userIdRequesting)) {
     party.id = party._id.toString();
     delete party._id;
@@ -77,7 +89,7 @@ app.get("/nearby_parties", function(req, res) {
       var coordinates = party.coordinates;
       if (withinRange(0.25, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
         nearbyParties.push({
-          id : party._id.toString(),
+          id: party._id.toString(),
           address: party.address,
           city: party.city,
           state: party.state,
@@ -88,6 +100,22 @@ app.get("/nearby_parties", function(req, res) {
     res.send(nearbyParties);
   } else {
     res.status(400).end();
+  }
+});
+
+app.delete("/parties/:id", function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var partyIdRequested = parseInt(req.params.id);
+  try {
+    var party = readDocument("parties", partyIdRequested);
+  } catch (err) {
+    res.status(404).end();
+  }
+  if (verifyPartyAccess(party, userIdRequesting)) {
+    deleteDocument("parties", party._id);
+    res.status(204).end();
+  } else {
+    res.status(401).end();
   }
 });
 
