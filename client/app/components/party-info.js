@@ -184,19 +184,19 @@ export default class PartyInfo extends React.Component {
 
                     {this.state.attending.map((attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={attending} status="going" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={attending} user={this.props.params.userId} status="going" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 
                     {this.state.invited.map((invited, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={invited} status="pending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={invited} user={this.props.params.userId} status="pending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 
                     {this.state["not attending"].map((not_attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={not_attending} status="not attending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={not_attending} user={this.props.params.userId} status="not attending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 

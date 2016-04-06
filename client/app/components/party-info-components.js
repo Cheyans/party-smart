@@ -58,13 +58,15 @@ render(){
 export class PartyInfoInvited extends React.Component {
 
   render() {
+    if(this.props.party.host.id.toString()==this.props.user.toString()){
     if (this.props.status === "going") {
       return (
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
-            <button onClick={(e) => this.props.handleRemoveClick(e,this.props.id.id,this.props.party,this.props.id)} type="button">Remove User</button>
+            <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
             <span className="label label-success pull-right going-invited-margin">Going</span>
+
           </td>
         </tr>
       )
@@ -75,8 +77,8 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
-            <button onClick={(e) => this.props.handleRemoveClick(e,this.props.id.id,this.props.party,this.props.id)} type="button">Remove User</button>
-            <span className="label label-warning pull-right going-invited-margin">Pending</span>
+              <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+              <span className="label label-success pull-right going-invited-margin">Going</span>
           </td>
         </tr>
       )
@@ -87,12 +89,44 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
-            <button onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)} type="button">Remove User</button>
-            <span className="label label-danger pull-right going-invited-margin">Declined</span>
+              <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+              <span className="label label-success pull-right going-invited-margin">Going</span>
           </td>
         </tr>
       )
     }
+  }else{
+    if (this.props.status === "going") {
+      return (
+        <tr>
+          <td className="filterable-cell">
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+            <span className="label label-success pull-right going-invited-margin">Going</span>
 
+          </td>
+        </tr>
+      )
+    }
+    else if (this.props.status === "pending") {
+      return (
+        <tr>
+          <td className="filterable-cell">
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+              <span className="label label-success pull-right going-invited-margin">Going</span>
+          </td>
+        </tr>
+      )
+    }
+    else if (this.props.status === "not attending") {
+      return (
+        <tr>
+          <td className="filterable-cell">
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+              <span className="label label-success pull-right going-invited-margin">Going</span>
+          </td>
+        </tr>
+      )
+    }
+  }
   }
 }
