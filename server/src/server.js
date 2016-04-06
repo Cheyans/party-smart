@@ -223,6 +223,52 @@ app.post('/parties', validate({
   res.status(201).end();
 });
 
+function containsUser(users,user){
+  for(var u of users){
+    if(u._id==user._id){
+      return true;
+    }
+  }
+  return false;
+}
+
+app.post("/search/:userId/user", function(req, res) {
+  var fromUser = getUserIdFromToken(req.get('Authorization'));
+  var userdata = readDocument('users', fromUser);
+  if (typeof(req.body) === 'string') {
+    var query = req.body;
+
+    var friends = userdata.friends.map((userid)=>readDocument("users",userid));
+    var allusers = getCollection("users");
+        var searchedFriendUsers = [];
+        var searchedAllUsers = [];
+    for(var user of allusers){
+      user.name = (user.fname + " " + user.lname).toLowerCase();
+      if(user.name.search(query)!=-1 && !containsUser(friends,user)){
+        searchedAllUsers.push(user);
+      }
+    }
+    for(var friend of friends){
+      friend.name = (friend.fname+ " "+friend.lname).toLowerCase();
+      if(friend.name.search(query)!=-1){
+        searchedFriendUsers.push(friend);
+      }
+    }
+    var search = {
+      searchedAllUsers:[],
+      searchedFriendUsers:[]
+    };
+    search.searchedAllUsers = searchedAllUsers;
+    search.searchedFriendUsers = searchedFriendUsers;
+    res.send(search);
+  } else {
+    // 400: Bad Request.
+    res.status(400).end();
+  }
+});
+
+
+
 // update invited list for a party
 app.put('/parties/:id/invited', function(req, res) {
   var fromUser = getUserIdFromToken(req.get('Authorization'));
