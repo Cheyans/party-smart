@@ -1,5 +1,5 @@
 import React from 'react';
-import {PartyInfoInvited,PrivacyButton} from './party-info-components';
+import {PartyInfoInvited,PrivacyButton,PartyInfoComplaint} from './party-info-components';
 import {putPartyInvited,getPartyInfoData} from '../server'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
@@ -21,7 +21,9 @@ export default class PartyInfo extends React.Component {
       },
       "attending": [],
       "invited": [],
-      "not attending": []
+      "declined": [],
+      "complaints": [],
+      "supplies": []
     };
   }
 
@@ -86,8 +88,7 @@ export default class PartyInfo extends React.Component {
                     <a href="#supplies" data-toggle="tab">Supplies</a>
                   </li>
                   <li role="presentation" className="">
-                    <a href="#complaints" data-toggle="tab">Complaints
-                      <span className="badge background-color badge-warning">1</span>
+                    <a href="#complaints" data-toggle="tab">Complaints <span className="badge background-color badge-warning">{this.state.complaints.length}</span>
                     </a>
                   </li>
                 </ul>
@@ -122,17 +123,14 @@ export default class PartyInfo extends React.Component {
 
                         <address>
                           {this.state.address}<br/>
-                          {this.state.city}
-                          {this.state.state},
-                          {this.state.zip}<br/>
+                          {this.state.city} {this.state.state}, {this.state.zip}<br/>
                         </address>
 
                         <strong>Party Host</strong><br/>
-                        {this.state.host.fname}
-                        {this.state.host.lname}
+                        {this.state.host.fname} {this.state.host.lname}
                         <br/>
                         <a href="mailto:#">{this.state.host.email}</a>
-                        <br/><br/>
+                        <br/>
 
                         <strong>Description</strong><br/>
                         {this.state.description}
@@ -162,10 +160,26 @@ export default class PartyInfo extends React.Component {
                   </div>
 
                   <div className="tab-pane fade" id="complaints">
-                    Complaint stuff here
-                  </div>
-                </div>
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
+                        {this.state.complaints.map((complaints, i) => {
+                          return (
+                            <PartyInfoComplaint key={i} id={complaints}></PartyInfoComplaint>
+                          )
+                        })}
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
@@ -194,7 +208,7 @@ export default class PartyInfo extends React.Component {
                       )
                     })}
 
-                    {this.state["not attending"].map((not_attending, i) => {
+                    {this.state.declined.map((not_attending, i) => {
                       return (
                         <PartyInfoInvited key={i} id={not_attending} user={this.props.params.userId} status="not attending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )

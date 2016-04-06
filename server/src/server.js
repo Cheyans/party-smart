@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
 var partySchema = require("./schemas/party.json");
-var messageService = require("./message");
+//var messageService = require("./message");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
