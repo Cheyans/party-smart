@@ -32,6 +32,7 @@ app.get("/users/:id", function(req, res) {
 
     delete user.admin;
     delete user._id;
+    messageService.sendSMS(user.phone_number, "test");
     res.send(user);
   } else {
     res.status(401).end();
