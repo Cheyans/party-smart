@@ -33,6 +33,7 @@ export default class Profile extends React.Component {
   }
 
   render() {
+    debugger;
     var friends = [];
     var prevParties = {
       "attended":[],

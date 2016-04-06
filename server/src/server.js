@@ -55,6 +55,92 @@ app.get("/users/:id/parties", function(req, res) {
     }
 });
 
+app.get("/users/:id/profile", function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = parseInt(req.params.id);
+  if (userIdRequested === userIdRequesting) {
+    var parties = getCollection("parties");
+    var indexPrev = 0;
+    var indexFuture = 0;
+    var indexHost = 0;
+    var curDate = new Date();
+    var parDate = new Date();
+    var profileParties = {
+      prevParties: {
+        attended: [],
+        "not attending": [],
+        declined:[],
+        invited: []
+      },
+      futureParties: {
+        attended: [],
+        "not attending": [],
+        declined:[],
+        invited: []
+      },
+      hostingParties: []
+    }
+    for (var party of parties) {
+      for (var z = 0; z < party.attending.length; z++) {
+        if (party.attending[z] === userIdRequesting) {
+          parDate = new Date(party.dateTime);
+          if (parDate.getTime() < curDate.getTime()) {
+            profileParties.prevParties.attended[indexPrev] = party._id;
+            indexPrev++;
+          } else
+          if (parDate.getTime() > curDate.getTime()) {
+            profileParties.futureParties.attended[indexFuture] = party._id;
+            indexFuture++;
+          }
+        }
+      }
+      indexFuture = 0;
+      indexPrev = 0;
+      for (z = 0; z < party.declined.length; z++) {
+        if (party.declined[z] === userIdRequesting) {
+          parDate = new Date(party.dateTime);
+          if (parDate.getTime() < curDate.getTime()) {
+            profileParties.prevParties["not attending"][indexPrev] = party._id;
+            indexPrev++;
+          } else
+          if (parDate.getTime() > curDate.getTime()) {
+            profileParties.futureParties["not attending"][indexFuture] = party._id;
+            indexFuture++;
+          }
+        }
+      }
+      indexFuture = 0;
+      indexPrev = 0;
+      for (z = 0; z < party.invited.length; z++) {
+        if (party.invited[z] === userIdRequesting) {
+          parDate = new Date(party.dateTime);
+          if (parDate.getTime() < curDate.getTime()) {
+            profileParties.prevParties.invited[indexPrev] = party._id;
+            indexPrev++;
+          } else
+          if (parDate.getTime() > curDate.getTime()) {
+            profileParties.futureParties.invited[indexFuture] = party._id;
+            indexFuture++;
+          }
+        }
+      }
+      if (party.host === userIdRequesting) {
+        profileParties.hostingParties[indexHost] = party._id;
+        indexHost++;
+      }
+    }
+    profileParties.hostingParties = profileParties.hostingParties.map((host) => readDocument("parties", host));
+    profileParties.futureParties.attended = profileParties.futureParties.attended.map((att) => readDocument("parties", att));
+    profileParties.futureParties["not attending"] = profileParties.futureParties["not attending"].map((nat) => readDocument("parties", nat));
+    profileParties.futureParties.invited = profileParties.futureParties.invited.map((inv) => readDocument("parties", inv));
+    profileParties.prevParties.attended = profileParties.prevParties.attended.map((att) => readDocument("parties", att));
+    profileParties.prevParties["not attending"] = profileParties.prevParties["not attending"].map((nat) => readDocument("parties", nat));
+    profileParties.prevParties.invited = profileParties.prevParties.invited.map((inv) => readDocument("parties", inv));
+    res.send(profileParties);
+  } else {
+    res.status(401).end();
+  }
+});
 // Fetch party information
 app.get("/parties/:id", function(req, res) {
     var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
@@ -81,6 +167,8 @@ app.get("/parties/:id", function(req, res) {
         res.status(401).end();
     }
 });
+
+
 
 app.get("/nearby_parties", function(req, res) {
     var latitude = req.get("Latitude");

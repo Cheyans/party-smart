@@ -36,6 +36,14 @@ export function putPartyInvited(partyId, party, userId, cb){
   });
 }
 
+export function getProfileParties(id, cb) {
+  sendXHR("GET", "/users/" + id + "/profile", undefined, (xhr) => {
+    // Call the callback with the data.
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
+
 export function updateUserData(data) {
     var updatedUser = {
         "_id": data.id,
@@ -144,6 +152,7 @@ export function getProfileParties(id, cb) {
     profileParties.prevParties.invited = profileParties.prevParties.invited.map((inv) => readDocument("parties", inv));
     return emulateServerReturn(profileParties, cb);
 }
+
 
 
 export function getAdminInformation(page, pageSize, cb) {
