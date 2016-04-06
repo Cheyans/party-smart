@@ -130,3 +130,32 @@ export class PartyInfoInvited extends React.Component {
   }
   }
 }
+
+
+export class PartyInfoComplaint extends React.Component {
+  render() {
+    if (this.props.id.message === null) {
+      return (
+        <tr>
+          <td>
+            {this.props.id.datetime}
+          </td>
+          <td>
+            <i>This neighbor did not leave a message</i>
+          </td>
+        </tr>
+      )
+    } else {
+        return (
+          <tr>
+            <td>
+              {this.props.id.datetime}
+            </td>
+            <td>
+              {this.props.id.message}
+            </td>
+          </tr>
+        )
+      }
+  }
+}
