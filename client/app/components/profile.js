@@ -2,17 +2,28 @@ import React from 'react';
 import {searchProfile, getAuthorData, getProfileParties} from '../server';
 import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends, FriendsSearchBar} from './profile-components';
 
-function remove_duplicates_safe(arr) {
-  var obj = {};
-  var arr2 = [];
-  for (var i = 0; i < arr.length; i++) {
-      if (!(arr[i] in obj)) {
-          arr2.push(arr[i]);
-          obj[arr[i]] = true;
-      }
-  }
-  return arr2;
-}
+// function arrayContains(arr, val) {
+//     var i = arr.length;
+//     while (i--) {
+//         if ( arr[i].id === val.id ) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+//
+// function removeDuplicates(arr) {
+//     var originalArr = arr.slice(0);
+//     var i, len, j, val;
+//     arr.length = 0;
+//
+//     for (i = 0, len = originalArr.length; i < len; ++i) {
+//         val = originalArr[i];
+//         if (!arrayContains(arr, val)) {
+//             arr.push(val);
+//         }
+//     }
+// }
 
 export default class Profile extends React.Component {
 
@@ -93,7 +104,8 @@ export default class Profile extends React.Component {
       hostedParties = this.state.profileParties.hostingParties;
     }
     if(this.state.isSearch == true){
-      friendsTable = remove_duplicates_safe(this.state.searchData.searchedAllUsers.concat(this.state.searchData.searchedFriendUsers));
+      friendsTable = this.state.searchData.searchedAllUsers.concat(this.state.searchData.searchedFriendUsers);
+      debugger;
     }else{
       if(this.state.userData.friends){
         friendsTable = this.state.userData.friends;

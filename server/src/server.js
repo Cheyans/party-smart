@@ -196,12 +196,19 @@ app.get("/nearby_parties", function(req, res) {
     }
 });
 
-app.post("/profile/:userId/search", function(req, res) {
+function containsUser(users,user){
+  for(var u of users){
+    if(u._id==user._id){
+      return true;
+    }
+  }
+  return false;
+}
+
+app.post("/search/:userId/user", function(req, res) {
   var fromUser = getUserIdFromToken(req.get('Authorization'));
   var userdata = readDocument('users', fromUser);
   if (typeof(req.body) === 'string') {
-    // trim() removes whitespace before and after the query.
-    // toLowerCase() makes the query lowercase.
     var query = req.body;
 
     var friends = userdata.friends.map((userid)=>readDocument("users",userid));
@@ -210,7 +217,7 @@ app.post("/profile/:userId/search", function(req, res) {
         var searchedAllUsers = [];
     for(var user of allusers){
       user.name = (user.fname + " " + user.lname).toLowerCase();
-      if(user.name.search(query)!=-1){
+      if(user.name.search(query)!=-1 && !containsUser(friends,user)){
         searchedAllUsers.push(user);
       }
     }
@@ -232,6 +239,8 @@ app.post("/profile/:userId/search", function(req, res) {
     res.status(400).end();
   }
 });
+
+
 
 // update invited list for a party
 app.put('/parties/:id/invited', function(req, res) {

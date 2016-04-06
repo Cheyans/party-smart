@@ -37,7 +37,7 @@ export function putPartyInvited(partyId, party, userId, cb){
 }
 
 export function searchProfile(id, queryText, cb){
-  sendXHR("POST", "/profile/" + id + "/search", queryText , (xhr) => {
+  sendXHR("POST", "/search/" + id + "/user", queryText , (xhr) => {
     // Call the callback with the data.
     cb(JSON.parse(xhr.responseText));
   });
