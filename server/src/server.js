@@ -91,6 +91,55 @@ app.get("/nearby_parties", function(req, res) {
   }
 });
 
+// update invited list for a party
+app.put('/parties/:id/invited', function(req, res) {
+  var fromUser = getUserIdFromToken(req.get('Authorization'));
+  var parties = getCollection("parties");
+  var isHost = false;
+  for(var party of parties){
+    if(party.host==fromUser && party._id==req.params.id){
+      isHost = true;
+      break;
+    }
+  }
+  var index;
+  if (isHost) {
+    for(var user of party.attending){
+      if(req.body.indexOf(user.toString())==-1){
+        index = party.attending.indexOf(user);
+        party.attending.splice(index,1);
+      }
+    }
+    for(user of party.declined){
+      if(req.body.indexOf(user.toString())==-1){
+        index = party.declined.indexOf(user);
+        party.declined.splice(index,1);
+      }
+    }
+    for(user of party.invited){
+      if(req.body.indexOf(user.toString())==-1){
+        index = party.invited.indexOf(user);
+        party.invited.splice(index,1);
+      }
+    }
+    writeDocument("parties",party)
+    var updatedParty ={
+      host:[],
+      attending:[],
+      invited:[],
+      declined:[]
+    };
+    updatedParty.host = getBasicUserInfo(party.host);
+    updatedParty.attending = party.attending.map((id) => getBasicUserInfo(id));
+    updatedParty.invited = party.invited.map((id) => getBasicUserInfo(id));
+    updatedParty.declined = party.declined.map((id) => getBasicUserInfo(id));
+    res.send(updatedParty);
+  } else {
+    // 401: Unauthorized.
+    res.status(401).end();
+  }
+})
+
 function getBasicUserInfo(userId) {
   var user = readDocument("users", userId);
   return {

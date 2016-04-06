@@ -1,6 +1,5 @@
 import React from 'react';
-import {getAuthorData, setPartyPrivate, setPartyOpen} from '../server';
-
+import {setPartyPrivate, setPartyOpen} from '../server';
 export class PrivacyButton extends React.Component{
   constructor(props) {
     super(props);
@@ -57,10 +56,14 @@ render(){
 
 
 export class PartyInfoInvited extends React.Component {
+
+
+
   constructor(props) {
     super(props);
     this.state = {}
   }
+
 
   render() {
     if (this.props.status === "going") {
@@ -68,6 +71,7 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+            <button onClick={(e) => this.props.handleRemoveClick(e,this.props.id.id,this.props.party)} type="button">Remove User</button>
             <span className="label label-success pull-right going-invited-margin">Going</span>
           </td>
         </tr>
@@ -79,6 +83,7 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+            <button onClick={(e) => this.props.handleRemoveClick(e,this.props.id.id,this.props.party)} type="button">Remove User</button>
             <span className="label label-warning pull-right going-invited-margin">Pending</span>
           </td>
         </tr>
@@ -90,6 +95,7 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
+            <button onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party)} type="button">Remove User</button>
             <span className="label label-danger pull-right going-invited-margin">Declined</span>
           </td>
         </tr>

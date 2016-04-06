@@ -1,10 +1,11 @@
 import React from 'react';
 import {PartyInfoInvited,PrivacyButton} from './party-info-components';
-import {getInvitedData,getPartyInfoData,getAuthorData,getPartyData} from '../server';
+import {putPartyInvited,getPartyInfoData} from '../server'
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.state = {
       "private status":"false",
       "host": {
@@ -16,10 +17,21 @@ export default class PartyInfo extends React.Component {
     };
   }
 
+  handleRemoveClick(clickEvent, userId, party) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      putPartyInvited(party.id,party,userId,(partyData) => this.setState(
+        Object.assign(this.state, {"attending": partyData.attending},{"declined": partyData.declined},{"invited": partyData.invited})
+      )
+    );
+    }
+  }
+
   componentDidMount() {
-    getPartyInfoData(this.props.params.partyId, (partyData) => {
+      getPartyInfoData(this.props.params.partyId, (partyData) => {
         this.setState(partyData);
-    });
+      }
+    )
   }
 
   render() {
@@ -143,19 +155,19 @@ export default class PartyInfo extends React.Component {
 
                     {this.state.attending.map((attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={attending} status="going"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={attending} status="going" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 
                     {this.state.invited.map((invited, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={invited} status="pending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={invited} status="pending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 
                     {this.state["not attending"].map((not_attending, i) => {
                       return (
-                        <PartyInfoInvited key={i} id={not_attending} status="not attending"></PartyInfoInvited>
+                        <PartyInfoInvited key={i} id={not_attending} status="not attending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )
                     })}
 

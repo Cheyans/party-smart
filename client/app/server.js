@@ -23,6 +23,19 @@ export function getPartyInfoData(partyId, cb) {
   });
 }
 
+export function putPartyInvited(partyId, party, userId, cb){
+  var spliceParty = {
+    invited: party.attending.concat(party.declined.concat(party.invited))
+  }
+  var body = spliceParty.invited.map((user) => (user).id);
+  var index = body.indexOf(userId);
+  body.splice(index,1);
+  sendXHR("PUT", "/parties/" + partyId + "/invited", body , (xhr) => {
+    // Call the callback with the data.
+    (cb(JSON.parse(xhr.responseText)));
+  });
+}
+
 export function updateUserData(data) {
   var updatedUser = {
     "_id": data.id,
