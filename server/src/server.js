@@ -2,8 +2,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
-var config = require("./config");
-var twilio = require("twilio")(config.accountSid, config.authToken);
+//var config = require("./config");
+//var twilio = require("twilio")(config.accountSid, config.authToken);
 var partySchema = require("./schemas/party.json");
 
 var readDocument = database.readDocument;
@@ -81,9 +81,11 @@ app.get("/users/:id/profile", function(req, res) {
       hostingParties: []
     }
     for (var party of parties) {
+      indexFuture = 0;
+      indexPrev = 0;
       for (var z = 0; z < party.attending.length; z++) {
         if (party.attending[z] === userIdRequesting) {
-          parDate = new Date(party.dateTime);
+          parDate = new Date(party.datetime);
           if (parDate.getTime() < curDate.getTime()) {
             profileParties.prevParties.attended[indexPrev] = party._id;
             indexPrev++;
@@ -98,7 +100,7 @@ app.get("/users/:id/profile", function(req, res) {
       indexPrev = 0;
       for (z = 0; z < party.declined.length; z++) {
         if (party.declined[z] === userIdRequesting) {
-          parDate = new Date(party.dateTime);
+          parDate = new Date(party.datetime);
           if (parDate.getTime() < curDate.getTime()) {
             profileParties.prevParties["not attending"][indexPrev] = party._id;
             indexPrev++;
@@ -113,7 +115,7 @@ app.get("/users/:id/profile", function(req, res) {
       indexPrev = 0;
       for (z = 0; z < party.invited.length; z++) {
         if (party.invited[z] === userIdRequesting) {
-          parDate = new Date(party.dateTime);
+          parDate = new Date(party.datetime);
           if (parDate.getTime() < curDate.getTime()) {
             profileParties.prevParties.invited[indexPrev] = party._id;
             indexPrev++;

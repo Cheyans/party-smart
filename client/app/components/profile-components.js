@@ -47,14 +47,14 @@ export class FriendsSearchBar extends React.Component {
 
 export class ProfileHostedParties extends React.Component {
   render() {
-    var date = new Date(this.props.party.dateTime);
+    var date = new Date(this.props.party.datetime);
     return (
       <Link to={"party"+"/"+this.props.user.id+"/"+this.props.party._id} className="list-group-item">
         <h4 className="list-group-item-heading">{this.props.party.title}</h4>
         <p className="list-group-item-text">
           <span className="label label-success">{this.props.party.attending.length}</span>
           <span className="label label-warning">{this.props.party.invited.length}</span>
-          <span className="label label-danger">{this.props.party["not attending"].length}</span>
+          <span className="label label-danger">{this.props.party.declined.length}</span>
           <span className="label label-default pull-right">{date.getMonth()+1}/{date.getDate()+1}/{date.getYear()-100}</span>
         </p>
       </Link>
@@ -63,21 +63,12 @@ export class ProfileHostedParties extends React.Component {
 }
 
 export class ProfileFriends extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
-  componentDidMount() {
-    getUserName(this.props.id, (userData) => {
-      this.setState(userData);
-    });
-  }
   render() {
     return (
       <tr>
         <td className="filterable-cell">
           <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
-          <div className="pull-right">{this.state.fname} {this.state.lname}</div>
+          <div className="pull-right">{this.props.id.fname} {this.props.id.lname}</div>
         </td>
       </tr>
     )
@@ -86,7 +77,7 @@ export class ProfileFriends extends React.Component {
 
 export class ProfilePartiesInv extends React.Component {
   render(){
-    var date = new Date(this.props.party.dateTime);
+    var date = new Date(this.props.party.datetime);
     return(
         <Link to={"party"+"/"+this.props.user.id+"/"+this.props.party._id} className="list-group-item">
           <h4 className="list-group-item-heading">{this.props.party.title}</h4>
@@ -102,7 +93,7 @@ export class ProfilePartiesInv extends React.Component {
 
 export class ProfilePartiesNat extends React.Component {
   render() {
-    var date = new Date(this.props.party.dateTime);
+    var date = new Date(this.props.party.datetime);
     return (
       <Link to={"party" + "/" + this.props.user.id + "/" + this.props.party._id} className="list-group-item">
         <h4 className="list-group-item-heading">{this.props.party.title}</h4>
@@ -118,7 +109,7 @@ export class ProfilePartiesNat extends React.Component {
 
 export class ProfilePartiesAtt extends React.Component {
   render(){
-    var date = new Date(this.props.party.dateTime);
+    var date = new Date(this.props.party.datetime);
     return(
         <Link to={"party"+"/"+this.props.user.id+"/"+this.props.party._id} className="list-group-item">
           <h4 className="list-group-item-heading">{this.props.party.title}</h4>
