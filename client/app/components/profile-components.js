@@ -70,16 +70,41 @@ export class ProfileHostedParties extends React.Component {
   }
 }
 
+function isFriend(users,user){
+  for(var u of users){
+    if(u.id==user){
+      return true;
+    }
+  }
+  return false;
+}
+
 export class ProfileFriends extends React.Component {
+
   render() {
-    return (
-      <tr>
-        <td className="filterable-cell">
-          <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
-          <div className="pull-right">{this.props.id.fname} {this.props.id.lname}</div>
-        </td>
-      </tr>
-    )
+    if(isFriend(this.props.user.friends,this.props.id.id)||isFriend(this.props.user.friends,this.props.id._id)) {
+      return (
+        <tr>
+          <td className="filterable-cell">
+            <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
+            <div className="pull-right">{this.props.id.fname} {this.props.id.lname}
+              <a href="#" onClick={(e) => this.props.handleRemoveFriendClick(e,this.props.user.id,this.props.id)}className="glyphicon glyphicon-remove" aria-hidden="true"></a>
+            </div>
+          </td>
+        </tr>
+      )
+    }else {
+      return (
+        <tr>
+          <td className="filterable-cell">
+            <img src="../img/guy.jpg" className="img-circle" width="18px" height="18px" />
+            <div className="pull-right">{this.props.id.fname} {this.props.id.lname}
+              <a href="#" onClick={(e) => this.props.handleAddFriendClick(e,this.props.user.id,this.props.id)}className="glyphicon glyphicon-ok" aria-hidden="true"></a>
+            </div>
+          </td>
+        </tr>
+      )
+    }
   }
 }
 
