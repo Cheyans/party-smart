@@ -4,7 +4,7 @@ var initialData = {
     "_id": 0,
     "fname": "Cheyan",
     "lname": "Setayesh",
-    "phone_number": "999999999",
+    "phone_number": "7818799033",
     "email": "a@umass.edu",
     "picture": "img/guy.jpg",
     "admin": "true",
