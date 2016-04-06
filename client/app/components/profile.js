@@ -1,12 +1,32 @@
 import React from 'react';
-import {getAuthorData, getProfileParties} from '../server';
+import {searchProfile, getAuthorData, getProfileParties} from '../server';
 import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends, FriendsSearchBar} from './profile-components';
+
+function remove_duplicates_safe(arr) {
+  var obj = {};
+  var arr2 = [];
+  for (var i = 0; i < arr.length; i++) {
+      if (!(arr[i] in obj)) {
+          arr2.push(arr[i]);
+          obj[arr[i]] = true;
+      }
+  }
+  return arr2;
+}
 
 export default class Profile extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.showFriends = this.showFriends.bind(this);
     this.state = {
+      showFriends:true,
+      searchData:{
+        searchedAllUsers:[],
+        searchedFriendUsers:[]
+      },
+      isSearch:false,
       prevParties: {
         "attended":[],
         "not attending": [],
@@ -23,6 +43,23 @@ export default class Profile extends React.Component {
     };
   }
 
+  showFriends(){
+    this.setState({isSearch:false});
+  }
+
+
+  handleSearch(clickEvent, searchText) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      searchProfile(this.props.params.userId,searchText,(searchdata) =>
+        this.setState({searchData: searchdata, isSearch:true})
+      )
+    }
+  }
+
+
+
+
   componentDidMount() {
     getAuthorData(0, (userData) => {
       this.setState({userData : userData});
@@ -34,7 +71,7 @@ export default class Profile extends React.Component {
 
   render() {
 
-    var friends = [];
+    var friendsTable = [];
     var prevParties = {
       "attended":[],
       "notattending":[],
@@ -55,8 +92,12 @@ export default class Profile extends React.Component {
       futureParties.invited = this.state.profileParties.futureParties.invited;
       hostedParties = this.state.profileParties.hostingParties;
     }
-    if(this.state.userData.friends){
-      friends = this.state.userData.friends;
+    if(this.state.isSearch == true){
+      friendsTable = remove_duplicates_safe(this.state.searchData.searchedAllUsers.concat(this.state.searchData.searchedFriendUsers));
+    }else{
+      if(this.state.userData.friends){
+        friendsTable = this.state.userData.friends;
+      }
     }
     return (
       <div className="profile">
@@ -166,10 +207,10 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
-                <FriendsSearchBar />
+                <FriendsSearchBar handleSearch={this.handleSearch} showFriends={this.showFriends}/>
                 <table className="table table-outline friends-table">
                   <tbody className = "">
-                    {friends.map((friend,i) => {
+                    {friendsTable.map((friend,i) => {
                       return (
                         <ProfileFriends key={i} user={this.state.userData} id={friend}></ProfileFriends>
                       )

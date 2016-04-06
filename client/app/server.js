@@ -36,6 +36,13 @@ export function putPartyInvited(partyId, party, userId, cb){
   });
 }
 
+export function searchProfile(id, queryText, cb){
+  sendXHR("POST", "/profile/" + id + "/search", queryText , (xhr) => {
+    // Call the callback with the data.
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 export function getProfileParties(id, cb) {
   sendXHR("GET", "/users/" + id + "/profile", undefined, (xhr) => {
     // Call the callback with the data.

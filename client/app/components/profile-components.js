@@ -6,14 +6,21 @@ export class FriendsSearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputText: "Search All..."
+      inputText: "Search All...",
+      value: ""
     }
+  }
+
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({value: e.target.value});
   }
 
   handleFriendsClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      this.setState({inputText: "Search Friends..."})
+      this.props.showFriends();
+      this.setState({inputText: "View Friends..."})
     }
   }
 
@@ -27,16 +34,17 @@ export class FriendsSearchBar extends React.Component {
   render() {
     return(
     <div className="input-group">
-      <input type="text" className="form-control" placeholder={this.state.inputText}/>
+      <input type="text" className="form-control" value={this.state.value} placeholder={this.state.inputText} onChange={(e) => this.handleChange(e)}/>
       <span className="input-group-btn">
-          <button type="button" className="btn btn-success">Go</button>
+          <button onClick={(e) => this.props.handleSearch(e,this.state.value)} type="button" className="btn btn-success">Go</button>
           <button type="button" className="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
             <span className="caret"></span>
             <span className="sr-only">Toggle Dropdown</span>
           </button>
           <ul className="dropdown-menu">
-            <li><a onClick={(e) => this.handleFriendsClick(e)} type="button">Friends</a></li>
-            <li><a onClick={(e) => this.handleAllClick(e)} type="button">All</a></li>
+            <li><a onClick={(e) => this.handleFriendsClick(e)} type="button">View Friends</a></li>
+            <li><a onClick={(e) => this.handleAllClick(e)} type="button">Search</a></li>
           </ul>
       </span>
     </div>
