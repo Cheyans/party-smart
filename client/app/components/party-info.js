@@ -1,12 +1,20 @@
 import React from 'react';
 import {PartyInfoInvited,PrivacyButton} from './party-info-components';
 import {putPartyInvited,getPartyInfoData} from '../server'
+import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.state = {
+      removeUser:{
+        fname:"",
+        lname:"",
+        id:""
+      },
+      removeParty:[],
+      isShowingModal:false,
       "private status":"false",
       "host": {
         _id:null
@@ -17,13 +25,25 @@ export default class PartyInfo extends React.Component {
     };
   }
 
-  handleRemoveClick(clickEvent, userId, party) {
+  handleCloseClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      putPartyInvited(party.id,party,userId,(partyData) => this.setState(
-        Object.assign(this.state, {"attending": partyData.attending},{"declined": partyData.declined},{"invited": partyData.invited})
-      )
-    );
+      this.setState({isShowingModal: false, value: ""});
+    }
+  }
+
+  handleRemoveConfirm(e) {
+    e.preventDefault();
+      putPartyInvited(this.state.removeParty.id,this.state.removeParty,this.state.removeUser.id,(partyData) => this.setState(
+          Object.assign(this.state, {isShowingModal: false},{"attending": partyData.attending},{"declined": partyData.declined},{"invited": partyData.invited})
+          )
+      );
+  }
+
+  handleRemoveClick(clickEvent, userId, party, user) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({isShowingModal: true, value: "",removeUser: user,removeParty: party});
     }
   }
 
@@ -44,6 +64,15 @@ export default class PartyInfo extends React.Component {
     }
     return (
       <div className="container party-info">
+        {this.state.isShowingModal && <ModalContainer onClose={this.handleClose}>
+          <ModalDialog className="complaint-modal" onClose={this.handleClose}>
+            <h3>Are you sure you want to remove {this.state.removeUser.fname} {this.state.removeUser.lname} from your party?</h3>
+            <hr></hr>
+            <button type="submit" className="btn btn-default submit-btn" onClick={(e) => this.handleRemoveConfirm(e)}>Submit</button>
+            <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+          </ModalDialog>
+        </ModalContainer>
+      }
         <div className="row">
           <div className="col-md-8">
             <div className="panel panel-default">
