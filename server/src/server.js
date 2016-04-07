@@ -34,7 +34,6 @@ app.get("/users/:id", function(req, res) {
     user.friends = user.friends.map(getBasicUserInfo);
     user.id = user._id.toString();
 
-    delete user.admin;
     delete user._id;
     res.send(user);
   } else {
@@ -183,19 +182,27 @@ app.get("/admin", function(req, res) {
       parties: parties.map((party) => {
         party.id = party._id.toString();
         delete party._id;
+
+        var host = readDocument("users", party.host);
+        party.host_id = party.host.toString();
+        party.host = [host.fname, host.lname].join(" ");
+
         party.attending = party.attending.map(getBasicUserInfo);
         party.invited = party.invited.map(getBasicUserInfo);
         party.declined = party.declined.map(getBasicUserInfo);
-        party.supplies = party.supplies.map(getSupplyInfo);
+        party.supplies = party.supplies.map((supply) => {
+          return getSupplyInfo(supply.supply_id, supply.claimed_by)
+        });
         return party;
       }),
       users: users.map((user) => {
         user.id = user._id.toString();
         delete user._id;
         user.friends = user.friends.map(getBasicUserInfo);
+        return user;
       })
     }
-    return admin;
+    res.send(admin);
   } else {
     res.status(401).end();
   }

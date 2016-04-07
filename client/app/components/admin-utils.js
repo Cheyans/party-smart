@@ -23,8 +23,8 @@ export var partyColumns = [
   "zip",
   "state",
   "country",
-  "dateTime",
-  "private status",
+  "datetime",
+  "private_status",
   "attending length",
   "complaints length"
 ];
@@ -35,7 +35,7 @@ export var rowMetaData = {
       var today = new Date();
       var tomorrow = new Date();
       tomorrow.setDate(today.getDate() + 1);
-      var date = Date.parse(row.dateTime);
+      var date = Date.parse(row.datetime);
       if (date > tomorrow) {
         return 'future-date griddle-row';
       } else if (date > today) {
@@ -70,7 +70,7 @@ export function getPartyModal(data, hideModal) {
             {data.complaints.map((complaints, i) => {
               return (
                 <div key={i} className="modal-text">
-                  <p className="modal-text">{new Date(complaints.dateTime).toLocaleString()}</p>
+                  <p className="modal-text">{new Date(complaints.datetime).toLocaleString()}</p>
                   <p>{complaints.message || "No complaint message"}</p>
                   <hr/>
                 </div>
@@ -186,10 +186,10 @@ export var partyColumnMetaData = [
     "columnName": "country",
     "displayName": "Country"
   }, {
-    "columnName": "dateTime",
+    "columnName": "datetime",
     "displayName": "Date Time"
   }, {
-    "columnName": "private status",
+    "columnName": "private_status",
     "displayName": "Private Party"
   }, {
     "columnName": "attending length",
