@@ -34,7 +34,6 @@ app.get("/users/:id", function(req, res) {
     user.friends = user.friends.map(getBasicUserInfo);
     user.id = user._id.toString();
 
-    delete user.admin;
     delete user._id;
     res.send(user);
   } else {
@@ -173,6 +172,42 @@ app.get("/parties/:id", function(req, res) {
   }
 });
 
+app.get("/admin", function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var users = getCollection("users");
+  var userRequesting = users[userIdRequesting];
+  if (userRequesting && userRequesting.admin === "true") {
+    var parties = getCollection("parties");
+    var admin = {
+      parties: parties.map((party) => {
+        party.id = party._id.toString();
+        delete party._id;
+
+        var host = readDocument("users", party.host);
+        party.host_id = party.host.toString();
+        party.host = [host.fname, host.lname].join(" ");
+
+        party.attending = party.attending.map(getBasicUserInfo);
+        party.invited = party.invited.map(getBasicUserInfo);
+        party.declined = party.declined.map(getBasicUserInfo);
+        party.supplies = party.supplies.map((supply) => {
+          return getSupplyInfo(supply.supply_id, supply.claimed_by)
+        });
+        return party;
+      }),
+      users: users.map((user) => {
+        user.id = user._id.toString();
+        delete user._id;
+        user.friends = user.friends.map(getBasicUserInfo);
+        return user;
+      })
+    }
+    res.send(admin);
+  } else {
+    res.status(401).end();
+  }
+});
+
 app.post("/complaints", validate({
   body: complaintSchema
 }), function(req, res) {
@@ -212,6 +247,39 @@ app.post("/nearby_parties", validate({
     }
   });
   res.send(nearbyParties);
+});
+
+app.post("/profile/:userid/removefriend/:friendid",function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = parseInt(req.params.userid);
+  if (userIdRequested === userIdRequesting) {
+    var user = readDocument("users",userIdRequesting);
+    var userfriends = user.friends;
+    var friendIndex = userfriends.indexOf(parseInt(req.params.friendid));
+    user.friends.splice(friendIndex,1);
+    writeDocument("users",user);
+    user.friends = user.friends.map((id) => getBasicUserInfo(id));
+    user.id = user._id;
+    res.send(user);
+  } else {
+    res.status(401).end();
+  }
+});
+
+app.post("/profile/:userid/addfriend/:friendid",function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = parseInt(req.params.userid);
+  if (userIdRequested === userIdRequesting) {
+    var user = readDocument("users",userIdRequesting);
+    var friend = readDocument("users",parseInt(req.params.friendid));
+    user.friends.push(friend._id);
+    writeDocument("users",user);
+    user.friends = user.friends.map((id) => getBasicUserInfo(id))
+    user.id = user._id;
+    res.send(user);
+  } else {
+    res.status(401).end();
+  }
 });
 
 //creating a new party server route
@@ -279,8 +347,8 @@ app.post("/search/:userId/user", function(req, res) {
       searchedAllUsers: [],
       searchedFriendUsers: []
     };
-    search.searchedAllUsers = searchedAllUsers;
-    search.searchedFriendUsers = searchedFriendUsers;
+    search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
+    search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
     res.send(search);
   } else {
     // 400: Bad Request.

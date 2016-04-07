@@ -83,6 +83,17 @@ export function getComplaints(coordinates, cb) {
   });
 }
 
+export function addProfileFriend(userId,friendId, cb){
+  sendXHR("POST", "/profile/" + userId +"/addfriend/" + friendId, undefined, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
+export function removeProfileFriend(userId,friendId, cb){
+  sendXHR("POST", "/profile/" + userId +"/removefriend/" + friendId, undefined, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
 /*
  * Post complaints from the server
  */
@@ -107,47 +118,21 @@ export function getParty(id, cb) {
   return emulateServerReturn(readDocument("parties", id), cb);
 }
 
-export function getAdminInformation(page, pageSize, cb) {
-  pageSize = pageSize > 1000 ? 1000 : pageSize;
-  var data = getLimitedDBDump(page, pageSize);
-  var supplies = readCollection("supplies");
-  var users = data["users"];
-  for (var user of users) {
-    user["total complaints"] = 0;
-    user["friends"] = user["friends"].map((friend) => {
-      var user = users[friend];
-      return {
-        name: [user.fname, user.lname].join(" ")
-      }
+export function getAdminInformation(cb) {
+  sendXHR("GET", "/admin", undefined, (xhr) => {
+    var data = JSON.parse(xhr.responseText);
+    data.users.forEach((user) => {
+      user["total complaints"] = 0;
+      data.parties.forEach((party) => {
+         if (party.host_id === user.id) {
+           party["attending length"] = party["attending"].length;
+           party["complaints length"] = party["complaints"].length;
+           user["total complaints"] += party["complaints length"];
+         }
+      })
     })
-    for (var party of data["parties"]) {
-      if (party["host"] === user["_id"]) {
-        party["host"] = [user["fname"], user["lname"]].join(" ");
-        party["attending length"] = party["attending"].length;
-        party["complaints length"] = party["complaints"].length;
-        user["total complaints"] += party["complaints length"];
-        party["dateTime"] = new Date(party["dateTime"]).toLocaleString();
-        party["attending"] = party["attending"].map((attendee, i) => {
-          var user = users[i];
-          return {
-            id: i,
-            name: [user.fname, user.lname].join(" ")
-          };
-        });
-        party["supplies"] = party["supplies"].map((supply) => {
-          var user = users[supply.claimed_by];
-          var userInfo = {};
-          if (user) {
-            userInfo.name = [user.fname, user.lname].join(" ")
-          }
-          return Object.assign(userInfo, supplies[supply.supply_id]);
-        });
-        delete party["invited"];
-        delete party["not attending"];
-      }
-    }
-  }
-  return emulateServerReturn(data, cb);
+    cb(data);
+  });
 }
 
 export function getPartyData(id, cb) {

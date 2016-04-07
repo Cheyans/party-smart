@@ -27,7 +27,7 @@ export default class AdminPage extends React.Component {
   }
 
   componentDidMount() {
-    getAdminInformation(0, 1000, (data) => {
+    getAdminInformation((data) => {
       var newState = data;
       this.swapTables(newState);
     });

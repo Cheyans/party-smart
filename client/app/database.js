@@ -56,7 +56,7 @@ var initialData = {
       "zip": "01003",
       "state": "MA",
       "country": "USA",
-      "dateTime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+      "dateTime": "Thu July 03 2016 23:33:59 GMT-0500 (EST)",
       "host": 0,
       "attending": [
         1, 2, 3
