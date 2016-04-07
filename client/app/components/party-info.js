@@ -1,20 +1,28 @@
 import React from 'react';
 import {PartyInfoInvited,PrivacyButton,PartyInfoComplaint,PartyInfoSupplies} from './party-info-components';
-import {putPartyInvited,getPartyInfoData} from '../server'
+import {putPartyInvited,getPartyInfoData,putPartySupplies} from '../server'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 export default class PartyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
+    this.handleRemoveSupplyClick = this.handleRemoveSupplyClick.bind(this);
     this.state = {
       removeUser:{
         fname:"",
         lname:"",
         id:""
       },
+      removeSupply: {
+        claimed_by:"",
+        userId:"",
+        id:"",
+        name:""
+      },
       removeParty:[],
       isShowingModal:false,
+      isShowingSupplyModal: false,
       "private status":"false",
       "host": {
         _id:null
@@ -30,7 +38,7 @@ export default class PartyInfo extends React.Component {
   handleCloseClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      this.setState({isShowingModal: false, value: ""});
+      this.setState({isShowingModal: false, isShowingSupplyModal: false, value: ""});
     }
   }
 
@@ -42,10 +50,25 @@ export default class PartyInfo extends React.Component {
       );
   }
 
+  handleRemoveSupplyConfirm(e) {
+    e.preventDefault();
+      putPartySupplies(this.state.removeParty.id,this.state.removeParty,this.state.removeSupply.id,this.state.removeSupply.userId,(partyData) => this.setState(
+          Object.assign(this.state, {isShowingSupplyModal: false},{"supplies": partyData.supplies})
+          )
+      );
+  }
+
   handleRemoveClick(clickEvent, userId, party, user) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
       this.setState({isShowingModal: true, value: "",removeUser: user,removeParty: party});
+    }
+  }
+
+  handleRemoveSupplyClick(clickEvent, supplyId, party, supply) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({isShowingSupplyModal: true, value: "",removeSupply: supply,removeParty: party});
     }
   }
 
@@ -74,6 +97,15 @@ export default class PartyInfo extends React.Component {
             <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
           </ModalDialog>
         </ModalContainer>
+      }
+      {this.state.isShowingSupplyModal && <ModalContainer onClose={this.handleClose}>
+        <ModalDialog className="complaint-modal" onClose={this.handleClose}>
+          <h3>Are you sure you want to remove {this.state.removeSupply.name} brought by {this.state.removeSupply.claimed_by}?</h3>
+          <hr></hr>
+          <button type="submit" className="btn btn-default submit-btn" onClick={(e) => this.handleRemoveSupplyConfirm(e)}>Submit</button>
+          <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+        </ModalDialog>
+      </ModalContainer>
       }
         <div className="row">
           <div className="col-md-8">
@@ -168,7 +200,7 @@ export default class PartyInfo extends React.Component {
 
                         {this.state.supplies.map((supplies, i) => {
                           return (
-                            <PartyInfoSupplies key={i} id={supplies}></PartyInfoSupplies>
+                            <PartyInfoSupplies key={i} id={supplies} party={this.state} user={this.props.params.userId} handleRemoveSupplyClick={this.handleRemoveSupplyClick}></PartyInfoSupplies>
                           )
                         })}
 
