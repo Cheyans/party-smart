@@ -173,6 +173,34 @@ app.get("/parties/:id", function(req, res) {
   }
 });
 
+app.get("/admin", function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var users = getCollection("users");
+  var userRequesting = users[userIdRequesting];
+  if (userRequesting && userRequesting.admin === "true") {
+    var parties = getCollection("parties");
+    var admin = {
+      parties: parties.map((party) => {
+        party.id = party._id.toString();
+        delete party._id;
+        party.attending = party.attending.map(getBasicUserInfo);
+        party.invited = party.invited.map(getBasicUserInfo);
+        party.declined = party.declined.map(getBasicUserInfo);
+        party.supplies = party.supplies.map(getSupplyInfo);
+        return party;
+      }),
+      users: users.map((user) => {
+        user.id = user._id.toString();
+        delete user._id;
+        user.friends = user.friends.map(getBasicUserInfo);
+      })
+    }
+    return admin;
+  } else {
+    res.status(401).end();
+  }
+});
+
 app.post("/complaints", validate({
   body: complaintSchema
 }), function(req, res) {
