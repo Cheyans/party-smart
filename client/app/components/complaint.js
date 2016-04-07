@@ -1,20 +1,27 @@
 import React from 'react';
-import {getNearByParties} from '../server';
+import {getComplaints} from '../server';
 import AddressEntry from './complaint-address'
 
 export default class Complaint extends React.Component {
 
   componentDidMount() {
-    getNearByParties("95 Pleasant Street", (nearByParties) => {
-      this.setState({nbp: nearByParties});
-    });
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 3000
+    };
+    navigator.geolocation.getCurrentPosition((position) => {
+      getComplaints(position.coords, (data) => this.setState(data));
+    }, navigator.geolocation.getCurrentPosition((position => {
+      getComplaints(position.coords), (data) => this.setState(data);
+    })), options);
   }
 
   render() {
     var data = [];
-    if (this.state) {
-      data = this.state.nbp;
+    if(this.state) {
+      data = this.state;
     }
+    debugger;
     return (
       <div className="container complaint panel panel-default">
         <div className="header">
@@ -23,8 +30,8 @@ export default class Complaint extends React.Component {
         <img className="image" src="img/map.jpg" width="100%"/>
         <div className="panel-footer">
           <div className="list-group">
-            {data.map((address, i) => {
-              return (<AddressEntry key={i} data={address}/>);
+            {data.map((party) => {
+              return (<AddressEntry key={party.id} data={party}/>);
             })
 }
           </div>

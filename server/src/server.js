@@ -3,7 +3,8 @@ var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
 var partySchema = require("./schemas/party.json");
-//var messageService = require("./message");
+var messageService = require("./message");
+var complaintSchema = require('./schemas/complaint.json');
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -170,6 +171,7 @@ app.get("/parties/:id", function(req, res) {
 });
 
 app.get("/nearby_parties", function(req, res) {
+  debugger;
   var latitude = req.get("Latitude");
   var longitude = req.get("Longitude");
   if (latitude && longitude) {
@@ -317,6 +319,26 @@ app.put('/parties/:id/invited', function(req, res) {
     res.status(401).end();
   }
 })
+
+/**
+ * File a complaint.
+ */
+// `POST /complaint { id: partyID, message: contents  }`
+app.post('/complaint', validate({ body: complaintSchema }), function(req, res) {
+  // If this function runs, `req.body` passed JSON validation!
+  var body = req.body;
+
+  //its anonymous so we do not need authorization
+
+  //read with party id
+  var partyData = readDocument('party', body.id);
+  //we need to delete the id because we just use it for reference
+  delete body.id;
+  partyData.complaints.push(body);
+
+  //send 201 to the client
+  res.status(201).end();
+});
 
 app.delete("/parties/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));

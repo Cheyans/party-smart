@@ -1,10 +1,8 @@
 import {
     readDocument,
     writeDocument,
-    addDocument,
     getLimitedDBDump,
-    readCollection,
-    getNextCollectionID
+    readCollection
 } from "./database.js";
 
 
@@ -62,6 +60,19 @@ export function updateUserData(data) {
         "friends": data.friends
     }
     writeDocument("users", updatedUser);
+}
+
+
+/*
+* Get complaints from the server
+*/
+export function getComplaints(coordinates, cb){
+  sendXHR('GET', '/nearby_parties', {
+    longtitude: coordinates.longtitude,
+    latitude: coordinates.latitude
+  }, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
 }
 
 export function getUserName(id, cb) {
@@ -166,36 +177,6 @@ export function setPartyOpen(partyId, cb) {
     party["private status"] = "false";
     writeDocument("parties", party);
     return emulateServerReturn("false", cb);
-}
-
-export function addComplaint(partyId, complaint, cb) {
-    var party = readDocument("parties", partyId);
-    party.complaints.push({
-        dateTime: new Date().toString(),
-        message: complaint
-    })
-    return emulateServerReturn(writeDocument("parties", party), cb);
-}
-
-export function getNearByParties(coordinates, cb) {
-    //need to loop through party objects and match our address
-    //we are going to chage the formatting of the database so we are actually goign to
-    //compare our coordinates with GPScoordinates and output the address as well
-    var parties = readCollection("parties");
-    var nearByParties = [];
-    for (var party of parties) {
-        var address = party["address"];
-        if (address === coordinates) {
-            nearByParties.push({
-                "id": party["_id"],
-                "address": party["address"],
-                "city": party["city"],
-                "zip": party["zip"],
-                "state": party["state"]
-            });
-        }
-    }
-    return emulateServerReturn(nearByParties, cb);
 }
 
 export function resetDatabase() {
