@@ -1,10 +1,3 @@
-import {
-  readDocument,
-  writeDocument,
-  getLimitedDBDump,
-  readCollection
-} from "./database.js";
-
 export function getAuthorData(user, cb) {
   // We don"t need to send a body, so pass in "undefined" for the body.
   sendXHR("GET", "/users/" + user, undefined, (xhr) => {
@@ -57,20 +50,6 @@ export function getProfileParties(id, cb) {
   });
 }
 
-export function updateUserData(data) {
-  var updatedUser = {
-    "_id": data.id,
-    "fname": data.fname,
-    "lname": data.lname,
-    "phone_number": data.phone_number,
-    "email": data.email,
-    "picture": data.picture,
-    "admin": data.admin,
-    "friends": data.friends
-  }
-  writeDocument("users", updatedUser);
-}
-
 /*
  * Get complaints from the server
  */
@@ -103,21 +82,6 @@ export function postComplaints(complaint, cb) {
   });
 }
 
-export function getUserName(id, cb) {
-  var user = readDocument("users", parseInt(id));
-  var info = {
-    fname: "",
-    lname: ""
-  }
-  info.fname = user.fname;
-  info.lname = user.lname;
-  return emulateServerReturn(info, cb);
-}
-
-export function getParty(id, cb) {
-  return emulateServerReturn(readDocument("parties", id), cb);
-}
-
 export function getAdminInformation(cb) {
   sendXHR("GET", "/admin", undefined, (xhr) => {
     var data = JSON.parse(xhr.responseText);
@@ -133,10 +97,6 @@ export function getAdminInformation(cb) {
     })
     cb(data);
   });
-}
-
-export function getPartyData(id, cb) {
-  return emulateServerReturn(readDocument("parties", id), cb);
 }
 
 export function createNewParty(party) {
@@ -156,14 +116,6 @@ export function createNewParty(party) {
     "phone_number": party.phone_number
   };
   sendXHR("POST", "/parties", newParty);
-}
-
-export function getInvitedData(idList, cb) {
-  var people = [];
-  for (var i = 0; i < idList.length; i++) {
-    people.push(readDocument("users", idList[i]));
-  }
-  return emulateServerReturn(people, cb);
 }
 
 export function setPartyStatus(partyId, value, cb) {
@@ -239,15 +191,4 @@ function sendXHR(verb, resource, body, cb) {
     default:
       throw new Error("Unknown body type: " + typeof(body));
   }
-}
-
-/**
- * Emulates how a REST call is *asynchronous* -- it calls your function back
- * some time in the future with data.
- */
-
-function emulateServerReturn(data, cb) {
-  setTimeout(() => {
-    cb(data);
-  }, 4);
 }
