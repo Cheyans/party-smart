@@ -56,10 +56,10 @@ export var rowMetaData = {
   }
 };
 
-export function getPartyModal(data, adminThis) {
+export function getPartyModal(data, hideModal) {
   return (
-    <ModalContainer onClose={adminThis.hideModal}>
-      <ModalDialog className="admin-modal" onClose={adminThis.hideModal}>
+    <ModalContainer onClose={hideModal}>
+      <ModalDialog className="admin-modal" onClose={hideModal}>
         <h3>
           <strong>Party:&emsp;</strong>{data.title}</h3>
         <h4>
@@ -107,10 +107,10 @@ export function getPartyModal(data, adminThis) {
   )
 }
 
-export function getUserModal(data, adminThis) {
+export function getUserModal(data, hideModal) {
   return (
-    <ModalContainer onClose={adminThis.hideModal}>
-      <ModalDialog className="admin-modal" onClose={adminThis.hideModal}>
+    <ModalContainer onClose={hideModal}>
+      <ModalDialog className="admin-modal" onClose={hideModal}>
         <div className="row">
           <div className="col-md-5">
             <img className="modal-avatar" src={data.picture}></img>

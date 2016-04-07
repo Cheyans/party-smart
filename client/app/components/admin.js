@@ -1,14 +1,22 @@
 import React from 'react';
 import {getAdminInformation} from '../server';
 import Griddle from 'griddle-react';
-import {userColumns, partyColumns, rowMetaData, partyColumnMetaData, userColumnMetaData, getPartyModal, getUserModal} from './admin-utils';
-
-var adminThis;
+import {
+  userColumns,
+  partyColumns,
+  rowMetaData,
+  partyColumnMetaData,
+  userColumnMetaData,
+  getPartyModal,
+  getUserModal
+} from './admin-utils';
 
 export default class AdminPage extends React.Component {
   constructor(props) {
     super(props);
-    adminThis = this;
+    this.hideModal = this.hideModal.bind(this);
+    this.showModal = this.showModal.bind(this);
+
     this.state = {
       columnName: "parties",
       parties: [],
@@ -26,34 +34,24 @@ export default class AdminPage extends React.Component {
   }
 
   getColumnTitle() {
-    return this.state.columnName === "parties" ? "Show Users" : "Show Parties";
+    return this.state.columnName === "parties"
+      ? "Show Users"
+      : "Show Parties";
   }
 
   hideModal() {
-    adminThis.setState({
-      columnName: adminThis.state.columnName,
-      parties: adminThis.state.parties,
-      users: adminThis.state.users,
-      columns: adminThis.state.columns,
-      modal: ""
-    });
+    this.setState({columnName: this.state.columnName, parties: this.state.parties, users: this.state.users, columns: this.state.columns, modal: ""});
   }
 
   showModal(row) {
     var data = row.props.data;
     var modal;
     if (data.host != null || data.host != undefined) {
-      modal = getPartyModal(data, adminThis);
+      modal = getPartyModal(data, this.hideModal);
     } else {
-      modal = getUserModal(data, adminThis);
+      modal = getUserModal(data, this.hideModal);
     }
-    adminThis.setState({
-      columnName: adminThis.state.columnName,
-      parties: adminThis.state.parties,
-      users: adminThis.state.users,
-      columns: adminThis.state.columns,
-      modal: modal
-   });
+    this.setState({columnName: this.state.columnName, parties: this.state.parties, users: this.state.users, columns: this.state.columns, modal: modal});
   }
 
   swapTables(newState) {
@@ -71,13 +69,9 @@ export default class AdminPage extends React.Component {
 
   render() {
     return (
-      <div className = "admin">
-        <span className="swap-option btn" aria-hidden="true" onClick = {() => this.swapTables(this.state)}>{this.getColumnTitle()}</span>
-        <Griddle results={this.state[this.state.columnName]} columns={this.state.columns} rowMetadata={rowMetaData} columnMetadata={userColumnMetaData}
-          settingsToggleClassName={"settings btn"} useGriddleStyles={false} bodyHeight={800} resultsPerPage={50}
-          sortAscendingComponent={<span className="mdi mdi-arrow-up-bold"></span>} sortDescendingComponent={<span className="mdi mdi-arrow-down-bold"></span>}
-          showFilter={true} onRowClick={this.showModal} enableInfiniteScroll={true} showSettings={true}/>
-          {this.state.modal}
+      <div className="admin">
+        <span className="swap-option btn" aria-hidden="true" onClick= {() => this.swapTables(this.state)}>{this.getColumnTitle()}</span>
+        <Griddle results={this.state[this.state.columnName]} columns={this.state.columns} rowMetadata={rowMetaData} columnMetadata={userColumnMetaData} settingsToggleClassName={"settings btn"} useGriddleStyles={false} bodyHeight={800} resultsPerPage={50} sortAscendingComponent={< span className = "mdi mdi-arrow-up-bold" > </span>} sortDescendingComponent={< span className = "mdi mdi-arrow-down-bold" > </span>} showFilter={true} onRowClick={this.showModal} enableInfiniteScroll={true} showSettings={true}/> {this.state.modal}
       </div>
     )
   }
