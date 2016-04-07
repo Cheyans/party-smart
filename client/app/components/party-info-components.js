@@ -1,5 +1,5 @@
 import React from 'react';
-import {setPartyPrivate, setPartyOpen} from '../server';
+import {setPartyStatus} from '../server';
 export class PrivacyButton extends React.Component{
   constructor(props) {
     super(props);
@@ -9,7 +9,7 @@ export class PrivacyButton extends React.Component{
   handlePrivateClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      setPartyPrivate(this.props.partyId, (updatedPrivateStatus) => {
+      setPartyStatus(this.props.partyId,"true", (updatedPrivateStatus) => {
         this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
       });
     }
@@ -18,7 +18,7 @@ export class PrivacyButton extends React.Component{
   handleOpenClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      setPartyOpen(this.props.partyId, (updatedPrivateStatus) => {
+      setPartyStatus(this.props.partyId,"false", (updatedPrivateStatus) => {
         this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
       });
     }

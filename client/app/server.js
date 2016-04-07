@@ -156,18 +156,10 @@ export function getInvitedData(idList, cb) {
   return emulateServerReturn(people, cb);
 }
 
-export function setPartyPrivate(partyId, cb) {
-  var party = readDocument("parties", partyId);
-  party["private status"] = "true";
-  writeDocument("parties", party);
-  return emulateServerReturn("true", cb);
-}
-
-export function setPartyOpen(partyId, cb) {
-  var party = readDocument("parties", partyId);
-  party["private status"] = "false";
-  writeDocument("parties", party);
-  return emulateServerReturn("false", cb);
+export function setPartyStatus(partyId, value, cb) {
+  sendXHR("PUT", "/parties/" + partyId + "/private_status" , value, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
 }
 
 export function resetDatabase() {

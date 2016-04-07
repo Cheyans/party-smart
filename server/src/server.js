@@ -249,6 +249,19 @@ app.post("/nearby_parties", validate({
   res.send(nearbyParties);
 });
 
+app.put("/parties/:id/private_status",function(req, res){
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var partyHost = readDocument("parties",req.params.id).host;
+  if (userIdRequesting === partyHost) {
+    var party = readDocument("parties", req.params.id);
+    party["private status"] = req.value;
+    writeDocument("parties", party);
+    res.send(party["private status"]);
+  }else{
+    res.status(401).end();
+  }
+});
+
 app.post("/profile/:userid/removefriend/:friendid",function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.userid);
