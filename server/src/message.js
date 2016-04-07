@@ -13,23 +13,19 @@ var transporter = nodemailer.createTransport({
 
 //Very malicious, I know
 function sendSMS(number, body) {
-  providers.us.forEach((provider) => {
-    sendMessage({
-      from: "partysmart",
-      to: number + provider,
-      text: body
-    }, 0);
+  var mailOptions = {
+    to :  providers.us.map((provider) => {return number + provider}),
+    from : "PartySmart",
+    text: body
+  };
+
+  transporter.sendMail(mailOptions, (error, response) => {
+    if (error) {
+      console.log(error);
+    } else if (response) {
+      console.log("Succesfully sent to " + number);
+    }
   });
 }
 
 module.exports.sendSMS = sendSMS;
-
-function sendMessage(mailOptions, callStack) {
-  transporter.sendMail(mailOptions, (error, response) => {
-    if (error && callStack < 5) {
-      sendMessage(mailOptions, ++callStack);
-    } else if (response) {
-      console.log(response);
-    }
-  });
-}
