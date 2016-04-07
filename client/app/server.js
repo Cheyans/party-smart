@@ -63,13 +63,13 @@ export function getComplaints(coordinates, cb) {
 }
 
 export function addProfileFriend(userId,friendId, cb){
-  sendXHR("POST", "/profile/" + userId +"/addfriend/" + friendId, undefined, (xhr) => {
+  sendXHR("POST", "/users/" + userId +"/addfriend/" + friendId, undefined, (xhr) => {
     cb(JSON.parse(xhr.responseText));
   });
 }
 
 export function removeProfileFriend(userId,friendId, cb){
-  sendXHR("POST", "/profile/" + userId +"/removefriend/" + friendId, undefined, (xhr) => {
+  sendXHR("POST", "/users/" + userId +"/removefriend/" + friendId, undefined, (xhr) => {
     cb(JSON.parse(xhr.responseText));
   });
 }

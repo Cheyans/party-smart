@@ -7,7 +7,7 @@ var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
 
-var messageService = require("./message");
+//var messageService = require("./message");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -262,7 +262,7 @@ app.put("/parties/:id/private_status",function(req, res){
   }
 });
 
-app.post("/profile/:userid/removefriend/:friendid",function(req, res) {
+app.post("/users/:userid/removefriend/:friendid",function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.userid);
   if (userIdRequested === userIdRequesting) {
@@ -279,7 +279,7 @@ app.post("/profile/:userid/removefriend/:friendid",function(req, res) {
   }
 });
 
-app.post("/profile/:userid/addfriend/:friendid",function(req, res) {
+app.post("/users/:userid/addfriend/:friendid",function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.userid);
   if (userIdRequested === userIdRequesting) {

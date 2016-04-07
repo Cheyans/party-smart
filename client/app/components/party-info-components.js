@@ -165,21 +165,6 @@ export class PartyInfoSupplies extends React.Component {
     if (message === null) {
       message = "None";
     }
-    if (this.props.party.host.id.toString()==this.props.user.toString()){
-      return (
-        <tr>
-          <td>
-            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.name}
-          </td>
-          <td>
-            {message}
-          </td>
-          <td>
-            <a href="#" onClick={(e) => this.props.handleRemoveSupplyClick(e, this.props.id.id, this.props.party,this.props.id)} className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
-          </td>
-        </tr>
-      )
-    } else {
       return (
         <tr>
           <td>
@@ -190,6 +175,5 @@ export class PartyInfoSupplies extends React.Component {
           </td>
         </tr>
       )
-    }
   }
 }
