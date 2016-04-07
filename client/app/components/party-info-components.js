@@ -159,3 +159,31 @@ export class PartyInfoComplaint extends React.Component {
       }
   }
 }
+
+export class PartyInfoSupplies extends React.Component {
+  render() {
+    if (this.props.id.claimed_by === null) {
+      return (
+        <tr>
+          <td>
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.name}
+          </td>
+          <td>
+            None
+          </td>
+        </tr>
+      )
+    } else {
+      return (
+        <tr>
+          <td>
+            <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.name}
+          </td>
+          <td>
+            {this.props.id.claimed_by}
+          </td>
+        </tr>
+      )
+    }
+  }
+}

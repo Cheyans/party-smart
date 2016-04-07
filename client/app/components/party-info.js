@@ -1,5 +1,5 @@
 import React from 'react';
-import {PartyInfoInvited,PrivacyButton,PartyInfoComplaint} from './party-info-components';
+import {PartyInfoInvited,PrivacyButton,PartyInfoComplaint,PartyInfoSupplies} from './party-info-components';
 import {putPartyInvited,getPartyInfoData} from '../server'
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
@@ -134,6 +134,7 @@ export default class PartyInfo extends React.Component {
 
                         <strong>Description</strong><br/>
                         {this.state.description}
+                        <br/><br/>
 
                       </div>
                     </div>
@@ -156,7 +157,23 @@ export default class PartyInfo extends React.Component {
                   </div>
 
                   <div className="tab-pane fade" id="supplies">
-                    Supplies stuff here
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>User</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        {this.state.supplies.map((supplies, i) => {
+                          return (
+                            <PartyInfoSupplies key={i} id={supplies}></PartyInfoSupplies>
+                          )
+                        })}
+
+                      </tbody>
+                    </table>
                   </div>
 
                   <div className="tab-pane fade" id="complaints">
