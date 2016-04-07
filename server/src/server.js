@@ -7,7 +7,7 @@ var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
 
-//var messageService = require("./message");
+var messageService = require("./message");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
