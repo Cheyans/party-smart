@@ -214,6 +214,39 @@ app.post("/nearby_parties", validate({
   res.send(nearbyParties);
 });
 
+app.post("/profile/:userid/removefriend/:friendid",function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = parseInt(req.params.userid);
+  if (userIdRequested === userIdRequesting) {
+    var user = readDocument("users",userIdRequesting);
+    var userfriends = user.friends;
+    var friendIndex = userfriends.indexOf(parseInt(req.params.friendid));
+    user.friends.splice(friendIndex,1);
+    writeDocument("users",user);
+    user.friends = user.friends.map((id) => getBasicUserInfo(id));
+    user.id = user._id;
+    res.send(user);
+  } else {
+    res.status(401).end();
+  }
+});
+
+app.post("/profile/:userid/addfriend/:friendid",function(req, res) {
+  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = parseInt(req.params.userid);
+  if (userIdRequested === userIdRequesting) {
+    var user = readDocument("users",userIdRequesting);
+    var friend = readDocument("users",parseInt(req.params.friendid));
+    user.friends.push(friend._id);
+    writeDocument("users",user);
+    user.friends = user.friends.map((id) => getBasicUserInfo(id))
+    user.id = user._id;
+    res.send(user);
+  } else {
+    res.status(401).end();
+  }
+});
+
 //creating a new party server route
 app.post('/parties', validate({
   body: partySchema
@@ -279,8 +312,8 @@ app.post("/search/:userId/user", function(req, res) {
       searchedAllUsers: [],
       searchedFriendUsers: []
     };
-    search.searchedAllUsers = searchedAllUsers;
-    search.searchedFriendUsers = searchedFriendUsers;
+    search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
+    search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
     res.send(search);
   } else {
     // 400: Bad Request.

@@ -1,5 +1,5 @@
 import React from 'react';
-import {searchProfile, getAuthorData, getProfileParties} from '../server';
+import {addProfileFriend, removeProfileFriend, searchProfile, getAuthorData, getProfileParties} from '../server';
 import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends, FriendsSearchBar} from './profile-components';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
@@ -40,6 +40,22 @@ export default class Profile extends React.Component {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
       this.setState({isShowingAddModal: false, isShowingRemoveModal: false, value: ""});
+    }
+  }
+
+  handleAddFriendConfirm(clickEvent){
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+    addProfileFriend(this.state.userData.id,this.state.addUser.id,(result) =>
+    this.setState({userData: result, isShowingAddModal: false, isSearch: false}));
+    }
+  }
+
+  handleRemoveFriendConfirm(clickEvent){
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+    removeProfileFriend(this.state.userData.id,this.state.removeUser.id,(result) =>
+    this.setState({userData: result, isShowingRemoveModal: false, isSearch: false}));
     }
   }
 

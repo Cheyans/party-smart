@@ -52,7 +52,7 @@ var initialData = {
       "latitude": 42.3771197,
       "longitude": -72.520304
     },
-    "datetime": "Thu Mar 03 2016 23:33:59 GMT-0500 (EST)",
+    "datetime": "Thu Jul 03 2016 23:33:59 GMT-0500 (EST)",
     "host": 0,
     "attending": [
       1, 2, 3
@@ -96,7 +96,7 @@ var initialData = {
       "latitude": 42.3771091,
       "longitude": -72.5198894
     },
-    "datetime": "Thu Mar 22 2016 01:33:59 GMT-0500 (EST)",
+    "datetime": "Thu Jul 22 2016 01:33:59 GMT-0500 (EST)",
     "host": 2,
     "attending": [1],
     "invited": [
