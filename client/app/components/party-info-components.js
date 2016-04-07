@@ -161,14 +161,21 @@ export class PartyInfoComplaint extends React.Component {
 
 export class PartyInfoSupplies extends React.Component {
   render() {
-    if (this.props.id.claimed_by === null) {
+    var message = this.props.id.claimed_by;
+    if (message === null) {
+      message = "None";
+    }
+    if (this.props.party.host.id.toString()==this.props.user.toString()){
       return (
         <tr>
           <td>
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.name}
           </td>
           <td>
-            None
+            {message}
+          </td>
+          <td>
+            <a href="#" onClick={(e) => this.props.handleRemoveSupplyClick(e, this.props.id.id, this.props.party,this.props.id)} className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
           </td>
         </tr>
       )
@@ -179,7 +186,7 @@ export class PartyInfoSupplies extends React.Component {
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.name}
           </td>
           <td>
-            {this.props.id.claimed_by}
+            {message}
           </td>
         </tr>
       )

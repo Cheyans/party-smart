@@ -33,6 +33,16 @@ export function putPartyInvited(partyId, party, userId, cb) {
   });
 }
 
+export function putPartySupplies(partyId, party, supplyId, userId, cb) {
+  var body = party.supplies.map((supply) => [(supply).id, (supply).userId]);
+  var index = body.indexOf([supplyId, userId]);
+  body.splice(index, 1);
+  sendXHR("PUT", "/parties/" + partyId + "/supplies", body, (xhr) => {
+    // Call the callback with the data.
+    (cb(JSON.parse(xhr.responseText)));
+  });
+}
+
 export function searchProfile(id, queryText, cb) {
   sendXHR("POST", "/search/" + id + "/user", queryText, (xhr) => {
     // Call the callback with the data.
