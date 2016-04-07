@@ -2,9 +2,12 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
+
 var partySchema = require("./schemas/party.json");
+var coordinatesSchema = require("./schemas/coordinates.json");
+var complaintSchema = require("./schemas/complaint.json");
+
 var messageService = require("./message");
-var complaintSchema = require('./schemas/complaint.json');
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -33,7 +36,6 @@ app.get("/users/:id", function(req, res) {
 
     delete user.admin;
     delete user._id;
-    messageService.sendSMS(user.phone_number, "test");
     res.send(user);
   } else {
     res.status(401).end();
@@ -171,29 +173,45 @@ app.get("/parties/:id", function(req, res) {
   }
 });
 
-app.get("/nearby_parties", function(req, res) {
-  debugger;
-  var latitude = req.get("Latitude");
-  var longitude = req.get("Longitude");
-  if (latitude && longitude) {
-    var parties = getCollection("parties");
-    var nearbyParties = [];
-    parties.forEach((party) => {
-      var coordinates = party.coordinates;
-      if (withinRange(0.25, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
-        nearbyParties.push({
-          id: party._id.toString(),
-          address: party.address,
-          city: party.city,
-          state: party.state,
-          zip: party.zip
-        });
-      }
-    });
-    res.send(nearbyParties);
-  } else {
-    res.status(400).end();
+app.post("/complaints", validate({
+  body: complaintSchema
+}), function(req, res) {
+  var body = req.body;
+  try {
+    var party = readDocument("parties", body.id);
+  } catch (err) {
+    res.status(404).end();
   }
+  delete body.id;
+  party.complaints.push(body);
+  writeDocument("parties", party);
+
+  var user = readDocument("users", party.host);
+  messageService.sendSMS(user.phone_number, body.message);
+  res.status(201).end();
+});
+
+app.post("/nearby_parties", validate({
+  body: coordinatesSchema
+}), function(req, res) {
+  var latitude = req.body.latitude;
+  var longitude = req.body.longitude;
+  var parties = getCollection("parties");
+  var nearbyParties = [];
+
+  parties.forEach((party) => {
+    var coordinates = party.coordinates;
+    if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
+      nearbyParties.push({
+        id: party._id.toString(),
+        address: party.address,
+        city: party.city,
+        state: party.state,
+        zip: party.zip
+      });
+    }
+  });
+  res.send(nearbyParties);
 });
 
 //creating a new party server route
@@ -226,9 +244,9 @@ app.post('/parties', validate({
   res.status(201).end();
 });
 
-function containsUser(users,user){
-  for(var u of users){
-    if(u._id==user._id){
+function containsUser(users, user) {
+  for (var u of users) {
+    if (u._id == user._id) {
       return true;
     }
   }
@@ -241,25 +259,25 @@ app.post("/search/:userId/user", function(req, res) {
   if (typeof(req.body) === 'string') {
     var query = req.body;
 
-    var friends = userdata.friends.map((userid)=>readDocument("users",userid));
+    var friends = userdata.friends.map((userid) => readDocument("users", userid));
     var allusers = getCollection("users");
-        var searchedFriendUsers = [];
-        var searchedAllUsers = [];
-    for(var user of allusers){
+    var searchedFriendUsers = [];
+    var searchedAllUsers = [];
+    for (var user of allusers) {
       user.name = (user.fname + " " + user.lname).toLowerCase();
-      if(user.name.search(query)!=-1 && !containsUser(friends,user)){
+      if (user.name.search(query) != -1 && !containsUser(friends, user)) {
         searchedAllUsers.push(user);
       }
     }
-    for(var friend of friends){
-      friend.name = (friend.fname+ " "+friend.lname).toLowerCase();
-      if(friend.name.search(query)!=-1){
+    for (var friend of friends) {
+      friend.name = (friend.fname + " " + friend.lname).toLowerCase();
+      if (friend.name.search(query) != -1) {
         searchedFriendUsers.push(friend);
       }
     }
     var search = {
-      searchedAllUsers:[],
-      searchedFriendUsers:[]
+      searchedAllUsers: [],
+      searchedFriendUsers: []
     };
     search.searchedAllUsers = searchedAllUsers;
     search.searchedFriendUsers = searchedFriendUsers;
@@ -320,26 +338,6 @@ app.put('/parties/:id/invited', function(req, res) {
     res.status(401).end();
   }
 })
-
-/**
- * File a complaint.
- */
-// `POST /complaint { id: partyID, message: contents  }`
-app.post('/complaint', validate({ body: complaintSchema }), function(req, res) {
-  // If this function runs, `req.body` passed JSON validation!
-  var body = req.body;
-
-  //its anonymous so we do not need authorization
-
-  //read with party id
-  var partyData = readDocument('party', body.id);
-  //we need to delete the id because we just use it for reference
-  delete body.id;
-  partyData.complaints.push(body);
-
-  //send 201 to the client
-  res.status(201).end();
-});
 
 app.delete("/parties/:id", function(req, res) {
   var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
@@ -471,6 +469,7 @@ app.post("/resetdb", function(req, res) {
 
 app.use(function(err, req, res, next) {
   if (err.name === "JsonSchemaValidation") {
+    console.log(err);
     console.log(err.message);
     res.status(400).end();
   } else {

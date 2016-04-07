@@ -1,27 +1,27 @@
 import React from 'react';
 import {getComplaints} from '../server';
-import AddressEntry from './complaint-address'
+import AddressEntry from './address-entry'
 
 export default class Complaint extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {};
+  }
+
   componentDidMount() {
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 3000
-    };
-    navigator.geolocation.getCurrentPosition((position) => {
-      getComplaints(position.coords, (data) => this.setState(data));
-    }, navigator.geolocation.getCurrentPosition((position => {
-      getComplaints(position.coords), (data) => this.setState(data);
-    })), options);
+    navigator.geolocation.getCurrentPosition((position => {
+      getComplaints(position.coords, (data) => {
+        this.setState({parties: data})})
+    }));
   }
 
   render() {
     var data = [];
-    if(this.state) {
-      data = this.state;
+    if (this.state.parties) {
+      data = this.state.parties;
     }
-    debugger;
+
     return (
       <div className="container complaint panel panel-default">
         <div className="header">
@@ -31,7 +31,7 @@ export default class Complaint extends React.Component {
         <div className="panel-footer">
           <div className="list-group">
             {data.map((party) => {
-              return (<AddressEntry key={party.id} data={party}/>);
+              return (<AddressEntry key={party.id} data={party} handlePost={this.handlePost}/>);
             })
 }
           </div>
