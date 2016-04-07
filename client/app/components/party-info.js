@@ -21,7 +21,7 @@ export default class PartyInfo extends React.Component {
       },
       "attending": [],
       "invited": [],
-      "not attending": [],
+      "declined": [],
       "complaints": [],
       "supplies": []
     };
@@ -225,7 +225,7 @@ export default class PartyInfo extends React.Component {
                       )
                     })}
 
-                    {this.state["not attending"].map((not_attending, i) => {
+                    {this.state.declined.map((not_attending, i) => {
                       return (
                         <PartyInfoInvited key={i} id={not_attending} user={this.props.params.userId} status="not attending" partyId={this.props.params.partyId} party={this.state} handleRemoveClick={this.handleRemoveClick}></PartyInfoInvited>
                       )

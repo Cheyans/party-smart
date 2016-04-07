@@ -1,29 +1,7 @@
 import React from 'react';
 import {searchProfile, getAuthorData, getProfileParties} from '../server';
 import {ProfileHostedParties, ProfilePartiesAtt, ProfilePartiesInv, ProfilePartiesNat, ProfileFriends, FriendsSearchBar} from './profile-components';
-
-// function arrayContains(arr, val) {
-//     var i = arr.length;
-//     while (i--) {
-//         if ( arr[i].id === val.id ) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-//
-// function removeDuplicates(arr) {
-//     var originalArr = arr.slice(0);
-//     var i, len, j, val;
-//     arr.length = 0;
-//
-//     for (i = 0, len = originalArr.length; i < len; ++i) {
-//         val = originalArr[i];
-//         if (!arrayContains(arr, val)) {
-//             arr.push(val);
-//         }
-//     }
-// }
+import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 export default class Profile extends React.Component {
 
@@ -31,8 +9,12 @@ export default class Profile extends React.Component {
     super(props);
     this.handleSearch = this.handleSearch.bind(this);
     this.showFriends = this.showFriends.bind(this);
+    this.handleRemoveFriendClick = this.handleRemoveFriendClick.bind(this);
+    this.handleAddFriendClick = this.handleAddFriendClick.bind(this);
     this.state = {
       showFriends:true,
+      isShowingAddModal:false,
+      isShowingRemoveModal:false,
       searchData:{
         searchedAllUsers:[],
         searchedFriendUsers:[]
@@ -54,10 +36,30 @@ export default class Profile extends React.Component {
     };
   }
 
+  handleCloseClick(clickEvent) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({isShowingAddModal: false, isShowingRemoveModal: false, value: ""});
+    }
+  }
+
+  handleAddFriendClick(clickEvent, userId, adduser) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({isShowingAddModal: true, value: "",addUser: adduser});
+    }
+  }
+
+  handleRemoveFriendClick(clickEvent, userId, removeuser) {
+    clickEvent.preventDefault();
+    if (clickEvent.button === 0) {
+      this.setState({isShowingRemoveModal: true, value: "",removeUser: removeuser});
+    }
+  }
+
   showFriends(){
     this.setState({isSearch:false});
   }
-
 
   handleSearch(clickEvent, searchText) {
     clickEvent.preventDefault();
@@ -67,9 +69,6 @@ export default class Profile extends React.Component {
       )
     }
   }
-
-
-
 
   componentDidMount() {
     getAuthorData(0, (userData) => {
@@ -105,7 +104,6 @@ export default class Profile extends React.Component {
     }
     if(this.state.isSearch == true){
       friendsTable = this.state.searchData.searchedAllUsers.concat(this.state.searchData.searchedFriendUsers);
-      debugger;
     }else{
       if(this.state.userData.friends){
         friendsTable = this.state.userData.friends;
@@ -113,6 +111,24 @@ export default class Profile extends React.Component {
     }
     return (
       <div className="profile">
+        {this.state.isShowingAddModal && <ModalContainer onClose={this.handleClose}>
+          <ModalDialog className="complaint-modal" onClose={this.handleClose}>
+            <h3>Are you sure you want to add {this.state.addUser.fname} {this.state.addUser.lname} to your friends?</h3>
+            <hr></hr>
+            <button type="submit" className="btn btn-default submit-btn" onClick={(e) => this.handleAddFriendConfirm(e)}>Submit</button>
+            <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+          </ModalDialog>
+        </ModalContainer>
+      }
+      {this.state.isShowingRemoveModal && <ModalContainer onClose={this.handleClose}>
+        <ModalDialog className="complaint-modal" onClose={this.handleClose}>
+          <h3>Are you sure you want to remove {this.state.removeUser.fname} {this.state.removeUser.lname} from your friends?</h3>
+          <hr></hr>
+          <button type="submit" className="btn btn-default submit-btn" onClick={(e) => this.handleRemoveFriendConfirm(e)}>Submit</button>
+          <button type="close " className="btn btn-default close-btn" onClick={(e) => this.handleCloseClick(e)}>Close</button>
+        </ModalDialog>
+      </ModalContainer>
+    }
       <div className="container profile-margin-top account-info">
         <br />
         <div className="row">
@@ -219,12 +235,12 @@ export default class Profile extends React.Component {
                 <h3 className="panel-title">Friends:</h3>
               </div>
               <div className="panel-body">
-                <FriendsSearchBar handleSearch={this.handleSearch} showFriends={this.showFriends}/>
+                <FriendsSearchBar handleSearch={this.handleSearch} showFriends={this.showFriends} userData={this.state.userData}/>
                 <table className="table table-outline friends-table">
                   <tbody className = "">
                     {friendsTable.map((friend,i) => {
                       return (
-                        <ProfileFriends key={i} user={this.state.userData} id={friend}></ProfileFriends>
+                        <ProfileFriends key={i} user={this.state.userData} id={friend} handleAddFriendClick={this.handleAddFriendClick} handleRemoveFriendClick={this.handleRemoveFriendClick}></ProfileFriends>
                       )
                     })}
                   </tbody>

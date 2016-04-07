@@ -163,14 +163,14 @@ var initialData = {
     "title": "testParty4",
     "description": "This is a test party 2, don't forget to check for very long descriptions to see if they look good.",
     "private_status": "false",
-    "address": "20 N Pleasant St",
+    "address": "W. E. B. Du Bois Library",
     "city": "Amherst",
     "zip": "01002",
     "state": "MA",
     "country": "USA",
     "coordinates": {
-      "latitude": 42.37618519999999,
-      "longitude": -72.5198968
+      "latitude": 42.3897007,
+      "longitude": -72.5281613
     },
     "datetime": "Thu Mar 04 2016 01:33:59 GMT-0500 (EST)",
     "host": 2,
