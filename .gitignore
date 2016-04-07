@@ -3,7 +3,6 @@
 node_modules/
 config.js
 npm-debug.log
-config.js
 
 # Client
 client/build/js/app.js
