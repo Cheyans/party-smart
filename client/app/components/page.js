@@ -5,10 +5,11 @@ import {getAuthorData, resetDatabase} from '../server';
 export default class Page extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: 0};
+    this.state = {user: "000000000000000000000000"};
   }
 
   componentDidMount() {
+
     getAuthorData(this.state.user, (userData) => {
       this.setState(userData);
     });

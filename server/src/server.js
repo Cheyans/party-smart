@@ -3,6 +3,9 @@ var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
 
+var mongo_express = require('mongo-express/lib/middleware');
+var mongo_express_config = require('mongo-express/config.default.js');
+
 var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
@@ -17,25 +20,42 @@ var getCollection = database.getCollection;
 
 
 var app = express();
+
+
+var MongoDB = require('mongodb');
+var MongoClient = MongoDB.MongoClient;
+var ObjectID = MongoDB.ObjectID;
+var url = 'mongodb://localhost:27017/PartySmart';
+
+
+MongoClient.connect(url, function(err, db) {
+
 app.use(bodyParser.text());
 app.use(bodyParser.json());
 app.use(express.static("../client/build"));
+app.use('/mongo_express', mongo_express(mongo_express_config));
+
+function sendDatabaseError(res, err) {
+  res.status(500).send("A database error occurred: " + err);
+}
 
 // Fetch user information
 app.get("/users/:id", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
-  var userIdRequested = parseInt(req.params.id);
-  if (userIdRequested === userIdRequesting) {
-    try {
-      var user = readDocument("users", userIdRequested);
-    } catch (err) {
-      res.status(404).end();
-    }
-    user.friends = user.friends.map(getBasicUserInfo);
-    user.id = user._id.toString();
-
-    delete user._id;
-    res.send(user);
+  var userid = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = req.params.id;
+  if (userIdRequested === userid) {
+    db.collection('users').findOne({
+      _id: new ObjectID(userid)
+    },function(err, user) {
+      if (err) {
+        // An error occurred.
+        return res.status(500);
+      } else if (user === null) {
+        // Feed item not found!
+        return res.status(400);
+      }
+      res.send(user);
+          });
   } else {
     res.status(401).end();
   }
@@ -43,9 +63,9 @@ app.get("/users/:id", function(req, res) {
 
 // Fetch list of basic party information for user
 app.get("/users/:id/parties", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.id);
-  if (userIdRequested === userIdRequesting) {
+  if (userIdRequested === userid) {
     try {
       var partyInfo = getBasicPartyInfo(userIdRequested);
     } catch (err) {
@@ -57,105 +77,124 @@ app.get("/users/:id/parties", function(req, res) {
   }
 });
 
+
+
 app.get("/users/:id/profile", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
-  var userIdRequested = parseInt(req.params.id);
-  if (userIdRequested === userIdRequesting) {
-    var parties = getCollection("parties");
-    var indexPrev = 0;
-    var indexFuture = 0;
-    var indexHost = 0;
-    var curDate = new Date();
-    var parDate = new Date();
-    var profileParties = {
-      prevParties: {
-        attended: [],
-        "not attending": [],
-        declined: [],
-        invited: []
-      },
-      futureParties: {
-        attended: [],
-        "not attending": [],
-        declined: [],
-        invited: []
-      },
-      hostingParties: []
-    }
-    for (var party of parties) {
-      indexFuture = 0;
-      indexPrev = 0;
-      for (var z = 0; z < party.attending.length; z++) {
-        if (party.attending[z] === userIdRequesting) {
-          parDate = new Date(party.datetime);
-          if (parDate.getTime() < curDate.getTime()) {
-            profileParties.prevParties.attended[indexPrev] = party._id;
-            indexPrev++;
-          } else
-          if (parDate.getTime() > curDate.getTime()) {
-            profileParties.futureParties.attended[indexFuture] = party._id;
-            indexFuture++;
-          }
+  var userid = getUserIdFromToken(req.get("Authorization"));
+  var userIdRequested = req.params.id;
+  if (userIdRequested === userid) {
+    //parties = [];
+    db.collection("parties").find(
+              {$or:[
+                      { invi :
+                          { $in :[ new ObjectID(userid) ]
+                          }
+                      },
+                      { attending :
+                          { $in :[ new ObjectID(userid) ]
+                          }
+                      },
+                      { host :
+                          { $in :[ new ObjectID(userid) ]
+                          }
+                      },
+                      { declined :
+                          { $in :[ new ObjectID(userid) ]
+                          }
+                      }
+                  ]}
+    ).toArray(function(err,parties){
+      if(err){
+        res.send(err);
+      }
+      if(parties!=null){
+        var curDate = new Date();
+        var parDate = new Date();
+        var profileParties = {
+          prevParties: {
+            attended: [],
+            "not attending": [],
+            declined: [],
+            invited: []
+          },
+          futureParties: {
+            attended: [],
+            "not attending": [],
+            declined: [],
+            invited: []
+          },
+          hostingParties: []//,
+          //things:[]
         }
-      }
-      indexFuture = 0;
-      indexPrev = 0;
-      for (z = 0; z < party.declined.length; z++) {
-        if (party.declined[z] === userIdRequesting) {
-          parDate = new Date(party.datetime);
-          if (parDate.getTime() < curDate.getTime()) {
-            profileParties.prevParties["not attending"][indexPrev] = party._id;
-            indexPrev++;
-          } else
-          if (parDate.getTime() > curDate.getTime()) {
-            profileParties.futureParties["not attending"][indexFuture] = party._id;
-            indexFuture++;
+        for (var i = 0; i < parties.length; i++) {
+          var party = parties[i];
+          var list = party.attending;
+          list = list.map((id)=>(id.toString()));
+            if (list.indexOf({userid}.userid)!=-1) {
+              parDate = new Date(party.datetime);
+              if (parDate.getTime() < curDate.getTime()) {
+                profileParties.prevParties.attended.push(party);
+              } else{
+                profileParties.futureParties.attended.push(party);
+                }
+            }
+            list = party.declined;
+            list = list.map((id)=>(id.toString()));
+            if (list.indexOf({userid}.userid)!=-1) {
+              parDate = new Date(party.datetime);
+              if (parDate.getTime() < curDate.getTime()) {
+                profileParties.prevParties["not attending"].push(party);
+              } else
+              {
+                profileParties.futureParties["not attending"].push(party);
+              }
+            }
+            list = party.invited;
+            list = list.map((id)=>(id.toString()));
+            if (list.indexOf({userid}.userid)!=-1) {
+              parDate = new Date(party.datetime);
+              if (parDate.getTime() < curDate.getTime()) {
+                profileParties.prevParties.invited.push(party);
+              } else
+              {
+                profileParties.futureParties.invited.push(party);
+              }
+            }
+            list = party.host;
+            list = list.toString();
+          if (list === {userid}.userid) {
+            profileParties.hostingParties.push(party);
           }
-        }
-      }
-      indexFuture = 0;
-      indexPrev = 0;
-      for (z = 0; z < party.invited.length; z++) {
-        if (party.invited[z] === userIdRequesting) {
-          parDate = new Date(party.datetime);
-          if (parDate.getTime() < curDate.getTime()) {
-            profileParties.prevParties.invited[indexPrev] = party._id;
-            indexPrev++;
-          } else
-          if (parDate.getTime() > curDate.getTime()) {
-            profileParties.futureParties.invited[indexFuture] = party._id;
-            indexFuture++;
-          }
-        }
-      }
-      if (party.host === userIdRequesting) {
-        profileParties.hostingParties[indexHost] = party._id;
-        indexHost++;
-      }
-    }
-    profileParties.hostingParties = profileParties.hostingParties.map((host) => readDocument("parties", host));
-    profileParties.futureParties.attended = profileParties.futureParties.attended.map((att) => readDocument("parties", att));
-    profileParties.futureParties["not attending"] = profileParties.futureParties["not attending"].map((nat) => readDocument("parties", nat));
-    profileParties.futureParties.invited = profileParties.futureParties.invited.map((inv) => readDocument("parties", inv));
-    profileParties.prevParties.attended = profileParties.prevParties.attended.map((att) => readDocument("parties", att));
-    profileParties.prevParties["not attending"] = profileParties.prevParties["not attending"].map((nat) => readDocument("parties", nat));
-    profileParties.prevParties.invited = profileParties.prevParties.invited.map((inv) => readDocument("parties", inv));
-    res.send(profileParties);
+      }//end for var parties
+
+      //the following may seem useless but Alex is going to use it for reference:
+
+      // var par = parties[1];
+      // profileParties.things.push(par);
+      // list = par.attending;
+      // list = list.map((id)=>(id.toString()));
+      // profileParties.things.push(list);
+      // profileParties.things.push(list.indexOf({userid}.userid));
+      // profileParties.things.push({userid}.userid);
+      // profileParties.things.push(par.attending[0]);
+      // profileParties.things.push(parties);
+      res.send(profileParties);
+    }//if parties != null
+    });
   } else {
     res.status(401).end();
-  }
-});
+  }});
 
 // Fetch party information
 app.get("/parties/:id", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
   try {
     var party = readDocument("parties", partyIdRequested);
   } catch (err) {
     res.status(404).end();
   }
-  if (verifyPartyAccess(party, userIdRequesting)) {
+  if (verifyPartyAccess(party, userid)) {
     party.id = party._id.toString();
     delete party._id;
 
@@ -173,9 +212,9 @@ app.get("/parties/:id", function(req, res) {
 });
 
 app.get("/admin", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var users = getCollection("users");
-  var userRequesting = users[userIdRequesting];
+  var userRequesting = users[userid];
   if (userRequesting && userRequesting.admin === "true") {
     var parties = getCollection("parties");
     var admin = {
@@ -250,9 +289,9 @@ app.post("/nearby_parties", validate({
 });
 
 app.put("/parties/:id/private_status",function(req, res){
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var partyHost = readDocument("parties",req.params.id).host;
-  if (userIdRequesting === partyHost) {
+  if (userid === partyHost) {
     var party = readDocument("parties", req.params.id);
     party["private status"] = req.value;
     writeDocument("parties", party);
@@ -263,10 +302,10 @@ app.put("/parties/:id/private_status",function(req, res){
 });
 
 app.post("/users/:userid/removefriend/:friendid",function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.userid);
-  if (userIdRequested === userIdRequesting) {
-    var user = readDocument("users",userIdRequesting);
+  if (userIdRequested === userid) {
+    var user = readDocument("users",userid);
     var userfriends = user.friends;
     var friendIndex = userfriends.indexOf(parseInt(req.params.friendid));
     user.friends.splice(friendIndex,1);
@@ -280,10 +319,10 @@ app.post("/users/:userid/removefriend/:friendid",function(req, res) {
 });
 
 app.post("/users/:userid/addfriend/:friendid",function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = parseInt(req.params.userid);
-  if (userIdRequested === userIdRequesting) {
-    var user = readDocument("users",userIdRequesting);
+  if (userIdRequested === userid) {
+    var user = readDocument("users",userid);
     var friend = readDocument("users",parseInt(req.params.friendid));
     user.friends.push(friend._id);
     writeDocument("users",user);
@@ -456,14 +495,14 @@ app.put('/parties/:id/supplies', function(req, res) {
 })
 
 app.delete("/parties/:id", function(req, res) {
-  var userIdRequesting = getUserIdFromToken(req.get("Authorization"));
+  var userid = getUserIdFromToken(req.get("Authorization"));
   var partyIdRequested = parseInt(req.params.id);
   try {
     var party = readDocument("parties", partyIdRequested);
   } catch (err) {
     res.status(404).end();
   }
-  if (verifyPartyAccess(party, userIdRequesting)) {
+  if (verifyPartyAccess(party, userid)) {
     deleteDocument("parties", party._id);
     res.status(204).end();
   } else {
@@ -553,24 +592,21 @@ function withinRange(range, lat1, lon1, lat2, lon2) {
   return range < 0 || d / 1609.34 < range;
 }
 
-/**
- * Get the user ID from a token. Returns -1 (an invalid ID) if it fails.
- */
 function getUserIdFromToken(authorizationLine) {
   try {
     // Cut off "Bearer " from the header value.
     var token = authorizationLine.slice(7);
     // Convert the base64 string to a UTF-8 string.
-    var regularString = new Buffer(token, "base64").toString("utf8");
+    var regularString = new Buffer(token, 'base64').toString('utf8');
     // Convert the UTF-8 string into a JavaScript object.
     var tokenObj = JSON.parse(regularString);
-    var id = tokenObj["id"];
-    // Check that id is a number.
-    if (typeof id === "number") {
+    var id = tokenObj['id'];
+    // Check that id is a string.
+    if (typeof id === 'string') {
       return id;
     } else {
-      // Not a number. Return -1, an invalid ID.
-      return -1;
+      // Not a number. Return "", an invalid ID.
+      return "";
     }
   } catch (e) {
     // Return an invalid ID.
@@ -598,3 +634,4 @@ app.use(function(err, req, res, next) {
 app.listen(3000, function() {
   console.log("Listening on port 3000");
 });
+ });

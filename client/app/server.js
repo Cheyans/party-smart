@@ -134,7 +134,7 @@ export function resetDatabase() {
   xhr.send();
 }
 
-var token = "eyJpZCI6MH0="; // <-- Put your base64"d JSON token here
+var token = "eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCJ9"; // <-- Put your base64"d JSON token here
 /**
  * Properly configure+send an XMLHttpRequest with error handling, authorization token,
  * and other needed properties.

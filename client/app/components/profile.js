@@ -87,10 +87,10 @@ export default class Profile extends React.Component {
   }
 
   componentDidMount() {
-    getAuthorData(0, (userData) => {
+    getAuthorData("000000000000000000000000", (userData) => {
       this.setState({userData : userData});
     });
-    getProfileParties(0, (profileParties)=> {
+    getProfileParties("000000000000000000000000", (profileParties)=> {
       this.setState({profileParties : profileParties});
     });
   }

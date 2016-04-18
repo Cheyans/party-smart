@@ -1,7 +1,7 @@
 var ObjectID = require('mongodb').ObjectID;
 
 // Put your startup's name here (only letters and numbers -- no spaces, apostrophes, or special characters!)
-var databaseName = null;
+var databaseName = "PartySmart";
 // Put the initial mock objects here.
 // Your startup's initial mock objects go here
 var initialData = {
