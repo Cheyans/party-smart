@@ -58,7 +58,7 @@ app.get("/users/:id", function(req, res) {
       }
         getBasicUserInfo(user.friends,res,function(err,friends){
           if(err){
-            return res.status(500).send();
+            return res.status(500).end();
           }
           user.id = user._id;
           delete user._id;
@@ -220,29 +220,29 @@ app.get("/parties/:id", function(req, res) {
       _id: new ObjectID(partyIdRequested)
     },function(err,party){
       if(err){
-        res.status(501).send();
+        res.status(501).end();
       }
       if(party===null){
-        res.status(400).send();
+        res.status(400).end();
       }
       getBasicUserInfo(party.attending,res,function(err,att){
         if(err){
-          return res.status(502).send();
+          return res.status(502).end();
         }
         party.attending = att;
         getBasicUserInfo(party.declined,res,function(err,dec){
           if(err){
-            return res.status(503).send();
+            return res.status(503).end();
           }
           party.declined = dec;
           getBasicUserInfo(party.invited,res,function(err,inv){
             if(err){
-              return res.status(504).send();
+              return res.status(504).end();
             }
             party.invited = inv;
             getBasicUserInfo([party.host],res,function(err,host){
               if(err){
-                return res.status(505).send();
+                return res.status(505).end();
               }
               party.host = host[0];
               party.id = party._id;
@@ -347,16 +347,33 @@ app.put("/parties/:id/private_status",function(req, res){
 
 app.post("/users/:userid/removefriend/:friendid",function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
-  var userIdRequested = parseInt(req.params.userid);
+  var userIdRequested = req.params.userid;
   if (userIdRequested === userid) {
-    var user = readDocument("users",userid);
-    var userfriends = user.friends;
-    var friendIndex = userfriends.indexOf(parseInt(req.params.friendid));
-    user.friends.splice(friendIndex,1);
-    writeDocument("users",user);
-    user.friends = user.friends.map((id) => getBasicUserInfo(id));
-    user.id = user._id;
-    res.send(user);
+    db.collection("users").updateOne({ _id: new ObjectID(userid)},{
+        $pull: { friends: new ObjectID(req.params.friendid) }
+    },function(err,result){
+      if(err){
+        return res.status(500).end()
+      }
+      if(result.modifiedCount>=1){
+        getBasicUserInfo([new ObjectID(userid)],res,function(err,user){
+          if(err){
+            return res.status(500);
+          }
+          if(user.length<1){
+            return res.status(400);
+          }
+          getBasicUserInfo(user[0].friends,res,function(err,friends){
+            if(err){
+              return res.status(500).end();
+            }
+            user[0].id = user[0]._id;
+            delete user[0]._id;
+            user[0].friends = friends.map((friend)=>{friend.id=friend._id; return friend});
+            res.send(user[0]);
+          });
+        })
+      }});
   } else {
     res.status(401).end();
   }
@@ -364,15 +381,33 @@ app.post("/users/:userid/removefriend/:friendid",function(req, res) {
 
 app.post("/users/:userid/addfriend/:friendid",function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
-  var userIdRequested = parseInt(req.params.userid);
+  var userIdRequested = req.params.userid;
   if (userIdRequested === userid) {
-    var user = readDocument("users",userid);
-    var friend = readDocument("users",parseInt(req.params.friendid));
-    user.friends.push(friend._id);
-    writeDocument("users",user);
-    user.friends = user.friends.map((id) => getBasicUserInfo(id))
-    user.id = user._id;
-    res.send(user);
+    db.collection("users").updateOne({ _id: new ObjectID(userid)},{
+        $push: { friends: new ObjectID(req.params.friendid) }
+    },function(err,result){
+      if(err){
+        return res.status(500).end()
+      }
+      if(result.modifiedCount>=1){
+        getBasicUserInfo([new ObjectID(userid)],res,function(err,user){
+          if(err){
+            return res.status(500);
+          }
+          if(user.length<1){
+            return res.status(400);
+          }
+          getBasicUserInfo(user[0].friends,res,function(err,friends){
+            if(err){
+              return res.status(500).end();
+            }
+            user[0].id = user[0]._id;
+            delete user[0]._id;
+            user[0].friends = friends.map((friend)=>{friend.id=friend._id; return friend});
+            res.send(user[0]);
+          });
+        })
+      }});
   } else {
     res.status(401).end();
   }
