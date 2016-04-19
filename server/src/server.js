@@ -106,7 +106,6 @@ app.get("/users/:id/profile", function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
   var userIdRequested = req.params.id;
   if (userIdRequested === userid) {
-    //parties = [];
     db.collection("parties").find(
               {$or:[
                       { invi :
@@ -146,8 +145,7 @@ app.get("/users/:id/profile", function(req, res) {
             declined: [],
             invited: []
           },
-          hostingParties: [],
-          things:[]
+          hostingParties: []
         }
         for (var i = 0; i < parties.length; i++) {
           var party = parties[i];
@@ -188,8 +186,7 @@ app.get("/users/:id/profile", function(req, res) {
           if (list === {userid}.userid) {
             profileParties.hostingParties.push(party);
           }
-      }//end for var parties
-
+      }
       //the following may seem useless but Alex is going to use it for reference:
 
       // var par = parties[1];
@@ -201,11 +198,8 @@ app.get("/users/:id/profile", function(req, res) {
       // profileParties.things.push({userid}.userid);
       // profileParties.things.push(par.attending[0]);
       // profileParties.things.push(parties);
-      // var dude = par.attending[0];
-      // });
-      // profileParties.things.push(ussers);
       res.send(profileParties);
-    }//if parties != null
+    }
     });
   } else {
     res.status(401).end();
@@ -535,16 +529,6 @@ app.delete("/parties/:id", function(req, res) {
     res.status(401).end();
   }
 });
-
-// function getBasicUserInfo(userId) {
-//   var user = readDocument("users", userId);
-//   return {
-//     id: user._id.toString(),
-//     fname: user.fname,
-//     lname: user.lname,
-//     picture: user.picture
-//   }
-// }
 
 function getBasicPartyInfo(userId) {
   var parties = getCollection("parties");
