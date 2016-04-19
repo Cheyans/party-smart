@@ -7,6 +7,7 @@ var databaseName = "PartySmart";
 var initialData = {
   "users": [{
     "_id": new ObjectID("000000000000000000000000"),
+    "full_name": "Cheyan Setayesh",
     "fname": "Cheyan",
     "lname": "Setayesh",
     "phone_number": "7818799033",
@@ -16,6 +17,7 @@ var initialData = {
     "friends": [new ObjectID("000000000000000000000001"), new ObjectID("000000000000000000000002")]
   }, {
     "_id": new ObjectID("000000000000000000000001"),
+    "full_name": "Tim Richards",
     "fname": "Tim",
     "lname": "Richards",
     "phone_number": "999999999",
@@ -25,6 +27,7 @@ var initialData = {
     "friends": [new ObjectID("000000000000000000000002"), new ObjectID("000000000000000000000003")]
   }, {
     "_id": new ObjectID("000000000000000000000002"),
+    "full_name": "Alex Redden",
     "fname": "Alex",
     "lname": "Redden",
     "phone_number": "999999999",
@@ -34,6 +37,7 @@ var initialData = {
     "friends": [new ObjectID("000000000000000000000000"), new ObjectID("000000000000000000000003")]
   }, {
     "_id": new ObjectID("000000000000000000000003"),
+    "full_name": "John Vilk",
     "fname": "John",
     "lname": "Vilk",
     "phone_number": "999999999",

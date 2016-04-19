@@ -37,7 +37,7 @@ export function putPartySupplies(partyId, party, supplyId, userId, cb) {
 }
 
 export function searchProfile(id, queryText, cb) {
-  sendXHR("POST", "/search/" + id + "/user", queryText, (xhr) => {
+  sendXHR("POST", "/search/" + id + "/user", {query: queryText}, (xhr) => {
     // Call the callback with the data.
     cb(JSON.parse(xhr.responseText));
   });
