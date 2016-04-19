@@ -60,7 +60,9 @@ app.get("/users/:id", function(req, res) {
           if(err){
             return res.status(500).send();
           }
-          user.friends = friends;
+          user.id = user._id;
+          delete user._id;
+          user.friends = friends.map((friend)=>{friend.id=friend._id; return friend});
           res.send(user);
         });
       });
@@ -70,6 +72,9 @@ app.get("/users/:id", function(req, res) {
 });
 
 function getBasicUserInfo(userList,res,cb){
+  if(userList==null || userList.length==0){
+    return cb(null,[]);
+  }
   var query = {
     $or: userList.map((id) => { return {_id: id } })
   };
@@ -79,6 +84,8 @@ function getBasicUserInfo(userList,res,cb){
     }
     var userMap = [];
     users.forEach((user) => {
+      user.id = user._id;
+      delete user.id;
       userMap.push(user);
     });
     cb(null,userMap);
@@ -207,29 +214,69 @@ app.get("/users/:id/profile", function(req, res) {
 
 // Fetch party information
 app.get("/parties/:id", function(req, res) {
-  var userid = getUserIdFromToken(req.get("Authorization"));
-  var partyIdRequested = parseInt(req.params.id);
-  try {
-    var party = readDocument("parties", partyIdRequested);
-  } catch (err) {
-    res.status(404).end();
-  }
-  if (verifyPartyAccess(party, userid)) {
-    party.id = party._id.toString();
-    delete party._id;
+  //var userid = getUserIdFromToken(req.get("Authorization"));
+  var partyIdRequested = req.params.id;
+  db.collection('parties').findOne({
+      _id: new ObjectID(partyIdRequested)
+    },function(err,party){
+      if(err){
+        res.status(501).send();
+      }
+      if(party===null){
+        res.status(400).send();
+      }
+      getBasicUserInfo(party.attending,res,function(err,att){
+        if(err){
+          return res.status(502).send();
+        }
+        party.attending = att;
+        getBasicUserInfo(party.declined,res,function(err,dec){
+          if(err){
+            return res.status(503).send();
+          }
+          party.declined = dec;
+          getBasicUserInfo(party.invited,res,function(err,inv){
+            if(err){
+              return res.status(504).send();
+            }
+            party.invited = inv;
+            getBasicUserInfo([party.host],res,function(err,host){
+              if(err){
+                return res.status(505).send();
+              }
+              party.host = host[0];
+              party.id = party._id;
+              delete party._id;
+              res.send(party);
+            });//get host
+          });// get inv
+        });//get dec
+      });//get att
+    });//find party
+});//app
 
-    party.host = getBasicUserInfo(party.host);
-    party.attending = party.attending.map((id) => getBasicUserInfo(id));
-    party.invited = party.invited.map((id) => getBasicUserInfo(id));
-    party.declined = party.declined.map((id) => getBasicUserInfo(id));
-    party.supplies = party.supplies.map((supply) => {
-      return getSupplyInfo(supply.supply_id, supply.claimed_by);
-    });
-    res.send(party);
-  } else {
-    res.status(401).end();
-  }
-});
+
+//   try {
+//     var party = readDocument("parties", partyIdRequested);
+//   } catch (err) {
+//     res.status(404).end();
+//   }
+//   if (verifyPartyAccess(party, userid)) {
+//     party.id = party._id.toString();
+//     delete party._id;
+//
+//     party.host = getBasicUserInfo(party.host);
+//     party.attending = party.attending.map((id) => getBasicUserInfo(id));
+//     party.invited = party.invited.map((id) => getBasicUserInfo(id));
+//     party.declined = party.declined.map((id) => getBasicUserInfo(id));
+//     party.supplies = party.supplies.map((supply) => {
+//       return getSupplyInfo(supply.supply_id, supply.claimed_by);
+//     });
+//     res.send(party);
+//   } else {
+//     res.status(401).end();
+//   }
+// });
 
 app.get("/admin", function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));

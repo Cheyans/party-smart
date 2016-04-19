@@ -173,7 +173,7 @@ export default class PartyInfo extends React.Component {
                     <div className="panel-footer">
                       <br/>
                       <strong>{statusText}</strong>
-                      <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host.id}></PrivacyButton>
+                      <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
                       <br/>
                       <strong>Private Party:</strong>
                       <br/>
