@@ -255,29 +255,6 @@ app.get("/parties/:id", function(req, res) {
     });//find party
 });//app
 
-
-//   try {
-//     var party = readDocument("parties", partyIdRequested);
-//   } catch (err) {
-//     res.status(404).end();
-//   }
-//   if (verifyPartyAccess(party, userid)) {
-//     party.id = party._id.toString();
-//     delete party._id;
-//
-//     party.host = getBasicUserInfo(party.host);
-//     party.attending = party.attending.map((id) => getBasicUserInfo(id));
-//     party.invited = party.invited.map((id) => getBasicUserInfo(id));
-//     party.declined = party.declined.map((id) => getBasicUserInfo(id));
-//     party.supplies = party.supplies.map((supply) => {
-//       return getSupplyInfo(supply.supply_id, supply.claimed_by);
-//     });
-//     res.send(party);
-//   } else {
-//     res.status(401).end();
-//   }
-// });
-
 app.get("/admin", function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
   var users = getCollection("users");
