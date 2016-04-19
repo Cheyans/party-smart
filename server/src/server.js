@@ -39,6 +39,8 @@ function sendDatabaseError(res, err) {
   res.status(500).send("A database error occurred: " + err);
 }
 
+
+
 // Fetch user information
 app.get("/users/:id", function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
@@ -54,13 +56,34 @@ app.get("/users/:id", function(req, res) {
         // Feed item not found!
         return res.status(400);
       }
-      res.send(user);
-          });
+        getBasicUserInfo(user.friends,res,function(err,friends){
+          if(err){
+            return res.status(500).send();
+          }
+          user.friends = friends;
+          res.send(user);
+        });
+      });
   } else {
     res.status(401).end();
   }
 });
 
+function getBasicUserInfo(userList,res,cb){
+  var query = {
+    $or: userList.map((id) => { return {_id: id } })
+  };
+  db.collection('users').find(query).toArray(function(err, users) {
+    if (err) {
+      return cb(err,null);
+    }
+    var userMap = [];
+    users.forEach((user) => {
+      userMap.push(user);
+    });
+    cb(null,userMap);
+  })
+}
 // Fetch list of basic party information for user
 app.get("/users/:id/parties", function(req, res) {
   var userid = getUserIdFromToken(req.get("Authorization"));
@@ -123,8 +146,8 @@ app.get("/users/:id/profile", function(req, res) {
             declined: [],
             invited: []
           },
-          hostingParties: []//,
-          //things:[]
+          hostingParties: [],
+          things:[]
         }
         for (var i = 0; i < parties.length; i++) {
           var party = parties[i];
@@ -178,6 +201,9 @@ app.get("/users/:id/profile", function(req, res) {
       // profileParties.things.push({userid}.userid);
       // profileParties.things.push(par.attending[0]);
       // profileParties.things.push(parties);
+      // var dude = par.attending[0];
+      // });
+      // profileParties.things.push(ussers);
       res.send(profileParties);
     }//if parties != null
     });
@@ -510,15 +536,15 @@ app.delete("/parties/:id", function(req, res) {
   }
 });
 
-function getBasicUserInfo(userId) {
-  var user = readDocument("users", userId);
-  return {
-    id: user._id.toString(),
-    fname: user.fname,
-    lname: user.lname,
-    picture: user.picture
-  }
-}
+// function getBasicUserInfo(userId) {
+//   var user = readDocument("users", userId);
+//   return {
+//     id: user._id.toString(),
+//     fname: user.fname,
+//     lname: user.lname,
+//     picture: user.picture
+//   }
+// }
 
 function getBasicPartyInfo(userId) {
   var parties = getCollection("parties");
