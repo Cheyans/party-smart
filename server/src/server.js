@@ -10,7 +10,7 @@ var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
 
-var messageService = require("./message");
+//var messageService = require("./message");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -454,33 +454,55 @@ function containsUser(users, user) {
 
 app.post("/search/:userId/user", function(req, res) {
   var fromUser = getUserIdFromToken(req.get('Authorization'));
-  var userdata = readDocument('users', fromUser);
+  //var userdata = readDocument('users', fromUser);
   if (typeof(req.body) === 'string') {
-    var query = req.body;
-
-    var friends = userdata.friends.map((userid) => readDocument("users", userid));
-    var allusers = getCollection("users");
-    var searchedFriendUsers = [];
-    var searchedAllUsers = [];
-    for (var user of allusers) {
-      user.name = (user.fname + " " + user.lname).toLowerCase();
-      if (user.name.search(query) != -1 && !containsUser(friends, user)) {
-        searchedAllUsers.push(user);
+    db.collection("users").createIndex({fname: 1});
+    db.collection("users").createIndex({lname: 1});
+    db.collection("users").find({
+      $text:{
+        $search:{
+          $or:[
+            {fname: req.body},
+            {lname:req.body}
+          ]
+        }
       }
-    }
-    for (var friend of friends) {
-      friend.name = (friend.fname + " " + friend.lname).toLowerCase();
-      if (friend.name.search(query) != -1) {
-        searchedFriendUsers.push(friend);
+    },function(err,users){
+      //console.log(users);
+      if(err){
+        return res.status(500).end();
       }
-    }
-    var search = {
-      searchedAllUsers: [],
-      searchedFriendUsers: []
-    };
-    search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
-    search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
-    res.send(search);
+      getBasicUserInfo(users,res,function(userlist,err){
+        if(err){
+          return res.status(500).end();
+        }
+        else return res.send(userlist);
+      })
+    })
+    // var query = req.body;
+    // var friends = userdata.friends.map((userid) => readDocument("users", userid));
+    // var allusers = getCollection("users");
+    // var searchedFriendUsers = [];
+    // var searchedAllUsers = [];
+    // for (var user of allusers) {
+    //   user.name = (user.fname + " " + user.lname).toLowerCase();
+    //   if (user.name.search(query) != -1 && !containsUser(friends, user)) {
+    //     searchedAllUsers.push(user);
+    //   }
+    // }
+    // for (var friend of friends) {
+    //   friend.name = (friend.fname + " " + friend.lname).toLowerCase();
+    //   if (friend.name.search(query) != -1) {
+    //     searchedFriendUsers.push(friend);
+    //   }
+    // }
+    // var search = {
+    //   searchedAllUsers: [],
+    //   searchedFriendUsers: []
+    // };
+    // search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
+    // search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
+    // res.send(search);
   } else {
     // 400: Bad Request.
     res.status(400).end();

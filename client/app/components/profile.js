@@ -79,7 +79,8 @@ export default class Profile extends React.Component {
   handleSearch(clickEvent, searchText) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      searchProfile(this.props.params.userId,searchText,(searchdata) =>
+      debugger;
+      searchProfile(this.props.params.id,searchText,(searchdata) =>
         this.setState({searchData: searchdata, isSearch:true})
       )
     }
