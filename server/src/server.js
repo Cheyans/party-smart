@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
+var ResetDatabase = require('./resetdatabase');
 var https = require("https");
 
 var mongo_express = require('mongo-express/lib/middleware');
@@ -602,6 +603,7 @@ app.put('/parties/:id/invited', function(req, res) {
         if(err){
           return res.status(500).end();
         }
+        console.log(req.body)
         if(party.host.toString()!=fromUser.toString()){
           res.status(401).end();
         }
@@ -831,10 +833,11 @@ app.put('/parties/:id/invited', function(req, res) {
   }
 
   // Reset database.
-  app.post("/resetdb", function(req, res) {
+  app.post('/resetdb', function(req, res) {
     console.log("Resetting database...");
-    database.resetDatabase();
-    res.send();
+    ResetDatabase(db, function() {
+      res.send();
+    });
   });
 
   app.use(function(err, req, res, next) {
