@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
+var http = require("http");
 
 var mongo_express = require('mongo-express/lib/middleware');
 var mongo_express_config = require('mongo-express/config.default.js');
@@ -11,6 +12,7 @@ var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
 
 var messageService = require("./message");
+var config = require("./config")
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -463,34 +465,51 @@ MongoClient.connect(url, function(err, db) {
   });
 
   //creating a new party server route
-  app.post('/parties', validate({
-    body: partySchema
-  }), function(req, res) {
-    // If this function runs, `req.body` passed JSON validation!
-    var newParty = req.body;
-    newParty.host = getUserIdFromToken(req.get('Authorization'));
-    newParty.coordinates = {
-      "latitude": null,
-      "longitude": null
-    }
-    newParty.dateTime = new Date([newParty.date, newParty.time].join(" ")).toString();
-    delete newParty.time;
-    delete newParty.date;
+  app.post('/parties', validate({ body: partySchema}), function(req, res) {
 
-    newParty.attending = [];
-    newParty.declined = [];
-    newParty.compaints = [];
-    newParty.supplies = newParty.supplies.map((id) => {
-      return {
-        "supply_id": id,
-        "claimed_by": null
-      }
+  //If this function runs, req.body passed JSON validation
+    var party = req.body;
+    var fromUser = getUserIdFromToken(req.get("Authorization"));
+
+    var address = [party.address, party.city, party.state, party.zip].join(" ");
+    http.get("https://maps.googleapis.com/maps/api/geocode/json?key=" +
+    config.gmaps + "&address=" + address), function(result) {
+      var coord = xhr.responseText.geometry.location;
+      var newParty = {
+        "title": party.title,
+        "description": party.description,
+        "private_status": party.status,
+        "address": party.address,
+        "city": party.city,
+        "zip": party.zip,
+        "state": party.state,
+        "country": party.country,
+        "coordinates": {
+          "latitude": coord.lat,
+          "longitude": coord.lng
+        },
+        "date": new Date([party.date, party.time].join("")).toString(),
+        "host": new ObjectID(fromUser),
+        "attending": [],
+        "declined": [],
+        "complaints": []
+      };
+      newParty.supplies = newParty.supplies.map((id) => {
+        return {
+          "supply_id": id,
+          "claimed_by": null
+        }
+      });
+      //adding a party
+      db.collection('parties').insertOne(newParty, function(err, result){
+        if(err){
+          sendDatabaseError(err, res);
+        } else {
+          res.status(201).end();
+        }
+      });
     });
-    addDocument('parties', newParty);
-    var body = "Your party at " + newParty.address + " has been registered.";
-    messageService.sendSMS(newParty.phone_number, body);
-    res.status(201).end();
-  });
+  })
 
   function containsUser(users, user) {
     for (var u of users) {
