@@ -722,18 +722,25 @@ app.put('/parties/:id/invited', function(req, res) {
 
   app.delete("/parties/:id", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
-    var partyIdRequested = parseInt(req.params.id);
-    try {
-      var party = readDocument("parties", partyIdRequested);
-    } catch (err) {
-      res.status(404).end();
-    }
-    if (verifyPartyAccess(party, userid)) {
-      deleteDocument("parties", party._id);
-      res.status(204).end();
-    } else {
-      res.status(401).end();
-    }
+    var partyIdRequested = req.params.id;
+    var query = {_id: new ObjectID(partyIdRequested)};
+    db.collection("parties").findOne(query, (err, party) => {
+      if(err) {
+        sendDatabaseError(err, res);
+      }
+      if(!party) {
+        res.status(404).end();
+      } else if(party.host.toString() == new ObjectID(userid)) {
+        db.collection("parties").remove(query, {justOne: true}, (err) => {
+          if(err) {
+            sendDatabaseError(err, res);
+          }
+          res.status(200).end();
+        });
+      } else {
+        res.status(401).end();
+      }
+    });
   });
 
   function getBasicPartyInfo(userId) {
