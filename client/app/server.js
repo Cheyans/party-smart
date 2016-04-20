@@ -18,7 +18,6 @@ export function putPartyInvited(partyId, party, userId, cb) {
     invited: party.attending.concat(party.declined.concat(party.invited))
   }
   var body = spliceParty.invited.map((user) => (user).id);
-  debugger;
   var index = body.indexOf(userId);
   body.splice(index, 1);
   sendXHR("PUT", "/parties/" + partyId + "/invited", body, (xhr) => {

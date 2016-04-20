@@ -66,10 +66,7 @@ MongoClient.connect(url, function(err, db) {
           }
           user.id = user._id;
           delete user._id;
-          user.friends = friends.map((friend) => {
-            friend.id = friend._id;
-            return friend
-          });
+          user.friends = friends;
           res.send(user);
         });
       });
@@ -603,7 +600,6 @@ app.put('/parties/:id/invited', function(req, res) {
         if(err){
           return res.status(500).end();
         }
-        console.log(req.body)
         if(party.host.toString()!=fromUser.toString()){
           res.status(401).end();
         }
