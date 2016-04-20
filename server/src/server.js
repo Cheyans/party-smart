@@ -95,11 +95,11 @@ MongoClient.connect(url, function(err, db) {
       var userMap = [];
       users.forEach((user) => {
         user.id = user._id;
-        delete user.id;
+        delete user._id;
         userMap.push(user);
       });
       cb(null, userMap);
-    })
+    });
   }
   // Fetch list of basic party information for user
   app.get("/users/:id/parties", function(req, res) {
@@ -504,36 +504,56 @@ MongoClient.connect(url, function(err, db) {
     return false;
   }
 
-
+  //CALLBACK HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
   app.post("/search/:userId/user", validate({
     body: searchSchema
   }), function(req, res) {
     var fromUser = getUserIdFromToken(req.get('Authorization'));
     db.collection("users").findOne({
         _id: new ObjectID(fromUser)
-      }, function(err, user) {
+      }, function(err, searchingUser) {
         if (err) {
           res.status(400).end();
-        } else if (user._id.toString() === fromUser) {
+        } else if (searchingUser._id.toString() === fromUser) {
           db.collection("users").find({
             $text: {
               $search: req.body.query
             }
           }, function(err, result) {
+            var searchedFriendUsers = [];
+            var searchedAllUsers = [];
             result.toArray(function(err, users) {
-              var searchedFriendUsers = users.map(function(searchUser) {
-                if(user.friends.contains(searchUser._id) != -1) {
-                  return getBasicUserInfo([searchUser._id]);
-                }
-              });
-              var searchedAllUsers = users.map(function(searchUser) {
-                if(user.friends.contains(searchUser._id) == -1) {
-                  return getBasicUserInfo([searchUser._id]);
-                }
-              });
-              res.send({
-                searchedFriendUsers: searchedFriendUsers,
-                searchedAllUsers: searchedAllUsers
+              users.forEach(function(resultUser) {
+                var friends = [];
+                searchingUser.friends.forEach((friend) => {
+                  if(friend.toString() == resultUser._id.toString()){
+                    friends.push(friend);
+                  }
+                });
+                getBasicUserInfo(friends, res, function(err, result) {
+                  if(err) {
+                    sendDatabaseError(err, res);
+                  }
+                  searchedFriendUsers = searchedFriendUsers.concat(result);
+                  users.forEach(function(resultUser) {
+                    var others = [];
+                    searchingUser.friends.forEach((friend) => {
+                      if(friend.toString() != resultUser._id.toString()){
+                        others.push(friend);
+                      }
+                    });
+                    getBasicUserInfo(others, res, function(err, result) {
+                      if(err) {
+                        sendDatabaseError(err, res);
+                      }
+                      searchedAllUsers = searchedAllUsers.concat(result);
+                      res.send({
+                        searchedFriendUsers: searchedFriendUsers,
+                        searchedAllUsers: searchedAllUsers
+                      });
+                    });
+                  });
+                });
               });
             });
           })
@@ -541,56 +561,7 @@ MongoClient.connect(url, function(err, db) {
           // 400: Bad Request.
           res.status(401).end();
         }
-      })
-      //var userdata = readDocument('users', fromUser);
-      // if (fromUser === req.params.userId) {
-      //   db.collection("users").createIndex({fname: 1});
-      //   db.collection("users").createIndex({lname: 1});
-      //   db.collection("users").find({
-      //     $text:{
-      //       $search:{
-      //         $or:[
-      //           {fname: req.body},
-      //           {lname:req.body}
-      //         ]
-      //       }
-      //     }
-      //   },function(err,users){
-      //     //console.log(users);
-      //     if(err){
-      //       return res.status(500).end();
-      //     }
-      //     getBasicUserInfo(users,res,function(userlist,err){
-      //       if(err){
-      //         return res.status(500).end();
-      //       }
-      //       else return res.send(userlist);
-      //     })
-      //   })
-      // var query = req.body;
-      // var friends = userdata.friends.map((userid) => readDocument("users", userid));
-      // var allusers = getCollection("users");
-      // var searchedFriendUsers = [];
-      // var searchedAllUsers = [];
-      // for (var user of allusers) {
-      //   user.name = (user.fname + " " + user.lname).toLowerCase();
-      //   if (user.name.search(query) != -1 && !containsUser(friends, user)) {
-      //     searchedAllUsers.push(user);
-      //   }
-      // }
-      // for (var friend of friends) {
-      //   friend.name = (friend.fname + " " + friend.lname).toLowerCase();
-      //   if (friend.name.search(query) != -1) {
-      //     searchedFriendUsers.push(friend);
-      //   }
-      // }
-      // var search = {
-      //   searchedAllUsers: [],
-      //   searchedFriendUsers: []
-      // };
-      // search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
-      // search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
-      // res.send(search);
+      });
   });
 
 
