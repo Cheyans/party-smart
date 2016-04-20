@@ -44,7 +44,7 @@ export default class PartyInfo extends React.Component {
 
   handleRemoveConfirm(e) {
     e.preventDefault();
-      putPartyInvited(this.state.removeParty.id,this.state.removeParty,this.state.removeUser.id,(partyData) => this.setState(
+      putPartyInvited(this.state.removeParty.id,this.state.removeParty,this.state.removeUser._id,(partyData) => this.setState(
           Object.assign(this.state, {isShowingModal: false},{"attending": partyData.attending},{"declined": partyData.declined},{"invited": partyData.invited})
           )
       );

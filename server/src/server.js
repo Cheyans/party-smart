@@ -10,6 +10,7 @@ var mongo_express_config = require('mongo-express/config.default.js');
 var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
+var searchSchema = require("./schemas/search.json");
 
 var messageService = require("./message");
 var config = require("./config")
@@ -39,7 +40,9 @@ MongoClient.connect(url, function(err, db) {
     res.status(500).send("A database error occurred: " + err);
   }
 
-
+  db.collection("users").createIndex({
+    full_name: "text"
+  });
 
   // Fetch user information
   app.get("/users/:id", function(req, res) {
@@ -92,11 +95,11 @@ MongoClient.connect(url, function(err, db) {
       var userMap = [];
       users.forEach((user) => {
         user.id = user._id;
-        delete user.id;
+        delete user._id;
         userMap.push(user);
       });
       cb(null, userMap);
-    })
+    });
   }
   // Fetch list of basic party information for user
   app.get("/users/:id/parties", function(req, res) {
@@ -368,7 +371,6 @@ MongoClient.connect(url, function(err, db) {
             if (err) {
               return sendDatabaseError(res, err);
             }
-            //console.log(party.private_status.toString());
             res.send(req.body);
           });
       } else {
@@ -530,91 +532,158 @@ MongoClient.connect(url, function(err, db) {
     return false;
   }
 
-  app.post("/search/:userId/user", function(req, res) {
+  //CALLBACK HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+  app.post("/search/:userId/user", validate({
+    body: searchSchema
+  }), function(req, res) {
     var fromUser = getUserIdFromToken(req.get('Authorization'));
-    var userdata = readDocument('users', fromUser);
-    if (typeof(req.body) === 'string') {
-      var query = req.body;
-
-      var friends = userdata.friends.map((userid) => readDocument("users", userid));
-      var allusers = getCollection("users");
-      var searchedFriendUsers = [];
-      var searchedAllUsers = [];
-      for (var user of allusers) {
-        user.name = (user.fname + " " + user.lname).toLowerCase();
-        if (user.name.search(query) != -1 && !containsUser(friends, user)) {
-          searchedAllUsers.push(user);
+    db.collection("users").findOne({
+        _id: new ObjectID(fromUser)
+      }, function(err, searchingUser) {
+        if (err) {
+          res.status(400).end();
+        } else if (searchingUser._id.toString() === fromUser) {
+          db.collection("users").find({
+            $text: {
+              $search: req.body.query
+            }
+          }, function(err, result) {
+            var searchedFriendUsers = [];
+            var searchedAllUsers = [];
+            result.toArray(function(err, users) {
+              users.forEach(function(resultUser) {
+                var friends = [];
+                searchingUser.friends.forEach((friend) => {
+                  if(friend.toString() == resultUser._id.toString()){
+                    friends.push(friend);
+                  }
+                });
+                getBasicUserInfo(friends, res, function(err, result) {
+                  if(err) {
+                    sendDatabaseError(err, res);
+                  }
+                  searchedFriendUsers = searchedFriendUsers.concat(result);
+                  users.forEach(function(resultUser) {
+                    var others = [];
+                    searchingUser.friends.forEach((friend) => {
+                      if(friend.toString() != resultUser._id.toString()){
+                        others.push(friend);
+                      }
+                    });
+                    getBasicUserInfo(others, res, function(err, result) {
+                      if(err) {
+                        sendDatabaseError(err, res);
+                      }
+                      searchedAllUsers = searchedAllUsers.concat(result);
+                      res.send({
+                        searchedFriendUsers: searchedFriendUsers,
+                        searchedAllUsers: searchedAllUsers
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          })
+        } else {
+          // 400: Bad Request.
+          res.status(401).end();
         }
-      }
-      for (var friend of friends) {
-        friend.name = (friend.fname + " " + friend.lname).toLowerCase();
-        if (friend.name.search(query) != -1) {
-          searchedFriendUsers.push(friend);
-        }
-      }
-      var search = {
-        searchedAllUsers: [],
-        searchedFriendUsers: []
-      };
-      search.searchedAllUsers = searchedAllUsers.map((id) => getBasicUserInfo(id._id));
-      search.searchedFriendUsers = searchedFriendUsers.map((id) => getBasicUserInfo(id._id));
-      res.send(search);
-    } else {
-      // 400: Bad Request.
-      res.status(400).end();
-    }
+      });
   });
 
 
 
-  // update invited list for a party
-  app.put('/parties/:id/invited', function(req, res) {
-    var fromUser = getUserIdFromToken(req.get('Authorization'));
-    var parties = getCollection("parties");
-    var isHost = false;
-    for (var party of parties) {
-      if (party.host == fromUser && party._id == req.params.id) {
-        isHost = true;
-        break;
-      }
-    }
-    var index;
-    if (isHost) {
-      for (var user of party.attending) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.attending.indexOf(user);
-          party.attending.splice(index, 1);
+// update invited list for a party
+app.put('/parties/:id/invited', function(req, res) {
+  var fromUser = getUserIdFromToken(req.get('Authorization'));
+    db.collection("parties").findOne({_id: new ObjectID(req.params.id)},
+      function(err,party) {
+        if(err){
+          return res.status(500).end();
         }
-      }
-      for (user of party.declined) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.declined.indexOf(user);
-          party.declined.splice(index, 1);
+        if(party.host.toString()!=fromUser.toString()){
+          res.status(401).end();
         }
-      }
-      for (user of party.invited) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.invited.indexOf(user);
-          party.invited.splice(index, 1);
+        var index;
+        for (var user of party.attending) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.attending.indexOf(user);
+            party.attending.splice(index, 1);
+          }
         }
+        for (user of party.declined) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.declined.indexOf(user);
+            party.declined.splice(index, 1);
+          }
+        }
+        for (user of party.invited) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.invited.indexOf(user);
+            party.invited.splice(index, 1);
+          }
+        }
+        db.collection("parties").update({
+          _id: new ObjectID(req.params.id)
+        },{
+          "title": party.title,
+          "description": party.description,
+          "private_status": party.private_status,
+          "address": party.address,
+          "city": party.city,
+          "zip": party.zip,
+          "state": party.state,
+          "country": party.country,
+          "coordinates": party.coordinates,
+          "datetime": party.datetime,
+          "host": party.host,
+          "attending": party.attending,
+          "invited": party.invited,
+          "declined": party.declined,
+          "complaints": party.complaints,
+          "supplies": party.supplies
+        },
+        function(err,result){
+          if(err){
+            console.log(err);
+            return res.status(500).end();
+          }
+          if(result.modifiedCount<1){
+            return res.status(400).end();
+          }
+          getBasicUserInfo(party.attending,res,function(err,att){
+            if(err){
+              return res.status(502).end();
+            }
+            party.attending = att;
+            getBasicUserInfo(party.declined,res,function(err,dec){
+              if(err){
+                return res.status(503).end();
+              }
+              party.declined = dec;
+              getBasicUserInfo(party.invited,res,function(err,inv){
+                if(err){
+                  return res.status(504).end();
+                }
+                party.invited = inv;
+                getBasicUserInfo([party.host],res,function(err,host){
+                  if(err){
+                    return res.status(505).end();
+                  }
+                  party.host = host[0];
+                  party.id = party._id;
+                  delete party._id;
+                  res.send(party);
+                });//get host
+              });// get inv
+            });//get dec
+          });//get att
+        })
       }
-      writeDocument("parties", party)
-      var updatedParty = {
-        host: [],
-        attending: [],
-        invited: [],
-        declined: []
-      };
-      updatedParty.host = getBasicUserInfo(party.host);
-      updatedParty.attending = party.attending.map((id) => getBasicUserInfo(id));
-      updatedParty.invited = party.invited.map((id) => getBasicUserInfo(id));
-      updatedParty.declined = party.declined.map((id) => getBasicUserInfo(id));
-      res.send(updatedParty);
-    } else {
-      // 401: Unauthorized.
-      res.status(401).end();
-    }
-  })
+    )
+})
+
 
   // update supply list for a party
   app.put('/parties/:id/supplies', function(req, res) {
