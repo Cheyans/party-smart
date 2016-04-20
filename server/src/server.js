@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
-var http = require("http");
+var https = require("https");
 
 var mongo_express = require('mongo-express/lib/middleware');
 var mongo_express_config = require('mongo-express/config.default.js');
@@ -16,10 +16,8 @@ var config = require("./config")
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
-var addDocument = database.addDocument;
 var deleteDocument = database.deleteDocument;
 var getCollection = database.getCollection;
-
 
 var app = express();
 
@@ -465,50 +463,62 @@ MongoClient.connect(url, function(err, db) {
   });
 
   //creating a new party server route
-  app.post('/parties', validate({ body: partySchema}), function(req, res) {
+  app.post('/parties', validate({
+    body: partySchema
+  }), (req, res) => {
 
-  //If this function runs, req.body passed JSON validation
+    //If this function runs, req.body passed JSON validation
     var party = req.body;
     var fromUser = getUserIdFromToken(req.get("Authorization"));
 
     var address = [party.address, party.city, party.state, party.zip].join(" ");
-    http.get("https://maps.googleapis.com/maps/api/geocode/json?key=" +
-    config.gmaps + "&address=" + address), function(result) {
-      var coord = xhr.responseText.geometry.location;
-      var newParty = {
-        "title": party.title,
-        "description": party.description,
-        "private_status": party.status,
-        "address": party.address,
-        "city": party.city,
-        "zip": party.zip,
-        "state": party.state,
-        "country": party.country,
-        "coordinates": {
-          "latitude": coord.lat,
-          "longitude": coord.lng
-        },
-        "date": new Date([party.date, party.time].join("")).toString(),
-        "host": new ObjectID(fromUser),
-        "attending": [],
-        "declined": [],
-        "complaints": []
-      };
-      newParty.supplies = newParty.supplies.map((id) => {
-        return {
-          "supply_id": id,
-          "claimed_by": null
-        }
+    https.get("https://maps.googleapis.com/maps/api/geocode/json?key=" +
+      config.gmaps + "&address=" + address, (googleRes) => {
+        var body = '';
+        googleRes.on('data', function(data) {
+          body += data;
+        });
+        googleRes.on('end', () => {
+          var locations = JSON.parse(body);
+          if(locations.status == "ZERO_RESULTS") {
+            res.status(400).end();
+          }
+          var coord = locations.results[0].geometry.location;
+          var newParty = {
+            "title": party.title,
+            "description": party.description,
+            "private_status": party.status,
+            "address": party.address,
+            "city": party.city,
+            "zip": party.zip,
+            "state": party.state,
+            "country": party.country,
+            "coordinates": {
+              "latitude": coord.lat,
+              "longitude": coord.lng
+            },
+            "date": new Date([party.date, party.time].join("")).toString(),
+            "host": new ObjectID(fromUser),
+            "attending": [],
+            "declined": [],
+            "complaints": []
+          };
+          newParty.supplies = party.supplies.map((id) => {
+            return {
+              "supply_id": id,
+              "claimed_by": null
+            }
+          });
+          //adding a party
+          db.collection('parties').insertOne(newParty, (err) => {
+            if(err){
+              sendDatabaseError(err, res);
+            } else {
+              res.status(201).end();
+            }
+          });
+        });
       });
-      //adding a party
-      db.collection('parties').insertOne(newParty, function(err, result){
-        if(err){
-          sendDatabaseError(err, res);
-        } else {
-          res.status(201).end();
-        }
-      });
-    });
   })
 
   function containsUser(users, user) {

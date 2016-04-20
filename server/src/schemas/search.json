@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "query": {
+      "id": "query",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "query"
+  ]
+}

@@ -119,7 +119,6 @@ export function createNewParty(party) {
 }
 
 export function setPartyStatus(partyId, value, cb) {
-  debugger;
   sendXHR("PUT", "/parties/" + partyId + "/private_status" , value, (xhr) => {
     cb(JSON.parse(xhr.responseText));
   });
