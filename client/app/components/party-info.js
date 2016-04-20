@@ -23,7 +23,7 @@ export default class PartyInfo extends React.Component {
       removeParty:[],
       isShowingModal:false,
       isShowingSupplyModal: false,
-      "private status":"false",
+      "private_status":"false",
       "host": {
         _id:null
       },
@@ -83,7 +83,7 @@ export default class PartyInfo extends React.Component {
     var statusText = "";
     if(this.props.params.userId!=this.state.host.id){
       statusText = "This party is PRIVATE";
-      if(this.state["private status"]=="true"){
+      if(this.state["private_status"]=="false"){
         statusText = "This party is OPEN";
       }
     }
@@ -173,7 +173,7 @@ export default class PartyInfo extends React.Component {
                     <div className="panel-footer">
                       <br/>
                       <strong>{statusText}</strong>
-                      <PrivacyButton key={0} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
+                      <PrivacyButton key={0} private_status={this.state.private_status} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
                       <br/>
                       <strong>Private Party:</strong>
                       <br/>

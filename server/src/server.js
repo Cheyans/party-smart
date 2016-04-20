@@ -349,16 +349,36 @@ MongoClient.connect(url, function(err, db) {
   });
 
   app.put("/parties/:id/private_status", function(req, res) {
-    var userid = getUserIdFromToken(req.get("Authorization"));
-    var partyHost = readDocument("parties", req.params.id).host;
-    if (userid === partyHost) {
-      var party = readDocument("parties", req.params.id);
-      party["private status"] = req.value;
-      writeDocument("parties", party);
-      res.send(party["private status"]);
-    } else {
-      res.status(401).end();
-    }
+    var userid = new ObjectID(getUserIdFromToken(req.get("Authorization")));
+    db.collection('parties').findOne({
+      _id: new ObjectID(req.params.id)
+    }, function(err, party) {
+      if (err) {
+        return sendDatabaseError(res, err);
+      }
+      var partyHost = new ObjectID(party.host);
+
+      if (userid.toString() === partyHost.toString()) {
+
+        db.collection('parties').updateOne({
+            _id: new ObjectID(req.params.id)
+          }, {
+            $set: {
+              "private_status": req.body.toString()
+            }
+          },
+          function(err, result) {
+            if (err) {
+              return sendDatabaseError(res, err);
+            }
+            //console.log(party.private_status.toString());
+            res.send(req.body);
+          });
+      } else {
+        res.status(401).end();
+      }
+
+    });
   });
 
   app.post("/users/:userid/removefriend/:friendid", function(req, res) {
@@ -484,23 +504,37 @@ MongoClient.connect(url, function(err, db) {
     return false;
   }
 
+
   app.post("/search/:userId/user", validate({
     body: searchSchema
   }), function(req, res) {
     var fromUser = getUserIdFromToken(req.get('Authorization'));
     db.collection("users").findOne({
         _id: new ObjectID(fromUser)
-      }, function(err, result) {
+      }, function(err, user) {
         if (err) {
           res.status(400).end();
-        } else if (result._id.toString() === fromUser) {
+        } else if (user._id.toString() === fromUser) {
           db.collection("users").find({
             $text: {
               $search: req.body.query
             }
           }, function(err, result) {
-            result.toArray(function(err, documents) {
-
+            result.toArray(function(err, users) {
+              var searchedFriendUsers = users.map(function(searchUser) {
+                if(user.friends.contains(searchUser._id) != -1) {
+                  return getBasicUserInfo([searchUser._id]);
+                }
+              });
+              var searchedAllUsers = users.map(function(searchUser) {
+                if(user.friends.contains(searchUser._id) == -1) {
+                  return getBasicUserInfo([searchUser._id]);
+                }
+              });
+              res.send({
+                searchedFriendUsers: searchedFriendUsers,
+                searchedAllUsers: searchedAllUsers
+              });
             });
           })
         } else {
@@ -764,6 +798,7 @@ MongoClient.connect(url, function(err, db) {
 
   app.use(function(err, req, res, next) {
     if (err.name === "JsonSchemaValidation") {
+      console.log(err);
       console.log(err.message);
       res.status(400).end();
     } else {
