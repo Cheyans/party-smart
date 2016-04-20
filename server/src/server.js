@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
+var ResetDatabase = require('./resetdatabase');
 var https = require("https");
 
 var mongo_express = require('mongo-express/lib/middleware');
@@ -65,10 +66,7 @@ MongoClient.connect(url, function(err, db) {
           }
           user.id = user._id;
           delete user._id;
-          user.friends = friends.map((friend) => {
-            friend.id = friend._id;
-            return friend
-          });
+          user.friends = friends;
           res.send(user);
         });
       });
@@ -838,10 +836,11 @@ app.put('/parties/:id/invited', function(req, res) {
   }
 
   // Reset database.
-  app.post("/resetdb", function(req, res) {
+  app.post('/resetdb', function(req, res) {
     console.log("Resetting database...");
-    database.resetDatabase();
-    res.send();
+    ResetDatabase(db, function() {
+      res.send();
+    });
   });
 
   app.use(function(err, req, res, next) {

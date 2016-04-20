@@ -58,13 +58,13 @@ render(){
 export class PartyInfoInvited extends React.Component {
 
   render() {
-    if(this.props.party.host._id.toString()==this.props.user.toString()){
+    if(this.props.party.host.id.toString()==this.props.user.toString()){
     if (this.props.status === "going") {
       return (
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
-            <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id._id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+            <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
             <span className="label label-success pull-right going-invited-margin">Going</span>
 
           </td>
@@ -76,7 +76,7 @@ export class PartyInfoInvited extends React.Component {
         <tr>
           <td className="filterable-cell">
             <img src={this.props.id.picture} className="img-circle" width="18px" height="18px" /> {this.props.id.fname} {this.props.id.lname}
-              <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id._id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+              <a href="#" onClick={(e) => this.props.handleRemoveClick(e, this.props.id.id, this.props.party,this.props.id)}className="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
               <span className="label label-warning pull-right going-invited-margin">Invited</span>
           </td>
         </tr>

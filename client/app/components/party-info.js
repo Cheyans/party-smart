@@ -44,13 +44,13 @@ export default class PartyInfo extends React.Component {
 
   handleRemoveConfirm(e) {
     e.preventDefault();
-      putPartyInvited(this.state.removeParty.id,this.state.removeParty,this.state.removeUser._id,(partyData) => this.setState(
+      putPartyInvited(this.state.removeParty.id,this.state.removeParty,this.state.removeUser.id,(partyData) => this.setState(
           Object.assign(this.state, {isShowingModal: false},{"attending": partyData.attending},{"declined": partyData.declined},{"invited": partyData.invited})
           )
       );
   }
 
-  handleRemoveSupplyConfirm(e) {
+  handleRemoveSupplyConfirm(e){
     e.preventDefault();
       putPartySupplies(this.state.removeParty.id,this.state.removeParty,this.state.removeSupply.id,this.state.removeSupply.userId,(partyData) => this.setState(
           Object.assign(this.state, {isShowingSupplyModal: false},{"supplies": partyData.supplies})
@@ -173,7 +173,7 @@ export default class PartyInfo extends React.Component {
                     <div className="panel-footer">
                       <br/>
                       <strong>{statusText}</strong>
-                      <PrivacyButton key={0} private_status={this.state.private_status} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host._id}></PrivacyButton>
+                      <PrivacyButton key={0} private_status={this.state.private_status} partyId={this.props.params.partyId} userId={this.props.params.userId} host={this.state.host.id}></PrivacyButton>
                       <br/>
                       <strong>Private Party:</strong>
                       <br/>
