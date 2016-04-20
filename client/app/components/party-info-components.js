@@ -3,14 +3,17 @@ import {setPartyStatus} from '../server';
 export class PrivacyButton extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      private_status: this.props.private_status
+    }
   }
 
   handlePrivateClick(clickEvent) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
+
       setPartyStatus(this.props.partyId,"true", (updatedPrivateStatus) => {
-        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+        this.setState(Object.assign(this.state, {private_status: updatedPrivateStatus}));
       });
     }
   }
@@ -19,7 +22,7 @@ export class PrivacyButton extends React.Component{
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
       setPartyStatus(this.props.partyId,"false", (updatedPrivateStatus) => {
-        this.setState(Object.assign(this.state, {"private status": updatedPrivateStatus}));
+        this.setState(Object.assign(this.state, {private_status: updatedPrivateStatus}));
       });
     }
   }
@@ -27,11 +30,9 @@ export class PrivacyButton extends React.Component{
 render(){
   var buttonPrivate = "btn btn-default active";
   var buttonOpen = "btn btn-default";
-  var statusText = "This party is PRIVATE";
-  if (this.state["private status"] === "false") {
+  if (this.state.private_status.toString() === "false") {
     buttonPrivate = "btn btn-default";
     buttonOpen = "btn btn-default active";
-    statusText = "This party is OPEN";
   }
   if(this.props.host===this.props.userId){
     return(
@@ -45,7 +46,6 @@ render(){
       </div>
     </div>
     <br/>
-    <strong>{statusText}</strong>
     <br/>
     </div>
   )}
