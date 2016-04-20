@@ -60,7 +60,7 @@ var initialData = {
     "datetime": "Thu Jul 03 2016 23:33:59 GMT-0500 (EST)",
     "host": new ObjectID("000000000000000000000000"),
     "attending": [
-      new ObjectID("000000000000000000000001"), new ObjectID("000000000000000000000003"), new ObjectID("000000000000000000000003")
+      new ObjectID("000000000000000000000001"), new ObjectID("000000000000000000000002"), new ObjectID("000000000000000000000003")
     ],
     "invited": [],
     "declined": [],
