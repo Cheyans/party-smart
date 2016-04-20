@@ -11,7 +11,7 @@ var coordinatesSchema = require("./schemas/coordinates.json");
 var complaintSchema = require("./schemas/complaint.json");
 var searchSchema = require("./schemas/search.json");
 
-var messageService = require("./message");
+//var messageService = require("./message");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -371,7 +371,6 @@ MongoClient.connect(url, function(err, db) {
             if (err) {
               return sendDatabaseError(res, err);
             }
-            //console.log(party.private_status.toString());
             res.send(req.body);
           });
       } else {
@@ -566,54 +565,96 @@ MongoClient.connect(url, function(err, db) {
 
 
 
-  // update invited list for a party
-  app.put('/parties/:id/invited', function(req, res) {
-    var fromUser = getUserIdFromToken(req.get('Authorization'));
-    var parties = getCollection("parties");
-    var isHost = false;
-    for (var party of parties) {
-      if (party.host == fromUser && party._id == req.params.id) {
-        isHost = true;
-        break;
-      }
-    }
-    var index;
-    if (isHost) {
-      for (var user of party.attending) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.attending.indexOf(user);
-          party.attending.splice(index, 1);
+// update invited list for a party
+app.put('/parties/:id/invited', function(req, res) {
+  var fromUser = getUserIdFromToken(req.get('Authorization'));
+    db.collection("parties").findOne({_id: new ObjectID(req.params.id)},
+      function(err,party) {
+        if(err){
+          return res.status(500).end();
         }
-      }
-      for (user of party.declined) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.declined.indexOf(user);
-          party.declined.splice(index, 1);
+        if(party.host.toString()!=fromUser.toString()){
+          res.status(401).end();
         }
-      }
-      for (user of party.invited) {
-        if (req.body.indexOf(user.toString()) == -1) {
-          index = party.invited.indexOf(user);
-          party.invited.splice(index, 1);
+        var index;
+        for (var user of party.attending) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.attending.indexOf(user);
+            party.attending.splice(index, 1);
+          }
         }
+        for (user of party.declined) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.declined.indexOf(user);
+            party.declined.splice(index, 1);
+          }
+        }
+        for (user of party.invited) {
+          if (req.body.indexOf(user.toString()) == -1) {
+            index = party.invited.indexOf(user);
+            party.invited.splice(index, 1);
+          }
+        }
+        db.collection("parties").update({
+          _id: new ObjectID(req.params.id)
+        },{
+          "title": party.title,
+          "description": party.description,
+          "private_status": party.private_status,
+          "address": party.address,
+          "city": party.city,
+          "zip": party.zip,
+          "state": party.state,
+          "country": party.country,
+          "coordinates": party.coordinates,
+          "datetime": party.datetime,
+          "host": party.host,
+          "attending": party.attending,
+          "invited": party.invited,
+          "declined": party.declined,
+          "complaints": party.complaints,
+          "supplies": party.supplies
+        },
+        function(err,result){
+          if(err){
+            console.log(err);
+            return res.status(500).end();
+          }
+          if(result.modifiedCount<1){
+            return res.status(400).end();
+          }
+          getBasicUserInfo(party.attending,res,function(err,att){
+            if(err){
+              return res.status(502).end();
+            }
+            party.attending = att;
+            getBasicUserInfo(party.declined,res,function(err,dec){
+              if(err){
+                return res.status(503).end();
+              }
+              party.declined = dec;
+              getBasicUserInfo(party.invited,res,function(err,inv){
+                if(err){
+                  return res.status(504).end();
+                }
+                party.invited = inv;
+                getBasicUserInfo([party.host],res,function(err,host){
+                  if(err){
+                    return res.status(505).end();
+                  }
+                  party.host = host[0];
+                  party.id = party._id;
+                  delete party._id;
+                  res.send(party);
+                });//get host
+              });// get inv
+            });//get dec
+          });//get att
+        })
       }
-      writeDocument("parties", party)
-      var updatedParty = {
-        host: [],
-        attending: [],
-        invited: [],
-        declined: []
-      };
-      updatedParty.host = getBasicUserInfo(party.host);
-      updatedParty.attending = party.attending.map((id) => getBasicUserInfo(id));
-      updatedParty.invited = party.invited.map((id) => getBasicUserInfo(id));
-      updatedParty.declined = party.declined.map((id) => getBasicUserInfo(id));
-      res.send(updatedParty);
-    } else {
-      // 401: Unauthorized.
-      res.status(401).end();
-    }
-  })
+    )
+})
+
 
   // update supply list for a party
   app.put('/parties/:id/supplies', function(req, res) {
