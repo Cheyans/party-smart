@@ -102,14 +102,11 @@ MongoClient.connect(url, function(err, db) {
   // Fetch list of basic party information for user
   app.get("/users/:id/parties", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
-    var userIdRequested = parseInt(req.params.id);
+    var userIdRequested = req.params.id;
     if (userIdRequested === userid) {
-      try {
-        var partyInfo = getBasicPartyInfo(userIdRequested);
-      } catch (err) {
-        res.status(404).end();
-      }
-      res.send(partyInfo);
+      getBasicPartyInfo(userIdRequested, res, (partyInfo) => {
+        res.send(partyInfo);
+      });
     } else {
       res.status(401).end();
     }
@@ -840,26 +837,56 @@ MongoClient.connect(url, function(err, db) {
     });
   });
 
-  function getBasicPartyInfo(userId) {
-    var parties = getCollection("parties");
-    var userStatus;
-    return parties.map((party) => {
-      var host = readDocument("users", party.host);
-
-      if (party.attending.indexOf(userId) != -1) {
-        userStatus = "attending";
-      } else if (party.declined.indexOf(userId) != -1) {
-        userStatus = "declined";
+  function getBasicPartyInfo(userId, res, callback) {
+    db.collection("parties").find({
+      $or: [{
+        host: new ObjectID(userId)
+      }, {
+        attending: new ObjectID(userId)
+      }, {
+        declined: new ObjectID(userId)
+      }, {
+        invited: new ObjectID(userId)
+      }]
+    }, (err, partiesCursor) => {
+      if (err) {
+        sendDatabaseError(err, res);
       } else {
-        userStatus = "invited";
-      }
-
-      return {
-        id: party._id.toString(),
-        title: party.title,
-        dateTime: party.dateTime,
-        host: [host.fname, host.lname].join(" "),
-        status: userStatus
+        var partiesList = [];
+        partiesCursor.toArray((err, parties) => {
+          var asyncTasks = [];
+          parties.forEach((party) => {
+            asyncTasks.push((finished) => {
+              var userStatus;
+              if (party.attending.indexOf(userId) != -1) {
+                userStatus = "attending";
+              } else if (party.declined.indexOf(userId) != -1) {
+                userStatus = "declined";
+              } else {
+                userStatus = "invited";
+              }
+              db.collection("users").findOne({
+                _id: new ObjectID(party.host)
+              }, (err, host) => {
+                if (err) {
+                  sendDatabaseError(err, res);
+                } else {
+                  partiesList.push({
+                    id: party._id.toString(),
+                    title: party.title,
+                    dateTime: party.dateTime,
+                    host: [host.fname, host.lname].join(" "),
+                    status: userStatus
+                  });
+                  finished();
+                }
+              });
+            })
+          });
+          Async.parallel(asyncTasks, () => {
+            callback(partiesList);
+          })
+        });
       }
     });
   }
