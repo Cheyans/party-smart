@@ -27,10 +27,15 @@ export class PrivacyButton extends React.Component{
     }
   }
 
+  componentDidMount() {
+    this.setState({private_status: this.props.private_status}
+    );
+  }
+
 render(){
   var buttonPrivate = "btn btn-default active";
   var buttonOpen = "btn btn-default";
-  if (this.state.private_status.toString() === "false") {
+  if ((this.state.private_status.toString() === "false")||(this.state.private_status=="null" && this.props.private_status=="false")) {
     buttonPrivate = "btn btn-default";
     buttonOpen = "btn btn-default active";
   }
