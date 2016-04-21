@@ -812,14 +812,15 @@ MongoClient.connect(url, function(err, db) {
       }
       var supplyMap = [];
       supplies.forEach((supply) => {
-        supplyMap.push(supply);
-      });
-      var user;
-      supplies.forEach((supply) => {
-        if (supply.claimed_by != null) {
-          user = getBasicUserInfo(supply.claimed_by);
-          supply.claimed_by = [user.fname, user.lname].join(" ");
+        for (var i=0; i<supplyList.length; i++) {
+          if (parseInt(supplyList[i].supply_id)===parseInt(supply._id)) {
+            supply.claimed_by = supplyList[i].claimed_by;
+          }
         }
+
+      });
+      supplies.forEach((supply) => {
+        supplyMap.push(supply);
       });
       cb(null, supplyMap);
     })
