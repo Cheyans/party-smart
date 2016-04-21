@@ -258,15 +258,21 @@ MongoClient.connect(url, function(err, db) {
                 return res.status(505).end();
               }
               party.host = host[0];
-              party.id = party._id;
-              delete party._id;
-              res.send(party);
-            }); //get host
-          }); // get inv
-        }); //get dec
-      }); //get att
-    }); //find party
-  }); //app
+              getSupplyInfo(party.supplies, res, function(err,supplies){
+                if(err){
+                  return res.status(505).end();
+                }
+                party.supplies = supplies;
+                party.id = party._id;
+                delete party._id;
+                res.send(party);
+              });//get supplies
+            });//get host
+          });// get inv
+        });//get dec
+      });//get att
+    });//find party
+  });//app
 
   app.get("/admin", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
@@ -793,22 +799,30 @@ MongoClient.connect(url, function(err, db) {
     });
   }
 
-  function getSupplyInfo(supplyId, claimedById) {
-    var supply = readDocument("supplies", supplyId);
-    var supplyInfo = {
-      id: supply._id.toString(),
-      name: supply.name,
-      picture: supply.picture,
-      claimed_by: null,
-      userId: null
-    };
-
-    if (claimedById != null) {
-      var claimedBy = readDocument("users", claimedById);
-      supplyInfo.claimed_by = [claimedBy.fname, claimedBy.lname].join(" ");
-      supplyInfo.userId = claimedBy._id;
+  function getSupplyInfo(supplyList, res, cb) {
+    if(supplyList==null || supplyList.length==0){
+      return cb(null,[]);
     }
-    return supplyInfo;
+    var query = {
+      $or: supplyList.map((id) => { return {_id: id.supply_id } })
+    };
+    db.collection('supplies').find(query).toArray(function(err, supplies) {
+      if (err) {
+        return cb(err, null);
+      }
+      var supplyMap = [];
+      supplies.forEach((supply) => {
+        supplyMap.push(supply);
+      });
+      var user;
+      supplies.forEach((supply) => {
+        if (supply.claimed_by != null) {
+          user = getBasicUserInfo(supply.claimed_by);
+          supply.claimed_by = [user.fname, user.lname].join(" ");
+        }
+      });
+      cb(null, supplyMap);
+    })
   }
 
   function verifyPartyAccess(party, userId) {
