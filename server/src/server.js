@@ -17,7 +17,6 @@ var messageService = require("./message");
 var config = require("./config")
 var Async = require("async");
 
-var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var getCollection = database.getCollection;
 
@@ -111,8 +110,6 @@ MongoClient.connect(url, function(err, db) {
       res.status(401).end();
     }
   });
-
-
 
   app.get("/users/:id/profile", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
@@ -272,6 +269,66 @@ MongoClient.connect(url, function(err, db) {
     }); //find party
   }); //app
 
+  //CALLBACK HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+  app.post("/search/:userId/user", validate({
+    body: searchSchema
+  }), function(req, res) {
+    var fromUser = getUserIdFromToken(req.get("Authorization"));
+    db.collection("users").findOne({
+      _id: new ObjectID(fromUser)
+    }, function(err, searchingUser) {
+      if (err) {
+        res.status(400).end();
+      } else if (searchingUser._id.toString() === fromUser) {
+        db.collection("users").find({
+          $text: {
+            $search: req.body.query
+          }
+        }, function(err, result) {
+          var searchedFriendUsers = [];
+          var searchedAllUsers = [];
+          result.toArray(function(err, users) {
+            users.forEach(function(resultUser) {
+              var friends = [];
+              searchingUser.friends.forEach((friend) => {
+                if (friend.toString() == resultUser._id.toString()) {
+                  friends.push(friend);
+                }
+              });
+              getBasicUserInfo(friends, res, function(err, result) {
+                if (err) {
+                  sendDatabaseError(err, res);
+                }
+                searchedFriendUsers = searchedFriendUsers.concat(result);
+                users.forEach(function(resultUser) {
+                  var others = [];
+                  searchingUser.friends.forEach((friend) => {
+                    if (friend.toString() != resultUser._id.toString()) {
+                      others.push(friend);
+                    }
+                  });
+                  getBasicUserInfo(others, res, function(err, result) {
+                    if (err) {
+                      sendDatabaseError(err, res);
+                    }
+                    searchedAllUsers = searchedAllUsers.concat(result);
+                    res.send({
+                      searchedFriendUsers: searchedFriendUsers,
+                      searchedAllUsers: searchedAllUsers
+                    });
+                  });
+                });
+              });
+            });
+          });
+        })
+      } else {
+        // 400: Bad Request.
+        res.status(401).end();
+      }
+    });
+  });
+
   //OH my god, I lied, that last callback hell, wasn't callback hell, this bullshit is callback hell
   app.get("/admin", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
@@ -361,8 +418,8 @@ MongoClient.connect(url, function(err, db) {
                         });
                       }
                     });
-                  }
-                })
+                  } //Get your braces here, plenty of braces
+                }) //Have you heard of our lord and savior closure
               }
             })
           }
@@ -454,7 +511,7 @@ MongoClient.connect(url, function(err, db) {
               "private_status": req.body.toString()
             }
           },
-          function(err, result) {
+          function(err) {
             if (err) {
               return sendDatabaseError(res, err);
             }
@@ -610,77 +667,6 @@ MongoClient.connect(url, function(err, db) {
         });
       });
   })
-
-  function containsUser(users, user) {
-    for (var u of users) {
-      if (u._id == user._id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  //CALLBACK HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-  app.post("/search/:userId/user", validate({
-    body: searchSchema
-  }), function(req, res) {
-    var fromUser = getUserIdFromToken(req.get("Authorization"));
-    db.collection("users").findOne({
-      _id: new ObjectID(fromUser)
-    }, function(err, searchingUser) {
-      if (err) {
-        res.status(400).end();
-      } else if (searchingUser._id.toString() === fromUser) {
-        db.collection("users").find({
-          $text: {
-            $search: req.body.query
-          }
-        }, function(err, result) {
-          var searchedFriendUsers = [];
-          var searchedAllUsers = [];
-          result.toArray(function(err, users) {
-            users.forEach(function(resultUser) {
-              var friends = [];
-              searchingUser.friends.forEach((friend) => {
-                if (friend.toString() == resultUser._id.toString()) {
-                  friends.push(friend);
-                }
-              });
-              getBasicUserInfo(friends, res, function(err, result) {
-                if (err) {
-                  sendDatabaseError(err, res);
-                }
-                searchedFriendUsers = searchedFriendUsers.concat(result);
-                users.forEach(function(resultUser) {
-                  var others = [];
-                  searchingUser.friends.forEach((friend) => {
-                    if (friend.toString() != resultUser._id.toString()) {
-                      others.push(friend);
-                    }
-                  });
-                  getBasicUserInfo(others, res, function(err, result) {
-                    if (err) {
-                      sendDatabaseError(err, res);
-                    }
-                    searchedAllUsers = searchedAllUsers.concat(result);
-                    res.send({
-                      searchedFriendUsers: searchedFriendUsers,
-                      searchedAllUsers: searchedAllUsers
-                    });
-                  });
-                });
-              });
-            });
-          });
-        })
-      } else {
-        // 400: Bad Request.
-        res.status(401).end();
-      }
-    });
-  });
-
-
 
   // update invited list for a party
   app.put("/parties/:id/invited", function(req, res) {
@@ -920,13 +906,6 @@ MongoClient.connect(url, function(err, db) {
       });
       cb(null, supplyMap);
     })
-  }
-
-  function verifyPartyAccess(party, userId) {
-    return userId === party.host ||
-      party.attending.indexOf(userId) != -1 ||
-      party.invited.indexOf(userId) != -1 ||
-      party.declined.indexOf(userId) != -1;
   }
 
   /*
