@@ -288,38 +288,42 @@ MongoClient.connect(url, function(err, db) {
           var searchedFriendUsers = [];
           var searchedAllUsers = [];
           result.toArray(function(err, users) {
-            users.forEach(function(resultUser) {
-              var friends = [];
-              searchingUser.friends.forEach((friend) => {
-                if (friend.toString() == resultUser._id.toString()) {
-                  friends.push(friend);
-                }
-              });
-              getBasicUserInfo(friends, res, function(err, result) {
-                if (err) {
-                  sendDatabaseError(err, res);
-                }
-                searchedFriendUsers = searchedFriendUsers.concat(result);
-                users.forEach(function(resultUser) {
-                  var others = [];
-                  searchingUser.friends.forEach((friend) => {
-                    if (friend.toString() != resultUser._id.toString()) {
-                      others.push(friend);
-                    }
-                  });
-                  getBasicUserInfo(others, res, function(err, result) {
-                    if (err) {
-                      sendDatabaseError(err, res);
-                    }
-                    searchedAllUsers = searchedAllUsers.concat(result);
-                    res.send({
-                      searchedFriendUsers: searchedFriendUsers,
-                      searchedAllUsers: searchedAllUsers
+            if (err) {
+              sendDatabaseError(err, res);
+            } else {
+              users.forEach(function(resultUser) {
+                var friends = [];
+                searchingUser.friends.forEach((friend) => {
+                  if (friend.toString() == resultUser._id.toString()) {
+                    friends.push(friend);
+                  }
+                });
+                getBasicUserInfo(friends, res, function(err, result) {
+                  if (err) {
+                    sendDatabaseError(err, res);
+                  }
+                  searchedFriendUsers = searchedFriendUsers.concat(result);
+                  users.forEach(function(resultUser) {
+                    var others = [];
+                    searchingUser.friends.forEach((friend) => {
+                      if (friend.toString() != resultUser._id.toString()) {
+                        others.push(friend);
+                      }
+                    });
+                    getBasicUserInfo(others, res, function(err, result) {
+                      if (err) {
+                        sendDatabaseError(err, res);
+                      }
+                      searchedAllUsers = searchedAllUsers.concat(result);
+                      res.send({
+                        searchedFriendUsers: searchedFriendUsers,
+                        searchedAllUsers: searchedAllUsers
+                      });
                     });
                   });
                 });
               });
-            });
+            }
           });
         })
       } else {
@@ -348,78 +352,78 @@ MongoClient.connect(url, function(err, db) {
                 sendDatabaseError(err, res);
               } else {
                 db.collection("parties").find((err, partiesCursor) => {
-                  if (err) {
-                    sendDatabaseError(err, res);
-                  } else {
-                    partiesCursor.toArray((err, parties) => {
-                      if (err) {
-                        sendDatabaseError(err, res);
-                      } else {
-                        var verboseParties = [];
-                        var verboseUsers = [];
-                        var asyncTasks = [];
-                        parties.forEach((party) => {
-                          asyncTasks.push((callback) => {
-                            party.id = party._id.toString();
-                            delete party._id;
-                            db.collection("users").findOne({
-                              _id: new ObjectID(party.host)
-                            }, (err, host) => {
-                              party.host_id = party.host.toString();
-                              party.host = [host.fname, host.lname].join(" ");
-                              getBasicUserInfo(party.attending, res, (err, attendingList) => {
-                                if (err) {
-                                  sendDatabaseError(err, res);
-                                }
-                                party.attending = attendingList;
-                                getBasicUserInfo(party.invited, res, (err, invitedList) => {
+                    if (err) {
+                      sendDatabaseError(err, res);
+                    } else {
+                      partiesCursor.toArray((err, parties) => {
+                        if (err) {
+                          sendDatabaseError(err, res);
+                        } else {
+                          var verboseParties = [];
+                          var verboseUsers = [];
+                          var asyncTasks = [];
+                          parties.forEach((party) => {
+                            asyncTasks.push((callback) => {
+                              party.id = party._id.toString();
+                              delete party._id;
+                              db.collection("users").findOne({
+                                _id: new ObjectID(party.host)
+                              }, (err, host) => {
+                                party.host_id = party.host.toString();
+                                party.host = [host.fname, host.lname].join(" ");
+                                getBasicUserInfo(party.attending, res, (err, attendingList) => {
                                   if (err) {
                                     sendDatabaseError(err, res);
                                   }
-                                  party.invited = invitedList;
-                                  getBasicUserInfo(party.declined, res, (err, declinedList) => {
+                                  party.attending = attendingList;
+                                  getBasicUserInfo(party.invited, res, (err, invitedList) => {
                                     if (err) {
                                       sendDatabaseError(err, res);
                                     }
-                                    party.declined = declinedList;
-                                    getSupplyInfo(party.supplies, res, function(err, supplies) {
+                                    party.invited = invitedList;
+                                    getBasicUserInfo(party.declined, res, (err, declinedList) => {
                                       if (err) {
                                         sendDatabaseError(err, res);
                                       }
-                                      party.supplies = supplies;
-                                      verboseParties.push(party);
-                                      callback();
+                                      party.declined = declinedList;
+                                      getSupplyInfo(party.supplies, res, function(err, supplies) {
+                                        if (err) {
+                                          sendDatabaseError(err, res);
+                                        }
+                                        party.supplies = supplies;
+                                        verboseParties.push(party);
+                                        callback();
+                                      });
                                     });
                                   });
                                 });
                               });
-                            });
-                          })
-                        });
-                        users.forEach((user) => {
-                          asyncTasks.push((callback) => {
-                            user.id = user._id.toString();
-                            delete user._id;
-                            getBasicUserInfo(user.friends, res, (err, friendsList) => {
-                              if (err) {
-                                sendDatabaseError(err, res);
-                              }
-                              user.friends = friendsList;
-                              verboseUsers.push(user);
-                              callback();
+                            })
+                          });
+                          users.forEach((user) => {
+                            asyncTasks.push((callback) => {
+                              user.id = user._id.toString();
+                              delete user._id;
+                              getBasicUserInfo(user.friends, res, (err, friendsList) => {
+                                if (err) {
+                                  sendDatabaseError(err, res);
+                                }
+                                user.friends = friendsList;
+                                verboseUsers.push(user);
+                                callback();
+                              });
                             });
                           });
-                        });
-                        Async.parallel(asyncTasks, () => {
-                          res.send({
-                            parties: verboseParties,
-                            users: verboseUsers
+                          Async.parallel(asyncTasks, () => {
+                            res.send({
+                              parties: verboseParties,
+                              users: verboseUsers
+                            });
                           });
-                        });
-                      }
-                    });
-                  } //Get your braces here, plenty of braces
-                }) //Have you heard of our lord and savior closure
+                        }
+                      });
+                    } //Get your braces here, plenty of braces
+                  }) //Have you heard of our lord and savior closure
               }
             })
           }
