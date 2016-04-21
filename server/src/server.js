@@ -438,16 +438,16 @@ MongoClient.connect(url, function(err, db) {
     body: complaintSchema
   }), function(req, res) {
     var body = req.body;
-    console.log(req.body);
-    console.log(new ObjectID(body.id));
+    //console.log(req.body);
+    //console.log(new ObjectID(body.id));
     db.collection('parties').findOne({
       _id: new ObjectID(body.id)
     }, function(err, party) {
       if (err) {
         return sendDatabaseError(res, err);
       }
-      console.log(party);
-      console.log(party._id);
+      //console.log(party);
+      //console.log(party._id);
       db.collection('parties').updateOne({
           _id: new ObjectID(party._id)
         }, {
