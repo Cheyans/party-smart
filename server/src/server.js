@@ -307,19 +307,35 @@ MongoClient.connect(url, function(err, db) {
   app.post("/complaints", validate({
     body: complaintSchema
   }), function(req, res) {
-    var body = req.body;
-    try {
-      var party = readDocument("parties", body.id);
-    } catch (err) {
-      res.status(404).end();
-    }
-    delete body.id;
-    party.complaints.push(body);
-    writeDocument("parties", party);
+    var body = new ObjectID(req.body);
+    console.log(body.id);
+    db.collection('parties').findOne({
+      _id: new ObjectID(body.id)
+    }, function(err, party) {
+      if (err) {
+        return sendDatabaseError(res, err);
+      }
+      db.collection('parties').updateOne({
+          _id: new ObjectID(body.id)
+        }, {
+          $push: {
+            complaints: {
+              $each: [body],
+              $position: 0
+            }
+          }
+        },
+        function(err) {
+          if (err) {
+            res.status(500).end();
+          }
+          var user = new Object(party.host);
+          messageService.sendSMS(user.phone_number, body.message);
+          res.status(201).end();
+        }
+      );
+    });
 
-    var user = readDocument("users", party.host);
-    messageService.sendSMS(user.phone_number, body.message);
-    res.status(201).end();
   });
 
   app.post("/nearby_parties", validate({
@@ -327,22 +343,28 @@ MongoClient.connect(url, function(err, db) {
   }), function(req, res) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
-    var parties = getCollection("parties");
-    var nearbyParties = [];
 
-    parties.forEach((party) => {
-      var coordinates = party.coordinates;
-      if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
-        nearbyParties.push({
-          id: party._id.toString(),
-          address: party.address,
-          city: party.city,
-          state: party.state,
-          zip: party.zip
+    db.collection("parties").find({}).toArray(function(err, allParties) {
+      if (err) {
+        //A database error happened//500: Internal error
+        res.status(500).send("A database error occures:" + err);
+      } else {
+        var nearbyParties = [];
+        allParties.forEach((party) => {
+          var coordinates = party.coordinates;
+          if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
+            nearbyParties.push({
+              id: party._id.toString(),
+              address: party.address,
+              city: party.city,
+              state: party.state,
+              zip: party.zip
+            });
+          }
         });
+        res.send(nearbyParties);
       }
     });
-    res.send(nearbyParties);
   });
 
   app.put("/parties/:id/private_status", function(req, res) {
