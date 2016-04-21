@@ -51,7 +51,7 @@ export default class Host extends React.Component {
         input.value = "";
       }
     }
-    
+
     createNewParty(newParty);
   }
 
@@ -157,12 +157,29 @@ export default class Host extends React.Component {
                       <input className="form-control" placeholder="Time" required="true" type="text" id="time"/>
                     </div>
                   </div>
+
+
                   <div className='col-sm-6'>
                     <div className='form-group'>
                       <input className="form-control" placeholder="Date" required="true" type="text" id="date"/>
                     </div>
                   </div>
                 </div>
+
+                <div className='col-sm-6'>
+                  <div className='form-group'>
+                    <input className="form-control" placeholder="phone_number" required="true" type="text" id="phone_number"/>
+                  </div>
+                </div>
+
+                <div className='col-sm-6'>
+                  <div className='form-group'>
+                    <input className="form-control" placeholder="private_status" required="true" type="text" id="private_status"/>
+                  </div>
+                </div>
+
+
+
                 <div className='row row-padding'>
                   <div className='col-sm-6'>
                     <div className="form-group">
