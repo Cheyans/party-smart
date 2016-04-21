@@ -46,7 +46,7 @@ export default class Profile extends React.Component {
   handleAddFriendConfirm(clickEvent){
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-    addProfileFriend(this.state.userData.id,this.state.addUser._id,(result) =>
+    addProfileFriend(this.state.userData.id,this.state.addUser.id,(result) =>
     this.setState({userData: result, isShowingAddModal: false, isSearch: false}));
     }
   }
@@ -54,7 +54,7 @@ export default class Profile extends React.Component {
   handleRemoveFriendConfirm(clickEvent){
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-    removeProfileFriend(this.state.userData.id,this.state.removeUser._id,(result) =>
+    removeProfileFriend(this.state.userData.id,this.state.removeUser.id,(result) =>
     {this.setState({userData: result, isShowingRemoveModal: false, isSearch: false})});}
   }
 
@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
   handleSearch(clickEvent, searchText) {
     clickEvent.preventDefault();
     if (clickEvent.button === 0) {
-      searchProfile(this.props.params.userId,searchText,(searchdata) =>
+      searchProfile(this.props.params.id,searchText,(searchdata) =>
         this.setState({searchData: searchdata, isSearch:true})
       )
     }
