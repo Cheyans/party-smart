@@ -2,11 +2,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var validate = require("express-jsonschema").validate;
 var database = require("./database");
-var ResetDatabase = require('./resetdatabase');
+var ResetDatabase = require("./resetdatabase");
 var https = require("https");
 
-var mongo_express = require('mongo-express/lib/middleware');
-var mongo_express_config = require('mongo-express/config.default.js');
+var mongo_express = require("mongo-express/lib/middleware");
+var mongo_express_config = require("mongo-express/config.default.js");
 
 var partySchema = require("./schemas/party.json");
 var coordinatesSchema = require("./schemas/coordinates.json");
@@ -18,15 +18,15 @@ var config = require("./config")
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
-var deleteDocument = database.deleteDocument;
 var getCollection = database.getCollection;
 
 var app = express();
 
-var MongoDB = require('mongodb');
+var MongoDB = require("mongodb");
+
 var MongoClient = MongoDB.MongoClient;
 var ObjectID = MongoDB.ObjectID;
-var url = 'mongodb://localhost:27017/PartySmart';
+var url = "mongodb://localhost:27017/PartySmart";
 
 
 MongoClient.connect(url, function(err, db) {
@@ -34,7 +34,7 @@ MongoClient.connect(url, function(err, db) {
   app.use(bodyParser.text());
   app.use(bodyParser.json());
   app.use(express.static("../client/build"));
-  app.use('/mongo_express', mongo_express(mongo_express_config));
+  app.use("/mongo_express", mongo_express(mongo_express_config));
 
   function sendDatabaseError(res, err) {
     res.status(500).send("A database error occurred: " + err);
@@ -49,7 +49,7 @@ MongoClient.connect(url, function(err, db) {
     var userid = getUserIdFromToken(req.get("Authorization"));
     var userIdRequested = req.params.id;
     if (userIdRequested === userid) {
-      db.collection('users').findOne({
+      db.collection("users").findOne({
         _id: new ObjectID(userid)
       }, function(err, user) {
         if (err) {
@@ -85,7 +85,7 @@ MongoClient.connect(url, function(err, db) {
         }
       })
     };
-    db.collection('users').find(query).toArray(function(err, users) {
+    db.collection("users").find(query).toArray(function(err, users) {
       if (err) {
         return cb(err, null);
       }
@@ -229,7 +229,7 @@ MongoClient.connect(url, function(err, db) {
   app.get("/parties/:id", function(req, res) {
     //var userid = getUserIdFromToken(req.get("Authorization"));
     var partyIdRequested = req.params.id;
-    db.collection('parties').findOne({
+    db.collection("parties").findOne({
       _id: new ObjectID(partyIdRequested)
     }, function(err, party) {
       if (err) {
@@ -307,19 +307,35 @@ MongoClient.connect(url, function(err, db) {
   app.post("/complaints", validate({
     body: complaintSchema
   }), function(req, res) {
-    var body = req.body;
-    try {
-      var party = readDocument("parties", body.id);
-    } catch (err) {
-      res.status(404).end();
-    }
-    delete body.id;
-    party.complaints.push(body);
-    writeDocument("parties", party);
+    var body = new ObjectID(req.body);
+    console.log(body.id);
+    db.collection('parties').findOne({
+      _id: new ObjectID(body.id)
+    }, function(err, party) {
+      if (err) {
+        return sendDatabaseError(res, err);
+      }
+      db.collection('parties').updateOne({
+          _id: new ObjectID(body.id)
+        }, {
+          $push: {
+            complaints: {
+              $each: [body],
+              $position: 0
+            }
+          }
+        },
+        function(err) {
+          if (err) {
+            res.status(500).end();
+          }
+          var user = new Object(party.host);
+          messageService.sendSMS(user.phone_number, body.message);
+          res.status(201).end();
+        }
+      );
+    });
 
-    var user = readDocument("users", party.host);
-    messageService.sendSMS(user.phone_number, body.message);
-    res.status(201).end();
   });
 
   app.post("/nearby_parties", validate({
@@ -327,27 +343,33 @@ MongoClient.connect(url, function(err, db) {
   }), function(req, res) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
-    var parties = getCollection("parties");
-    var nearbyParties = [];
 
-    parties.forEach((party) => {
-      var coordinates = party.coordinates;
-      if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
-        nearbyParties.push({
-          id: party._id.toString(),
-          address: party.address,
-          city: party.city,
-          state: party.state,
-          zip: party.zip
+    db.collection("parties").find({}).toArray(function(err, allParties) {
+      if (err) {
+        //A database error happened//500: Internal error
+        res.status(500).send("A database error occures:" + err);
+      } else {
+        var nearbyParties = [];
+        allParties.forEach((party) => {
+          var coordinates = party.coordinates;
+          if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
+            nearbyParties.push({
+              id: party._id.toString(),
+              address: party.address,
+              city: party.city,
+              state: party.state,
+              zip: party.zip
+            });
+          }
         });
+        res.send(nearbyParties);
       }
     });
-    res.send(nearbyParties);
   });
 
   app.put("/parties/:id/private_status", function(req, res) {
     var userid = new ObjectID(getUserIdFromToken(req.get("Authorization")));
-    db.collection('parties').findOne({
+    db.collection("parties").findOne({
       _id: new ObjectID(req.params.id)
     }, function(err, party) {
       if (err) {
@@ -357,7 +379,7 @@ MongoClient.connect(url, function(err, db) {
 
       if (userid.toString() === partyHost.toString()) {
 
-        db.collection('parties').updateOne({
+        db.collection("parties").updateOne({
             _id: new ObjectID(req.params.id)
           }, {
             $set: {
@@ -462,7 +484,7 @@ MongoClient.connect(url, function(err, db) {
   });
 
   //creating a new party server route
-  app.post('/parties', validate({
+  app.post("/parties", validate({
     body: partySchema
   }), (req, res) => {
 
@@ -473,49 +495,50 @@ MongoClient.connect(url, function(err, db) {
     var address = [party.address, party.city, party.state, party.zip].join(" ");
     https.get("https://maps.googleapis.com/maps/api/geocode/json?key=" +
       config.gmaps + "&address=" + address, (googleRes) => {
-        var body = '';
-        googleRes.on('data', function(data) {
+        var body = "";
+        googleRes.on("data", function(data) {
           body += data;
         });
-        googleRes.on('end', () => {
+        googleRes.on("end", () => {
           var locations = JSON.parse(body);
-          if(locations.status == "ZERO_RESULTS") {
+          if (locations.status == "ZERO_RESULTS") {
             res.status(400).end();
+          } else {
+            var coord = locations.results[0].geometry.location;
+            var newParty = {
+              "title": party.title,
+              "description": party.description,
+              "private_status": party.status,
+              "address": party.address,
+              "city": party.city,
+              "zip": party.zip,
+              "state": party.state,
+              "country": party.country,
+              "coordinates": {
+                "latitude": coord.lat,
+                "longitude": coord.lng
+              },
+              "date": new Date([party.date, party.time].join("")).toString(),
+              "host": new ObjectID(fromUser),
+              "attending": [],
+              "declined": [],
+              "complaints": []
+            };
+            newParty.supplies = party.supplies.map((id) => {
+              return {
+                "supply_id": id,
+                "claimed_by": null
+              }
+            });
+            //adding a party
+            db.collection("parties").insertOne(newParty, (err) => {
+              if (err) {
+                sendDatabaseError(err, res);
+              } else {
+                res.status(201).end();
+              }
+            });
           }
-          var coord = locations.results[0].geometry.location;
-          var newParty = {
-            "title": party.title,
-            "description": party.description,
-            "private_status": party.status,
-            "address": party.address,
-            "city": party.city,
-            "zip": party.zip,
-            "state": party.state,
-            "country": party.country,
-            "coordinates": {
-              "latitude": coord.lat,
-              "longitude": coord.lng
-            },
-            "date": new Date([party.date, party.time].join("")).toString(),
-            "host": new ObjectID(fromUser),
-            "attending": [],
-            "declined": [],
-            "complaints": []
-          };
-          newParty.supplies = party.supplies.map((id) => {
-            return {
-              "supply_id": id,
-              "claimed_by": null
-            }
-          });
-          //adding a party
-          db.collection('parties').insertOne(newParty, (err) => {
-            if(err){
-              sendDatabaseError(err, res);
-            } else {
-              res.status(201).end();
-            }
-          });
         });
       });
   })
@@ -533,73 +556,75 @@ MongoClient.connect(url, function(err, db) {
   app.post("/search/:userId/user", validate({
     body: searchSchema
   }), function(req, res) {
-    var fromUser = getUserIdFromToken(req.get('Authorization'));
+    var fromUser = getUserIdFromToken(req.get("Authorization"));
     db.collection("users").findOne({
-        _id: new ObjectID(fromUser)
-      }, function(err, searchingUser) {
-        if (err) {
-          res.status(400).end();
-        } else if (searchingUser._id.toString() === fromUser) {
-          db.collection("users").find({
-            $text: {
-              $search: req.body.query
-            }
-          }, function(err, result) {
-            var searchedFriendUsers = [];
-            var searchedAllUsers = [];
-            result.toArray(function(err, users) {
-              users.forEach(function(resultUser) {
-                var friends = [];
-                searchingUser.friends.forEach((friend) => {
-                  if(friend.toString() == resultUser._id.toString()){
-                    friends.push(friend);
-                  }
-                });
-                getBasicUserInfo(friends, res, function(err, result) {
-                  if(err) {
-                    sendDatabaseError(err, res);
-                  }
-                  searchedFriendUsers = searchedFriendUsers.concat(result);
-                  users.forEach(function(resultUser) {
-                    var others = [];
-                    searchingUser.friends.forEach((friend) => {
-                      if(friend.toString() != resultUser._id.toString()){
-                        others.push(friend);
-                      }
-                    });
-                    getBasicUserInfo(others, res, function(err, result) {
-                      if(err) {
-                        sendDatabaseError(err, res);
-                      }
-                      searchedAllUsers = searchedAllUsers.concat(result);
-                      res.send({
-                        searchedFriendUsers: searchedFriendUsers,
-                        searchedAllUsers: searchedAllUsers
-                      });
+      _id: new ObjectID(fromUser)
+    }, function(err, searchingUser) {
+      if (err) {
+        res.status(400).end();
+      } else if (searchingUser._id.toString() === fromUser) {
+        db.collection("users").find({
+          $text: {
+            $search: req.body.query
+          }
+        }, function(err, result) {
+          var searchedFriendUsers = [];
+          var searchedAllUsers = [];
+          result.toArray(function(err, users) {
+            users.forEach(function(resultUser) {
+              var friends = [];
+              searchingUser.friends.forEach((friend) => {
+                if (friend.toString() == resultUser._id.toString()) {
+                  friends.push(friend);
+                }
+              });
+              getBasicUserInfo(friends, res, function(err, result) {
+                if (err) {
+                  sendDatabaseError(err, res);
+                }
+                searchedFriendUsers = searchedFriendUsers.concat(result);
+                users.forEach(function(resultUser) {
+                  var others = [];
+                  searchingUser.friends.forEach((friend) => {
+                    if (friend.toString() != resultUser._id.toString()) {
+                      others.push(friend);
+                    }
+                  });
+                  getBasicUserInfo(others, res, function(err, result) {
+                    if (err) {
+                      sendDatabaseError(err, res);
+                    }
+                    searchedAllUsers = searchedAllUsers.concat(result);
+                    res.send({
+                      searchedFriendUsers: searchedFriendUsers,
+                      searchedAllUsers: searchedAllUsers
                     });
                   });
                 });
               });
             });
-          })
-        } else {
-          // 400: Bad Request.
-          res.status(401).end();
-        }
-      });
+          });
+        })
+      } else {
+        // 400: Bad Request.
+        res.status(401).end();
+      }
+    });
   });
 
 
 
-// update invited list for a party
-app.put('/parties/:id/invited', function(req, res) {
-  var fromUser = getUserIdFromToken(req.get('Authorization'));
-    db.collection("parties").findOne({_id: new ObjectID(req.params.id)},
-      function(err,party) {
-        if(err){
+  // update invited list for a party
+  app.put("/parties/:id/invited", function(req, res) {
+    var fromUser = getUserIdFromToken(req.get("Authorization"));
+    db.collection("parties").findOne({
+        _id: new ObjectID(req.params.id)
+      },
+      function(err, party) {
+        if (err) {
           return res.status(500).end();
         }
-        if(party.host.toString()!=fromUser.toString()){
+        if (party.host.toString() != fromUser.toString()) {
           res.status(401).end();
         }
         var index;
@@ -622,69 +647,69 @@ app.put('/parties/:id/invited', function(req, res) {
           }
         }
         db.collection("parties").update({
-          _id: new ObjectID(req.params.id)
-        },{
-          "title": party.title,
-          "description": party.description,
-          "private_status": party.private_status,
-          "address": party.address,
-          "city": party.city,
-          "zip": party.zip,
-          "state": party.state,
-          "country": party.country,
-          "coordinates": party.coordinates,
-          "datetime": party.datetime,
-          "host": party.host,
-          "attending": party.attending,
-          "invited": party.invited,
-          "declined": party.declined,
-          "complaints": party.complaints,
-          "supplies": party.supplies
-        },
-        function(err,result){
-          if(err){
-            console.log(err);
-            return res.status(500).end();
-          }
-          if(result.modifiedCount<1){
-            return res.status(400).end();
-          }
-          getBasicUserInfo(party.attending,res,function(err,att){
-            if(err){
-              return res.status(502).end();
+            _id: new ObjectID(req.params.id)
+          }, {
+            "title": party.title,
+            "description": party.description,
+            "private_status": party.private_status,
+            "address": party.address,
+            "city": party.city,
+            "zip": party.zip,
+            "state": party.state,
+            "country": party.country,
+            "coordinates": party.coordinates,
+            "datetime": party.datetime,
+            "host": party.host,
+            "attending": party.attending,
+            "invited": party.invited,
+            "declined": party.declined,
+            "complaints": party.complaints,
+            "supplies": party.supplies
+          },
+          function(err, result) {
+            if (err) {
+              console.log(err);
+              return res.status(500).end();
             }
-            party.attending = att;
-            getBasicUserInfo(party.declined,res,function(err,dec){
-              if(err){
-                return res.status(503).end();
+            if (result.modifiedCount < 1) {
+              return res.status(400).end();
+            }
+            getBasicUserInfo(party.attending, res, function(err, att) {
+              if (err) {
+                return res.status(502).end();
               }
-              party.declined = dec;
-              getBasicUserInfo(party.invited,res,function(err,inv){
-                if(err){
-                  return res.status(504).end();
+              party.attending = att;
+              getBasicUserInfo(party.declined, res, function(err, dec) {
+                if (err) {
+                  return res.status(503).end();
                 }
-                party.invited = inv;
-                getBasicUserInfo([party.host],res,function(err,host){
-                  if(err){
-                    return res.status(505).end();
+                party.declined = dec;
+                getBasicUserInfo(party.invited, res, function(err, inv) {
+                  if (err) {
+                    return res.status(504).end();
                   }
-                  party.host = host[0];
-                  party.id = party._id;
-                  delete party._id;
-                  res.send(party);
-                });//get host
-              });// get inv
-            });//get dec
-          });//get att
-        })
+                  party.invited = inv;
+                  getBasicUserInfo([party.host], res, function(err, host) {
+                    if (err) {
+                      return res.status(505).end();
+                    }
+                    party.host = host[0];
+                    party.id = party._id;
+                    delete party._id;
+                    res.send(party);
+                  }); //get host
+                }); // get inv
+              }); //get dec
+            }); //get att
+          })
       }
     )
-})
+  })
 
 
   // update supply list for a party
-  app.put('/parties/:id/supplies', function(req, res) {
-    var fromUser = getUserIdFromToken(req.get('Authorization'));
+  app.put("/parties/:id/supplies", function(req, res) {
+    var fromUser = getUserIdFromToken(req.get("Authorization"));
     var parties = getCollection("parties");
     var isHost = false;
     for (var party of parties) {
@@ -719,18 +744,29 @@ app.put('/parties/:id/invited', function(req, res) {
 
   app.delete("/parties/:id", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
-    var partyIdRequested = parseInt(req.params.id);
-    try {
-      var party = readDocument("parties", partyIdRequested);
-    } catch (err) {
-      res.status(404).end();
-    }
-    if (verifyPartyAccess(party, userid)) {
-      deleteDocument("parties", party._id);
-      res.status(204).end();
-    } else {
-      res.status(401).end();
-    }
+    var partyIdRequested = req.params.id;
+    var query = {
+      _id: new ObjectID(partyIdRequested)
+    };
+    db.collection("parties").findOne(query, (err, party) => {
+      if (err) {
+        sendDatabaseError(err, res);
+      }
+      if (!party) {
+        res.status(404).end();
+      } else if (party.host.toString() == new ObjectID(userid)) {
+        db.collection("parties").remove(query, {
+          justOne: true
+        }, (err) => {
+          if (err) {
+            sendDatabaseError(err, res);
+          }
+          res.status(200).end();
+        });
+      } else {
+        res.status(401).end();
+      }
+    });
   });
 
   function getBasicPartyInfo(userId) {
@@ -810,12 +846,12 @@ app.put('/parties/:id/invited', function(req, res) {
       // Cut off "Bearer " from the header value.
       var token = authorizationLine.slice(7);
       // Convert the base64 string to a UTF-8 string.
-      var regularString = new Buffer(token, 'base64').toString('utf8');
+      var regularString = new Buffer(token, "base64").toString("utf8");
       // Convert the UTF-8 string into a JavaScript object.
       var tokenObj = JSON.parse(regularString);
-      var id = tokenObj['id'];
+      var id = tokenObj["id"];
       // Check that id is a string.
-      if (typeof id === 'string') {
+      if (typeof id === "string") {
         return id;
       } else {
         // Not a number. Return "", an invalid ID.
@@ -828,7 +864,7 @@ app.put('/parties/:id/invited', function(req, res) {
   }
 
   // Reset database.
-  app.post('/resetdb', function(req, res) {
+  app.post("/resetdb", function(req, res) {
     console.log("Resetting database...");
     ResetDatabase(db, function() {
       res.send();
