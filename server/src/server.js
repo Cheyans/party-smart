@@ -22,8 +22,8 @@ var getCollection = database.getCollection;
 
 var app = express();
 
-
 var MongoDB = require("mongodb");
+
 var MongoClient = MongoDB.MongoClient;
 var ObjectID = MongoDB.ObjectID;
 var url = "mongodb://localhost:27017/PartySmart";
