@@ -437,16 +437,19 @@ MongoClient.connect(url, function(err, db) {
   app.post("/complaints", validate({
     body: complaintSchema
   }), function(req, res) {
-    var body = new ObjectID(req.body);
-    console.log(body.id);
+    var body = req.body;
+    console.log(req.body);
+    console.log(new ObjectID(body.id));
     db.collection('parties').findOne({
       _id: new ObjectID(body.id)
     }, function(err, party) {
       if (err) {
         return sendDatabaseError(res, err);
       }
+      console.log(party);
+      console.log(party._id);
       db.collection('parties').updateOne({
-          _id: new ObjectID(body.id)
+          _id: new ObjectID(party._id)
         }, {
           $push: {
             complaints: {
@@ -481,7 +484,7 @@ MongoClient.connect(url, function(err, db) {
         var nearbyParties = [];
         allParties.forEach((party) => {
           var coordinates = party.coordinates;
-          if (withinRange(18, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
+          if (withinRange(1800, coordinates.latitude, coordinates.longitude, latitude, longitude)) {
             nearbyParties.push({
               id: party._id.toString(),
               address: party.address,
