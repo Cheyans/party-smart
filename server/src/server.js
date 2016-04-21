@@ -15,6 +15,7 @@ var searchSchema = require("./schemas/search.json");
 
 var messageService = require("./message");
 var config = require("./config")
+var Async = require("async");
 
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
@@ -258,56 +259,121 @@ MongoClient.connect(url, function(err, db) {
                 return res.status(505).end();
               }
               party.host = host[0];
-              getSupplyInfo(party.supplies, res, function(err,supplies){
-                if(err){
+              getSupplyInfo(party.supplies, res, function(err, supplies) {
+                if (err) {
                   return res.status(505).end();
                 }
                 party.supplies = supplies;
                 party.id = party._id;
                 delete party._id;
                 res.send(party);
-              });//get supplies
-            });//get host
-          });// get inv
-        });//get dec
-      });//get att
-    });//find party
-  });//app
+              }); //get supplies
+            }); //get host
+          }); // get inv
+        }); //get dec
+      }); //get att
+    }); //find party
+  }); //app
 
+  //OH my god, I lied, that last callback hell, wasn't callback hell, this bullshit is callback hell
   app.get("/admin", function(req, res) {
     var userid = getUserIdFromToken(req.get("Authorization"));
-    var users = getCollection("users");
-    var userRequesting = users[userid];
-    if (userRequesting && userRequesting.admin === "true") {
-      var parties = getCollection("parties");
-      var admin = {
-        parties: parties.map((party) => {
-          party.id = party._id.toString();
-          delete party._id;
-
-          var host = readDocument("users", party.host);
-          party.host_id = party.host.toString();
-          party.host = [host.fname, host.lname].join(" ");
-
-          party.attending = party.attending.map(getBasicUserInfo);
-          party.invited = party.invited.map(getBasicUserInfo);
-          party.declined = party.declined.map(getBasicUserInfo);
-          party.supplies = party.supplies.map((supply) => {
-            return getSupplyInfo(supply.supply_id, supply.claimed_by)
-          });
-          return party;
-        }),
-        users: users.map((user) => {
-          user.id = user._id.toString();
-          delete user._id;
-          user.friends = user.friends.map(getBasicUserInfo);
-          return user;
+    db.collection("users").findOne({
+      _id: new ObjectID(userid),
+      admin: "true"
+    }, (err, result) => {
+      if (err) {
+        sendDatabaseError(err, res);
+      } else if (result) {
+        db.collection("users").find((err, usersCursor) => {
+          if (err) {
+            sendDatabaseError(err, res);
+          } else {
+            usersCursor.toArray((err, users) => {
+              if (err) {
+                sendDatabaseError(err, res);
+              } else {
+                db.collection("parties").find((err, partiesCursor) => {
+                  if (err) {
+                    sendDatabaseError(err, res);
+                  } else {
+                    partiesCursor.toArray((err, parties) => {
+                      if (err) {
+                        sendDatabaseError(err, res);
+                      } else {
+                        var verboseParties = [];
+                        var verboseUsers = [];
+                        var asyncTasks = [];
+                        parties.forEach((party) => {
+                          asyncTasks.push((callback) => {
+                            party.id = party._id.toString();
+                            delete party._id;
+                            db.collection("users").findOne({
+                              _id: new ObjectID(party.host)
+                            }, (err, host) => {
+                              party.host_id = party.host.toString();
+                              party.host = [host.fname, host.lname].join(" ");
+                              getBasicUserInfo(party.attending, res, (err, attendingList) => {
+                                if (err) {
+                                  sendDatabaseError(err, res);
+                                }
+                                party.attending = attendingList;
+                                getBasicUserInfo(party.invited, res, (err, invitedList) => {
+                                  if (err) {
+                                    sendDatabaseError(err, res);
+                                  }
+                                  party.invited = invitedList;
+                                  getBasicUserInfo(party.declined, res, (err, declinedList) => {
+                                    if (err) {
+                                      sendDatabaseError(err, res);
+                                    }
+                                    party.declined = declinedList;
+                                    getSupplyInfo(party.supplies, res, function(err, supplies) {
+                                      if (err) {
+                                        sendDatabaseError(err, res);
+                                      }
+                                      party.supplies = supplies;
+                                      verboseParties.push(party);
+                                      callback();
+                                    });
+                                  });
+                                });
+                              });
+                            });
+                          })
+                        });
+                        users.forEach((user) => {
+                          asyncTasks.push((callback) => {
+                            user.id = user._id.toString();
+                            delete user._id;
+                            getBasicUserInfo(user.friends, res, (err, friendsList) => {
+                              if (err) {
+                                sendDatabaseError(err, res);
+                              }
+                              user.friends = friendsList;
+                              verboseUsers.push(user);
+                              callback();
+                            });
+                          });
+                        });
+                        Async.parallel(asyncTasks, () => {
+                          res.send({
+                            parties: verboseParties,
+                            users: verboseUsers
+                          });
+                        });
+                      }
+                    });
+                  }
+                })
+              }
+            })
+          }
         })
+      } else {
+        res.status(401).end();
       }
-      res.send(admin);
-    } else {
-      res.status(401).end();
-    }
+    });
   });
 
   app.post("/complaints", validate({
@@ -350,10 +416,9 @@ MongoClient.connect(url, function(err, db) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
 
-    db.collection("parties").find({}).toArray(function(err, allParties) {
+    db.collection("parties").find().toArray(function(err, allParties) {
       if (err) {
-        //A database error happened//500: Internal error
-        res.status(500).send("A database error occures:" + err);
+        sendDatabaseError(err, res);
       } else {
         var nearbyParties = [];
         allParties.forEach((party) => {
@@ -800,11 +865,15 @@ MongoClient.connect(url, function(err, db) {
   }
 
   function getSupplyInfo(supplyList, res, cb) {
-    if(supplyList==null || supplyList.length==0){
-      return cb(null,[]);
+    if (supplyList == null || supplyList.length == 0) {
+      return cb(null, []);
     }
     var query = {
-      $or: supplyList.map((id) => { return {_id: id.supply_id } })
+      $or: supplyList.map((id) => {
+        return {
+          _id: id.supply_id
+        }
+      })
     };
     db.collection('supplies').find(query).toArray(function(err, supplies) {
       if (err) {
@@ -812,8 +881,8 @@ MongoClient.connect(url, function(err, db) {
       }
       var supplyMap = [];
       supplies.forEach((supply) => {
-        for (var i=0; i<supplyList.length; i++) {
-          if (parseInt(supplyList[i].supply_id)===parseInt(supply._id)) {
+        for (var i = 0; i < supplyList.length; i++) {
+          if (parseInt(supplyList[i].supply_id) === parseInt(supply._id)) {
             supply.claimed_by = supplyList[i].claimed_by;
           }
         }
